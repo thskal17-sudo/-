@@ -1,0 +1,4 @@
+<span class="eyebrow">PREVIEW</span>
+<h2>{{ s.title or "미리보기" }}</h2>
+<p>{{ s.body or "일부 페이지를 워터마크와 함께 보여드립니다." }}</p>
+<div class="grid2">{% for pv in previews %}<div class="shot"><img src="{{ pv.url }}"><div class="cap">{{ pv.page }}쪽</div></div>{% endfor %}</div>

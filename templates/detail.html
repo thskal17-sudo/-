@@ -1,0 +1,45 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<style>
+{% include "base.css" %}
+{% include "themes/" ~ theme ~ ".css" %}
+html, body { width: {{ width }}px; }
+.sec { width: {{ width }}px; padding: 72px 56px; }
+.sec + .sec { border-top: 1px solid var(--line); }
+.eyebrow { display: inline-block; font-size: 15px; font-weight: 700; color: var(--primary); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+h2 { font-size: 40px; font-weight: 800; letter-spacing: -1.2px; line-height: 1.25; margin-bottom: 18px; }
+p { font-size: 20px; line-height: 1.7; color: #3a3a40; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.chip { background: var(--primary-soft); color: var(--primary-dark); font-weight: 700; font-size: 19px; padding: 10px 18px; border-radius: 999px; }
+table.kv { width: 100%; border-collapse: collapse; margin-top: 8px; }
+table.kv th, table.kv td { text-align: left; padding: 16px 14px; font-size: 20px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.kv th { width: 150px; color: var(--muted); font-weight: 600; }
+table.kv td { font-weight: 600; }
+ol.list, ul.list { margin-top: 16px; padding-left: 0; list-style: none; }
+.list li { position: relative; padding: 12px 0 12px 44px; font-size: 20px; line-height: 1.5; border-bottom: 1px dashed var(--line); }
+.list li::before { content: attr(data-n); position: absolute; left: 0; top: 11px; width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.list.plain li { padding-left: 24px; }
+.list.plain li::before { content: ""; width: 8px; height: 8px; top: 21px; left: 4px; }
+.hero { background: linear-gradient(160deg, var(--primary) 0%, var(--primary-dark) 100%); color: #fff; padding: 88px 56px; }
+.hero .eyebrow { color: rgba(255,255,255,.75); }
+.hero h1 { font-size: 52px; font-weight: 800; letter-spacing: -1.6px; line-height: 1.2; margin-bottom: 20px; }
+.hero p { color: rgba(255,255,255,.88); font-size: 22px; }
+.hero .chip { background: rgba(255,255,255,.16); color: #fff; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 28px; }
+.shot { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+.shot img { width: 100%; border-radius: 6px; box-shadow: 0 6px 18px rgba(0,0,0,.12); }
+.shot .cap { margin-top: 10px; font-size: 16px; color: var(--muted); text-align: center; }
+.note { background: var(--paper); border-left: 6px solid var(--primary); padding: 20px 24px; margin-top: 18px; border-radius: 6px; }
+.note p { font-size: 19px; }
+.faq .q { font-size: 21px; font-weight: 700; margin-top: 26px; padding-left: 40px; position: relative; }
+.faq .q::before { content: "Q"; position: absolute; left: 0; top: -2px; color: var(--primary); font-weight: 800; font-size: 24px; }
+.faq .a { font-size: 19px; color: #3a3a40; line-height: 1.65; padding-left: 40px; margin-top: 8px; }
+.footer { background: var(--text); color: #fff; text-align: center; padding: 40px 56px; font-size: 18px; }
+.footer b { color: var(--accent); }
+</style></head><body>
+{% for s in plan.sections %}
+<section class="sec sec-{{ s.type }}{% if s.type == 'hero' %} hero{% endif %}" data-sec="{{ s.type }}">
+{% include "sections/" ~ s.type ~ ".html" %}
+</section>
+{% endfor %}
+<section class="sec footer" data-sec="footer"><b>{{ meta.store_name }}</b> · 교사를 위한 수업 자료</section>
+</body></html>

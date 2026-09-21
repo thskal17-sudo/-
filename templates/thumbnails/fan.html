@@ -1,0 +1,17 @@
+{% extends "thumbnails/_base.html" %}
+{% block style %}
+.stage { perspective: 1800px; }
+.page { width: 420px; height: 594px; top: {{ 190 if with_text else 200 }}px; transform-origin: bottom center; }
+.p1 { left: 290px; z-index: 4; {% if with_text %}transform: scale(.72) translateY(-260px);{% endif %} }
+.p2 { left: 420px; z-index: 3; transform: rotate(9deg) translateX(30px) {{ 'scale(.72) translateY(-260px)' if with_text else '' }}; }
+.p3 { left: 160px; z-index: 3; transform: rotate(-9deg) translateX(-30px) {{ 'scale(.72) translateY(-260px)' if with_text else '' }}; }
+.p4 { left: 500px; z-index: 2; transform: rotate(16deg) translateX(40px) {{ 'scale(.72) translateY(-260px)' if with_text else '' }}; opacity: .85; }
+.p5 { left: 80px; z-index: 2; transform: rotate(-16deg) translateX(-40px) {{ 'scale(.72) translateY(-260px)' if with_text else '' }}; opacity: .85; }
+{% endblock %}
+{% block pages %}
+<div class="page p5"><img src="{{ pages[4 % pages|length] }}"></div>
+<div class="page p4"><img src="{{ pages[3 % pages|length] }}"></div>
+<div class="page p3"><img src="{{ pages[2 % pages|length] }}"></div>
+<div class="page p2"><img src="{{ pages[1 % pages|length] }}"></div>
+<div class="page p1"><img src="{{ pages[0] }}"></div>
+{% endblock %}

@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+products/*/pages/
+products/*/out/
+products/*/source.pdf.converted
+.env

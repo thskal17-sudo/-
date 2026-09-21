@@ -1,0 +1,5 @@
+<span class="eyebrow">CONTENTS</span>
+<h2>{{ s.title or "구성" }}</h2>
+{% if s.body %}<p>{{ s.body }}</p>{% endif %}
+<table class="kv">{% for k, v in s.pairs %}<tr><th>{{ k }}</th><td>{{ v }}</td></tr>{% endfor %}</table>
+{% if s.items %}<ol class="list">{% for it in s.items %}<li data-n="{{ loop.index }}">{{ it }}</li>{% endfor %}</ol>{% endif %}

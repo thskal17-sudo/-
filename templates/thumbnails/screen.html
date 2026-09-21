@@ -1,0 +1,24 @@
+{% extends "thumbnails/_base.html" %}
+{% block style %}
+.laptop { position: absolute; width: 820px; transform-origin: top center; }
+.screen { width: 820px; height: 512px; background: #111; border-radius: 22px 22px 6px 6px; padding: 18px; box-shadow: 0 30px 60px rgba(0,0,0,.25); }
+.screen .inner { width: 100%; height: 100%; background: #fff; overflow: hidden; border-radius: 4px; }
+.screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.base { width: 900px; height: 22px; margin-left: -40px; background: linear-gradient(#d9d9de, #b9b9c0); border-radius: 0 0 18px 18px; }
+.base::after { content: ""; display: block; width: 140px; height: 8px; margin: 0 auto; background: #9a9aa2; border-radius: 0 0 8px 8px; }
+.side { position: absolute; width: 230px; height: 325px; }
+{% if with_text %}
+.laptop { left: 90px; top: 170px; transform: scale(.74); }
+.side { display: none; }
+{% else %}
+.laptop { left: 90px; top: 230px; }
+.side { top: 470px; }
+.s1 { left: 40px; transform: rotate(-8deg); }
+.s2 { right: 40px; transform: rotate(8deg); }
+{% endif %}
+{% endblock %}
+{% block pages %}
+<div class="page side s1"><img src="{{ pages[1 % pages|length] }}"></div>
+<div class="page side s2"><img src="{{ pages[2 % pages|length] }}"></div>
+<div class="laptop"><div class="screen"><div class="inner"><img src="{{ pages[0] }}"></div></div><div class="base"></div></div>
+{% endblock %}

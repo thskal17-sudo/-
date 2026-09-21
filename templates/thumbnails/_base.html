@@ -1,0 +1,23 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<style>
+{% include "base.css" %}
+{% include "themes/" ~ theme ~ ".css" %}
+html, body { width: 1000px; height: 1000px; overflow: hidden; }
+.stage { position: relative; width: 1000px; height: 1000px; background: {{ bg }}; overflow: hidden; }
+.page { position: absolute; background: #fff; box-shadow: 0 18px 40px rgba(0,0,0,.18), 0 2px 6px rgba(0,0,0,.08); border-radius: 6px; overflow: hidden; }
+.page img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.badge { position: absolute; left: 60px; top: 56px; background: var(--primary); color: #fff; font-weight: 700; font-size: 34px; padding: 12px 26px; border-radius: 999px; letter-spacing: -0.5px; }
+.title { position: absolute; left: 60px; bottom: 150px; font-size: 76px; font-weight: 800; line-height: 1.12; letter-spacing: -2px; color: var(--text); max-width: 880px; }
+.sub { position: absolute; left: 60px; bottom: 80px; font-size: 32px; font-weight: 500; color: var(--muted); letter-spacing: -0.5px; }
+.corner { position: absolute; right: 60px; top: 56px; background: var(--accent); color: #1c1c1e; font-weight: 800; font-size: 30px; padding: 12px 22px; border-radius: 14px; }
+{% block style %}{% endblock %}
+</style></head>
+<body><div class="stage">
+{% block pages %}{% endblock %}
+{% if with_text %}
+<div class="badge">{{ t.badge_top }}</div>
+{% if corner %}<div class="corner">{{ corner }}</div>{% endif %}
+<div class="title">{{ t.title }}</div>
+<div class="sub">{{ t.sub }}</div>
+{% endif %}
+</div></body></html>

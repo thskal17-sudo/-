@@ -1,0 +1,4 @@
+<span class="eyebrow">{{ plan.thumbnail.badge_top }}</span>
+<h1>{{ s.title or plan.thumbnail.title }}</h1>
+<p>{{ s.body }}</p>
+{% if s.items %}<div class="chips">{% for it in s.items %}<span class="chip">{{ it }}</span>{% endfor %}</div>{% endif %}

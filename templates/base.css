@@ -1,0 +1,9 @@
+@font-face {
+  font-family: "Pretendard";
+  src: url("{{ fonts_url }}/PretendardVariable.woff2") format("woff2-variations");
+  font-weight: 45 920;
+  font-display: block;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; color: var(--text); background: #fff; -webkit-font-smoothing: antialiased; word-break: keep-all; }
+img { display: block; }

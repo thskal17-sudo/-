@@ -1,0 +1,11 @@
+sku: sample-ko5-1
+store_name: 초록칠판
+price: 3900
+series: 초등 국어 활동지
+subject: 국어
+grade: 5학년
+school_level: 초등
+material_type: 활동지
+file_formats: [PDF, HWP]
+editable: true
+has_answer_key: true

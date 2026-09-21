@@ -1,0 +1,18 @@
+{% extends "thumbnails/_base.html" %}
+{% block style %}
+.page { width: 520px; height: 735px; transform-origin: top center; }
+{% if with_text %}
+.p1 { left: 240px; top: 150px; z-index: 3; transform: scale(.66); }
+.p2 { left: 300px; top: 135px; z-index: 2; transform: scale(.66) rotate(4deg); opacity: .95; }
+.p3 { left: 180px; top: 135px; z-index: 1; transform: scale(.66) rotate(-5deg); opacity: .9; }
+{% else %}
+.p1 { left: 240px; top: 132px; z-index: 3; }
+.p2 { left: 300px; top: 100px; z-index: 2; transform: rotate(4deg); opacity: .95; }
+.p3 { left: 180px; top: 100px; z-index: 1; transform: rotate(-5deg); opacity: .9; }
+{% endif %}
+{% endblock %}
+{% block pages %}
+<div class="page p3"><img src="{{ pages[2 % pages|length] }}"></div>
+<div class="page p2"><img src="{{ pages[1 % pages|length] }}"></div>
+<div class="page p1"><img src="{{ pages[0] }}"></div>
+{% endblock %}

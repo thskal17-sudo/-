@@ -1,0 +1,4 @@
+<span class="eyebrow">TARGET</span>
+<h2>{{ s.title or "이런 수업에 맞습니다" }}</h2>
+{% if s.body %}<p>{{ s.body }}</p>{% endif %}
+<table class="kv">{% for k, v in s.pairs %}<tr><th>{{ k }}</th><td>{{ v }}</td></tr>{% endfor %}</table>
