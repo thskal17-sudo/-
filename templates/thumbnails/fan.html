@@ -1,12 +1,21 @@
 {% extends "thumbnails/_base.html" %}
 {% block style %}
-.stage { perspective: 1800px; }
+{% if landscape %}
+.page { width: 520px; height: 293px; top: {{ 250 if with_text else 400 }}px; transform-origin: bottom center; }
+{% set s = 'scale(.8)' if with_text else '' %}
+.p1 { left: 240px; z-index: 4; transform: {{ s or 'none' }}; }
+.p2 { left: 330px; z-index: 3; transform: {{ s }} rotate(8deg); }
+.p3 { left: 150px; z-index: 3; transform: {{ s }} rotate(-8deg); }
+.p4 { left: 400px; z-index: 2; transform: {{ s }} rotate(16deg); opacity: .85; }
+.p5 { left: 80px; z-index: 2; transform: {{ s }} rotate(-16deg); opacity: .85; }
+{% else %}
 .page { width: 420px; height: 594px; top: {{ 190 if with_text else 200 }}px; transform-origin: bottom center; }
 .p1 { left: 290px; z-index: 4; {% if with_text %}transform: scale(.72) translateY(-260px);{% endif %} }
 .p2 { left: 420px; z-index: 3; transform: rotate(9deg) translateX(30px) {{ 'scale(.72) translateY(-260px)' if with_text else '' }}; }
 .p3 { left: 160px; z-index: 3; transform: rotate(-9deg) translateX(-30px) {{ 'scale(.72) translateY(-260px)' if with_text else '' }}; }
 .p4 { left: 500px; z-index: 2; transform: rotate(16deg) translateX(40px) {{ 'scale(.72) translateY(-260px)' if with_text else '' }}; opacity: .85; }
 .p5 { left: 80px; z-index: 2; transform: rotate(-16deg) translateX(-40px) {{ 'scale(.72) translateY(-260px)' if with_text else '' }}; opacity: .85; }
+{% endif %}
 {% endblock %}
 {% block pages %}
 <div class="page p5"><img src="{{ pages[4 % pages|length] }}"></div>

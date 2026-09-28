@@ -24,10 +24,10 @@ def pick_theme(meta: Meta, profile: MaterialProfile) -> str:
     return SUBJECT_THEMES.get(profile.subject, "default")
 
 
-def pick_style(meta: Meta, profile: MaterialProfile) -> str:
+def pick_style(meta: Meta, profile: MaterialProfile, landscape: bool = False) -> str:
     if meta.thumbnail_style:
         return meta.thumbnail_style
-    return "screen" if profile.material_type == "교안" else "fan"
+    return "screen" if landscape or profile.material_type == "교안" else "fan"
 
 
 def _env() -> Environment:
@@ -73,12 +73,12 @@ class Browser:
 
 def render_thumbnail(browser: Browser, meta: Meta, profile: MaterialProfile, plan: ContentPlan,
                      page_images: list[Path], style: str, with_text: bool, out_png: Path,
-                     work_dir: Path, corner: str = "") -> Path:
+                     work_dir: Path, corner: str = "", landscape: bool = False) -> Path:
     theme = pick_theme(meta, profile)
     imgs = [_file_url(p) for p in page_images] or []
     html = _env().get_template(f"thumbnails/{style}.html").render(
         theme=theme, fonts_url=_file_url(FONTS_DIR), pages=imgs, with_text=with_text,
-        t=plan.thumbnail, corner=corner, bg=("var(--primary-soft)" if with_text else "#f3f4f6"),
+        t=plan.thumbnail, corner=corner, landscape=landscape, bg=("var(--primary-soft)" if with_text else "#f3f4f6"),
     )
     work_dir.mkdir(parents=True, exist_ok=True)
     html_path = work_dir / f"thumb_{style}_{'text' if with_text else 'clean'}.html"
@@ -93,12 +93,13 @@ def render_thumbnail(browser: Browser, meta: Meta, profile: MaterialProfile, pla
 
 def render_detail(browser: Browser, meta: Meta, profile: MaterialProfile, plan: ContentPlan,
                   previews: list[dict], out_dir: Path, work_dir: Path,
-                  width: int = 860, scale: int = 2, max_segment: int = 1500) -> list[Path]:
+                  width: int = 860, scale: int = 2, max_segment: int = 1500,
+                  landscape: bool = False) -> list[Path]:
     """상세페이지를 통으로 찍은 뒤 섹션 경계에서 max_segment(CSS px) 이하로 자른다."""
     theme = pick_theme(meta, profile)
     html = _env().get_template("detail.html").render(
         theme=theme, fonts_url=_file_url(FONTS_DIR), width=width, plan=plan, meta=meta,
-        profile=profile, previews=[{**p, "url": _file_url(p["path"])} for p in previews],
+        profile=profile, landscape=landscape, previews=[{**p, "url": _file_url(p["path"])} for p in previews],
     )
     work_dir.mkdir(parents=True, exist_ok=True)
     html_path = work_dir / "detail.html"

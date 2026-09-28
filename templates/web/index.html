@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block style %}
+.drop { border: 2px dashed var(--line); border-radius: 14px; padding: 36px 20px; text-align: center; cursor: pointer; transition: .15s; background: var(--bg); }
+.drop.over, .drop:hover { border-color: var(--primary); background: var(--primary-soft); }
+.drop .big { font-size: 18px; font-weight: 700; }
+.drop .file { margin-top: 10px; font-weight: 700; color: var(--primary); }
+.drop input { display: none; }
+.check { display: flex; gap: 8px; align-items: center; font-weight: 500; }
+.bar { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; margin: 10px 0; }
+.bar i { display: block; height: 100%; width: 0; background: var(--primary); transition: width .2s; }
+pre.log { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px; font-size: 13px; max-height: 260px; overflow: auto; white-space: pre-wrap; margin: 0; }
+.list { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+.list a { text-decoration: none; color: var(--text); }
+.list img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); background: #fff; }
+.list .n { font-size: 13px; margin-top: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+details summary { cursor: pointer; font-weight: 700; margin: 6px 0 14px; }
+{% endblock %}
+{% block main %}
+<div class="card">
+  <h1>자료 파일 올리기</h1>
+  <p class="sub">PDF 또는 PPT·PPTX 파일을 올리면 대표 이미지, 추가 이미지, 상세페이지, 상품명, 검색 태그를 만듭니다.</p>
+  {% if not llm %}<div class="notice warn">Claude API 키가 설정되지 않아 규칙 기반 문구로 만듭니다. 키를 설정하면 자료 내용을 읽고 더 정확한 문구를 씁니다.</div>{% endif %}
+  <form id="f">
+    <div class="drop" id="drop">
+      <div class="big">여기에 파일을 끌어다 놓거나 눌러서 선택</div>
+      <div class="hint">PDF, PPTX, PPT · 최대 {{ max_mb }}MB</div>
+      <div class="file" id="fname"></div>
+      <input type="file" name="file" id="file" accept=".pdf,.pptx,.ppt,application/pdf,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-powerpoint">
+    </div>
+
+    <h2 style="margin-top:22px">자료 정보 <span class="muted" style="font-weight:500;font-size:14px">비워두면 파일에서 추정합니다</span></h2>
+    <div class="grid">
+      <div><label for="store_name">스토어명</label><input type="text" id="store_name" name="store_name" value="{{ prefill.store_name or settings.store_name or '' }}" placeholder="워터마크·하단에 표시"></div>
+      <div><label for="school_level">학교급</label><select id="school_level" name="school_level"><option value="">자동</option>{% for l in levels %}<option {% if prefill.school_level == l %}selected{% endif %}>{{ l }}</option>{% endfor %}</select></div>
+      <div><label for="grade">학년</label><input type="text" id="grade" name="grade" value="{{ prefill.grade or '' }}" placeholder="예: 5학년, 중2"></div>
+      <div><label for="subject">과목</label><input type="text" id="subject" name="subject" value="{{ prefill.subject or '' }}" placeholder="예: 국어, 수학"></div>
+      <div><label for="material_type">자료 유형</label><select id="material_type" name="material_type"><option value="">자동</option>{% for t in types %}<option {% if prefill.material_type == t %}selected{% endif %}>{{ t }}</option>{% endfor %}</select></div>
+      <div><label for="has_answer_key">정답지</label><select id="has_answer_key" name="has_answer_key"><option value="auto">자동</option><option value="yes" {% if prefill.has_answer_key == true %}selected{% endif %}>포함</option><option value="no" {% if prefill.has_answer_key == false %}selected{% endif %}>미포함</option></select></div>
+      <div><label for="file_formats">판매 파일 형식</label><input type="text" id="file_formats" name="file_formats" value="{{ (prefill.file_formats or [])|join(', ') }}" placeholder="예: PDF, PPTX, HWP"></div>
+      <div><label for="thumbnail_style">썸네일 형태</label><select id="thumbnail_style" name="thumbnail_style"><option value="auto">자동</option><option value="fan" {% if prefill.thumbnail_style == 'fan' %}selected{% endif %}>펼친 종이</option><option value="stack" {% if prefill.thumbnail_style == 'stack' %}selected{% endif %}>겹친 종이</option><option value="screen" {% if prefill.thumbnail_style == 'screen' %}selected{% endif %}>노트북 화면</option></select></div>
+    </div>
+    <div style="margin-top:14px"><label class="check"><input type="checkbox" name="editable" value="1" {% if prefill.editable %}checked{% endif %}> 편집 가능한 원본(PPTX·HWP 등)도 함께 판매</label></div>
+    <details style="margin-top:10px"><summary>상품 코드 지정</summary>
+      <div class="grid"><div><label for="sku">상품 코드</label><input type="text" id="sku" name="sku" value="{{ prefill.sku or '' }}" placeholder="비우면 자동" pattern="[A-Za-z0-9][A-Za-z0-9_\-]{0,63}"><div class="hint">영문·숫자·하이픈. 같은 코드로 올리면 덮어씁니다.</div></div></div>
+    </details>
+    <div class="row" style="margin-top:20px"><button class="btn" id="go" type="submit" disabled>만들기</button><span class="hint" id="state"></span></div>
+  </form>
+  <div id="progress" style="display:none;margin-top:18px">
+    <div class="bar"><i id="barfill"></i></div>
+    <div id="err"></div>
+    <pre class="log" id="log"></pre>
+  </div>
+</div>
+
+{% if products %}
+<div class="card">
+  <h2>최근 만든 상품</h2>
+  <div class="list">{% for p in products %}<a href="/p/{{ p.sku }}"><img loading="lazy" src="/p/{{ p.sku }}/files/thumb_main.jpg?v={{ p.mtime|int }}" alt=""><div class="n">{{ p.name }}</div></a>{% endfor %}</div>
+</div>
+{% endif %}
+{% endblock %}
+{% block script %}
+<script>
+const $ = (id) => document.getElementById(id);
+const drop = $("drop"), input = $("file"), go = $("go");
+const OK = [".pdf", ".pptx", ".ppt"], MAX = {{ max_mb }} * 1024 * 1024;
+function pick(f) {
+  if (!f) return;
+  const ext = f.name.slice(f.name.lastIndexOf(".")).toLowerCase();
+  if (!OK.includes(ext)) { $("fname").textContent = "PDF, PPTX, PPT 파일만 올릴 수 있습니다."; go.disabled = true; return; }
+  if (f.size > MAX) { $("fname").textContent = "파일이 너무 큽니다."; go.disabled = true; return; }
+  const dt = new DataTransfer(); dt.items.add(f); input.files = dt.files;
+  $("fname").textContent = f.name + " · " + (f.size / 1048576).toFixed(1) + "MB";
+  go.disabled = false;
+}
+drop.onclick = () => input.click();
+input.onchange = () => pick(input.files[0]);
+["dragenter", "dragover"].forEach(e => drop.addEventListener(e, ev => { ev.preventDefault(); drop.classList.add("over"); }));
+["dragleave", "drop"].forEach(e => drop.addEventListener(e, ev => { ev.preventDefault(); drop.classList.remove("over"); }));
+drop.addEventListener("drop", ev => pick(ev.dataTransfer.files[0]));
+
+function fail(msg) { $("err").innerHTML = ""; const d = document.createElement("div"); d.className = "notice err"; d.textContent = msg; $("err").appendChild(d); go.disabled = false; $("state").textContent = ""; }
+
+$("f").onsubmit = (ev) => {
+  ev.preventDefault();
+  if (!input.files.length) return;
+  go.disabled = true; $("progress").style.display = "block"; $("err").innerHTML = ""; $("log").textContent = "";
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "/api/upload");
+  xhr.upload.onprogress = (e) => { if (e.lengthComputable) { $("barfill").style.width = (e.loaded / e.total * 30) + "%"; $("state").textContent = "업로드 중 " + Math.round(e.loaded / e.total * 100) + "%"; } };
+  xhr.onload = () => {
+    let r = {}; try { r = JSON.parse(xhr.responseText); } catch (e) {}
+    if (xhr.status !== 200) return fail(r.error || "업로드에 실패했습니다.");
+    $("state").textContent = "만드는 중…"; poll(r.job_id);
+  };
+  xhr.onerror = () => fail("서버에 연결할 수 없습니다.");
+  xhr.send(new FormData($("f")));
+};
+
+function poll(id) {
+  fetch("/api/jobs/" + id).then(r => r.json()).then(j => {
+    $("log").textContent = j.logs.join("\n"); $("log").scrollTop = 1e9;
+    const step = Math.max(...j.logs.map(l => +((l.match(/^\[(\d)\/6\]/) || [])[1] || 0)), 0);
+    $("barfill").style.width = (30 + step / 6 * 70) + "%";
+    if (j.state === "done") { $("barfill").style.width = "100%"; location.href = "/p/" + j.sku; }
+    else if (j.state === "failed") fail(j.error || "만들기에 실패했습니다.");
+    else setTimeout(() => poll(id), 1000);
+  }).catch(() => setTimeout(() => poll(id), 2000));
+}
+</script>
+{% endblock %}

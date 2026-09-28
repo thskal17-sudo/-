@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}썸네일·상세페이지 만들기{% endblock %}</title>
+<style>
+@font-face { font-family: "Pretendard"; src: url("/fonts/PretendardVariable.woff2") format("woff2-variations"); font-weight: 45 920; font-display: swap; }
+:root { --bg: #f6f7f9; --card: #fff; --text: #17181c; --muted: #6b6f78; --line: #e3e5ea; --primary: #0f8b8d; --primary-dark: #0a6466; --primary-soft: #e3f4f4; --danger: #c93b3b; --danger-soft: #fdecec; --warn: #9a6b00; --warn-soft: #fff5d6; --ok: #1f7a45; --ok-soft: #e4f5ea; }
+@media (prefers-color-scheme: dark) { :root { --bg: #111316; --card: #1a1d21; --text: #eceef1; --muted: #9aa0aa; --line: #2c3036; --primary: #3bb3b5; --primary-dark: #7fd3d4; --primary-soft: #16302f; --danger: #ff7b7b; --danger-soft: #3a1c1c; --warn: #f2c14e; --warn-soft: #362b10; --ok: #6fd49a; --ok-soft: #143222; } }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: "Pretendard", system-ui, sans-serif; background: var(--bg); color: var(--text); word-break: keep-all; line-height: 1.55; }
+a { color: var(--primary); }
+header { background: var(--card); border-bottom: 1px solid var(--line); }
+header .in { max-width: 1080px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
+header a.brand { font-weight: 800; font-size: 18px; text-decoration: none; color: var(--text); }
+header .tag { font-size: 13px; color: var(--muted); }
+main { max-width: 1080px; margin: 0 auto; padding: 24px 20px 64px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px; margin-bottom: 20px; }
+h1 { font-size: 24px; margin: 0 0 6px; letter-spacing: -0.4px; }
+h2 { font-size: 18px; margin: 0 0 14px; letter-spacing: -0.3px; }
+p.sub { margin: 0 0 18px; color: var(--muted); }
+.notice { border-radius: 10px; padding: 12px 14px; font-size: 14px; margin-bottom: 16px; }
+.notice.warn { background: var(--warn-soft); color: var(--warn); }
+.notice.err { background: var(--danger-soft); color: var(--danger); }
+.notice.ok { background: var(--ok-soft); color: var(--ok); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 0; border-radius: 10px; padding: 11px 18px; font: inherit; font-weight: 700; cursor: pointer; background: var(--primary); color: #fff; text-decoration: none; }
+.btn:hover { background: var(--primary-dark); }
+.btn:disabled { opacity: .5; cursor: default; }
+.btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+.btn.ghost:hover { background: var(--bg); }
+.btn.sm { padding: 7px 12px; font-size: 14px; }
+label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+input[type=text], input[type=number], select { width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px; font: inherit; background: var(--card); color: var(--text); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+.hint { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.muted { color: var(--muted); }
+{% block style %}{% endblock %}
+</style></head>
+<body>
+<header><div class="in"><a class="brand" href="/">썸네일·상세페이지 만들기</a><span class="tag">교육자료 스마트스토어용</span></div></header>
+<main>{% block main %}{% endblock %}</main>
+{% block script %}{% endblock %}
+</body></html>

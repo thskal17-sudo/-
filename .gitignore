@@ -1,7 +1,10 @@
 __pycache__/
 *.pyc
 .venv/
-products/*/pages/
-products/*/out/
-products/*/source.pdf.converted
 .env
+*.egg-info/
+# 판매 자료 원본과 결과물은 저장소에 올리지 않는다 (샘플만 예외)
+products/*
+!products/sample-ko5-1/
+products/sample-ko5-1/pages/
+products/sample-ko5-1/out/

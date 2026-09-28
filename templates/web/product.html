@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}{{ product_name or sku }}{% endblock %}
+{% block style %}
+.copy { display: flex; gap: 10px; align-items: flex-start; }
+.copy .v { flex: 1; background: var(--bg); border: 1px solid var(--line); border-radius: 9px; padding: 10px 12px; font-weight: 600; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags span { background: var(--primary-soft); color: var(--primary-dark); border-radius: 99px; padding: 4px 10px; font-size: 14px; font-weight: 600; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.thumbs figure, .details figure { margin: 0; }
+.thumbs img { width: 100%; aspect-ratio: 1; border-radius: 10px; border: 1px solid var(--line); background: #fff; }
+figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; display: flex; justify-content: space-between; gap: 8px; }
+.details { max-width: 430px; margin: 0 auto; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; }
+.details img { width: 100%; display: block; }
+.issues li { margin: 4px 0; }
+.lv { font-size: 12px; font-weight: 700; border-radius: 6px; padding: 1px 6px; margin-right: 6px; }
+.lv.error { background: var(--danger-soft); color: var(--danger); }
+.lv.warn { background: var(--warn-soft); color: var(--warn); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+pre.log { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px; font-size: 13px; max-height: 200px; overflow: auto; white-space: pre-wrap; }
+{% endblock %}
+{% block main %}
+<div class="card">
+  <div class="row" style="justify-content:space-between">
+    <div><h1>{{ product_name or sku }}</h1><div class="muted" style="font-size:14px">상품 코드 {{ sku }} · 원본 {{ source }}</div></div>
+    <div class="row"><a class="btn" href="/p/{{ sku }}/download.zip">전체 ZIP 받기</a><a class="btn ghost" href="/?sku={{ sku }}">파일 다시 올리기</a></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>검수 결과</h2>
+  {% if report.ok and not report.issues %}<div class="notice ok">문제 없음</div>
+  {% elif report.ok %}<div class="notice ok">등록 가능. 아래 참고 사항을 확인하세요.</div>
+  {% else %}<div class="notice err">등록 전에 고쳐야 할 항목이 있습니다.</div>{% endif %}
+  {% if report.issues %}<ul class="issues">{% for i in report.issues %}<li><span class="lv {{ i.level }}">{{ '오류' if i.level == 'error' else '참고' }}</span>{{ i.where }} · {{ i.message }}</li>{% endfor %}</ul>{% endif %}
+</div>
+
+<div class="two">
+  <div class="card">
+    <h2>상품명</h2>
+    <div class="copy"><div class="v" id="pname">{{ product_name }}</div><button class="btn ghost sm" data-copy="pname">복사</button></div>
+    <div class="hint">{{ product_name|length }}자 / 50자</div>
+  </div>
+  <div class="card">
+    <h2>검색 태그</h2>
+    <div class="tags" id="tags">{% for t in tags %}<span>{{ t }}</span>{% endfor %}</div>
+    <div style="margin-top:10px"><button class="btn ghost sm" id="copytags">태그 복사</button></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="row" style="justify-content:space-between;margin-bottom:14px">
+    <h2 style="margin:0">대표·추가 이미지</h2>
+    <form class="row" id="rerun"><select name="style" style="width:auto"><option value="auto">자동</option><option value="fan">펼친 종이</option><option value="stack">겹친 종이</option><option value="screen">노트북 화면</option></select><button class="btn ghost sm" type="submit">이 형태로 다시 만들기</button></form>
+  </div>
+  <div id="rerunlog" style="display:none"><pre class="log" id="log"></pre></div>
+  <div class="thumbs">
+    {% for t in thumbs %}<figure><img src="/p/{{ sku }}/files/{{ t }}?v={{ v }}" alt=""><figcaption><span>{{ '대표 이미지 (문구 없음)' if t == 'thumb_main.jpg' else '추가 이미지' }}</span><a href="/p/{{ sku }}/files/{{ t }}" download>저장</a></figcaption></figure>{% endfor %}
+  </div>
+</div>
+
+<div class="card">
+  <h2>상세페이지 <span class="muted" style="font-size:14px;font-weight:500">{{ details|length }}장 · 위에서부터 순서대로 올리세요</span></h2>
+  <div class="details">{% for d in details %}<img src="/p/{{ sku }}/files/{{ d }}?v={{ v }}" alt="상세 {{ loop.index }}">{% endfor %}</div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+function copy(text, btn) { navigator.clipboard.writeText(text).then(() => { const o = btn.textContent; btn.textContent = "복사됨"; setTimeout(() => btn.textContent = o, 1200); }); }
+document.querySelectorAll("[data-copy]").forEach(b => b.onclick = () => copy(document.getElementById(b.dataset.copy).textContent.trim(), b));
+document.getElementById("copytags").onclick = (e) => copy([...document.querySelectorAll("#tags span")].map(s => s.textContent).join(","), e.target);
+document.getElementById("rerun").onsubmit = (ev) => {
+  ev.preventDefault();
+  const btn = ev.target.querySelector("button"); btn.disabled = true;
+  document.getElementById("rerunlog").style.display = "block";
+  fetch("/api/p/{{ sku }}/rerun", { method: "POST", body: new FormData(ev.target) }).then(r => r.json()).then(r => poll(r.job_id));
+  function poll(id) {
+    fetch("/api/jobs/" + id).then(r => r.json()).then(j => {
+      const log = document.getElementById("log"); log.textContent = j.logs.join("\n") + (j.error ? "\n" + j.error : ""); log.scrollTop = 1e9;
+      if (j.state === "done") location.reload();
+      else if (j.state === "failed") btn.disabled = false;
+      else setTimeout(() => poll(id), 1000);
+    });
+  }
+};
+</script>
+{% endblock %}
