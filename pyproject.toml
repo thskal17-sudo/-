@@ -19,6 +19,8 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "httpx>=0.27", "python-pptx>=0.6"]
+# scripts/blur_faces.py (영상 얼굴 블러) 용
+video = ["opencv-python-headless>=4.8", "mediapipe>=0.10.14", "numpy"]
 
 [project.scripts]
 edugen = "edugen.cli:app"
