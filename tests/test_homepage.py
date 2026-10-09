@@ -42,7 +42,7 @@ def test_index_renders_with_defaults(client):
     assert 'href="https://gangsaitda.com"' in html
     assert 'href="https://smartstore.naver.com/gyoannote"' in html
     assert 'href="https://blog.naver.com/sangsangcareer"' in html
-    assert "is-pending" not in html  # 바로가기 네 곳 모두 주소가 있다
+    assert 'is-pending" aria-disabled' not in html  # 바로가기 네 곳 모두 주소가 있다
     assert 'id="gallery"' not in html  # 사진이 없으면 칸이 안 보인다
     assert "회사소개서 받기" not in html
     assert "계성여고" not in html  # 학교 이름은 공개하지 않는다

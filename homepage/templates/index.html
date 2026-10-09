@@ -9,9 +9,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>한국엑스퍼트교육원</title>
-<meta name="description" content="한국엑스퍼트교육원은 부산·울산·경남 학교와 기관을 찾아가 AI 교육, 취업·진로, 직업체험, 창업 교육을 운영합니다. S2B 학교장터 등록 업체.">
+<meta name="description" content="한국엑스퍼트교육원은 부산·울산·경남 학교와 기관을 찾아가 AI 교육, 취업·진로, 직업체험, 창업, NCS 교육을 운영합니다. S2B 학교장터 등록 업체.">
 <meta property="og:title" content="한국엑스퍼트교육원">
-<meta property="og:description" content="AI 교육 · 취업·진로 · 직업체험 · 창업. 학교와 기관에 맞춘 교육을 설계하고 운영합니다.">
+<meta property="og:description" content="AI 교육 · 취업·진로 · 직업체험 · 창업 · NCS. 학교와 기관에 맞춘 교육을 설계하고 운영합니다.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="/static/logo-v.png">
 <link rel="icon" type="image/png" href="/static/favicon.png">
@@ -86,7 +86,7 @@
   }
   .hero.has-photo::after { display: none; }
   .hero .wrap { position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 680px; padding-top: 28px; padding-bottom: 150px; }
-  .meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, .55); color: #fff; }
+  .meta { display: grid; grid-template-columns: repeat(2, max-content); gap: 16px 96px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, .55); color: #fff; }
   .meta small { display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, .7); }
   .meta b { font-size: 15px; font-weight: 700; }
   .hero-body { margin-top: auto; padding-top: 140px; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: end; }
@@ -186,7 +186,7 @@
   .stat-label { margin-top: 10px; font-size: 15px; color: var(--ink-2); }
 
   /* ---------- 교육 분야 ---------- */
-  .fields { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .fields { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .field { padding: 30px; border-radius: 14px; background: #fff; border: 1px solid var(--line); }
   .field-top { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
   .field-icon { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; background: var(--blue-soft); color: var(--navy); }
@@ -196,12 +196,12 @@
   .field > p { margin: 0 0 16px; color: var(--ink-2); font-size: 16px; }
   .tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; list-style: none; }
   .tags li { padding: 5px 11px; border-radius: 6px; font-size: 13px; font-weight: 600; background: var(--bg-2); color: var(--ink-2); }
-  .field-wide { grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center; background: var(--navy); color: #fff; border: 0; }
-  .field-wide .field-icon { background: rgba(255, 255, 255, .12); color: #fff; }
-  .field-wide h3 { color: #fff; }
-  .field-wide .field-en { color: rgba(255, 255, 255, .6); }
-  .field-wide p { margin: 4px 0 0; color: rgba(255, 255, 255, .82); }
-  .field-wide .tags li { background: rgba(255, 255, 255, .12); color: #fff; }
+  .field-dark { background: var(--navy); color: #fff; border: 0; }
+  .field-dark .field-icon { background: rgba(255, 255, 255, .12); color: #fff; }
+  .field-dark h3 { color: #fff; }
+  .field-dark .field-en { color: rgba(255, 255, 255, .6); }
+  .field-dark > p { color: rgba(255, 255, 255, .82); }
+  .field-dark .tags li { background: rgba(255, 255, 255, .12); color: #fff; }
   .formats { margin-top: 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; color: var(--ink-2); font-size: 15px; }
   .formats b { color: var(--ink); margin-right: 4px; }
   .formats span { padding: 7px 14px; border-radius: 8px; background: #fff; border: 1px solid var(--line); font-weight: 700; color: var(--navy); }
@@ -293,12 +293,11 @@
   @media (max-width: 1080px) {
     .header-links { display: none; }
     .steps { grid-template-columns: repeat(3, 1fr); }
+    .fields { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 900px) {
     .about-grid, .contact-grid { grid-template-columns: 1fr; }
     .contact-info { position: static; }
-    .field-wide { grid-template-columns: auto 1fr; }
-    .field-wide .tags { grid-column: 1 / -1; }
     .footer-right { align-items: flex-start; }
     .hero-symbol { width: 110px; }
   }
@@ -316,7 +315,6 @@
     .hero .wrap { min-height: 0; padding-top: 20px; padding-bottom: 120px; }
     .hero::after { width: 300px; height: 353px; right: -20%; }
     .meta { grid-template-columns: 1fr 1fr; gap: 12px; }
-    .meta .meta-wide { grid-column: 1 / -1; }
     .hero-body { grid-template-columns: 1fr; padding-top: 90px; }
     .hero-symbol { display: none; }
     .shortcuts { margin-top: -72px; }
@@ -333,7 +331,6 @@
     .steps { grid-template-columns: 1fr 1fr; gap: 0 16px; }
     .gallery { grid-template-columns: 1fr 1fr; gap: 22px 12px; }
     .field, .form { padding: 22px; }
-    .field-wide { grid-template-columns: 1fr; }
     .footer-logo { height: 44px; }
   }
   @media (min-width: 761px) { .nav .nav-ext { display: none; } }
@@ -380,12 +377,11 @@
       <div class="meta">
         <div><small>Institute</small><b>한국엑스퍼트교육원</b></div>
         <div><small>Director</small><b>대표 박서현</b></div>
-        <div class="meta-wide"><small>Area</small><b>부산 · 울산 · 경남</b></div>
       </div>
       <div class="hero-body">
         <div>
           <h1>배움이<br>진로가 되는 교육</h1>
-          <p class="lead">AI 교육부터 취업·진로, 직업체험, 창업까지. 학교와 기관의 일정·예산·대상에 맞춰 수업을 설계하고, 강사 배치부터 결과보고서까지 교육원이 함께 운영합니다.</p>
+          <p class="lead">AI 교육부터 취업·진로, 직업체험, 창업, NCS 교육까지. 학교와 기관의 일정·예산·대상에 맞춰 수업을 설계하고, 강사 배치부터 결과보고서까지 교육원이 함께 운영합니다.</p>
           <div class="cta-row">
             <a href="#contact" class="btn btn-blue">교육 문의하기</a>
             <a href="#fields" class="btn btn-glass">교육 분야 보기</a>
@@ -445,7 +441,7 @@
             <h2>1. 한국엑스퍼트교육원이란</h2>
           </div>
           <div class="about-text">
-            <p>한국엑스퍼트교육원은 부산에 자리한 교육 전문 기관입니다. 학생들이 자신의 강점을 발견하고 미래를 준비할 수 있도록 <strong>AI · 취업·진로 · 직업체험 · 창업</strong> 교육을 기획하고 운영합니다.</p>
+            <p>한국엑스퍼트교육원은 부산에 자리한 교육 전문 기관입니다. 학생들이 자신의 강점을 발견하고 미래를 준비할 수 있도록 <strong>AI · 취업·진로 · 직업체험 · 창업 · NCS</strong> 교육을 기획하고 운영합니다.</p>
             <p class="lead-blue">학교와 기관은 원하는 주제만 정해 주시면 됩니다.</p>
             <p class="quiet">차시 구성과 강사 배치, 교재·활동지와 실습 재료, 운영 후 결과보고서까지 <strong>교육원이 수업 운영을 맡아</strong> 진행합니다.</p>
             <div class="about-sign">한국엑스퍼트교육원 대표<b>박서현</b></div>
@@ -493,7 +489,6 @@
             <div class="stat-label">누적 참여 학생</div>
           </div>
         </div>
-        <p class="data-source">출처: 한국엑스퍼트교육원. 만족도는 2025~2026년 부산·경남 초·중·고 캠프 참여 학생 113명 설문 결과(‘그렇다’와 ‘매우 그렇다’를 합한 비율), 참여 학생 수는 누적 기준</p>
       </div>
     </div>
   </section>
@@ -504,7 +499,7 @@
       <div class="section-head">
         <div class="part">Part 2.</div>
         <h2>2. 교육 분야</h2>
-        <p>네 가지 분야를 중심으로, 대상과 목적에 맞게 프로그램을 구성합니다.</p>
+        <p>다섯 가지 분야를 중심으로, 대상과 목적에 맞게 프로그램을 구성합니다.</p>
       </div>
 
       <div class="fields">
@@ -544,13 +539,21 @@
           <ul class="tags"><li>창업 정규 과정</li><li>창업캠프</li></ul>
         </article>
 
-        <article class="field field-wide">
-          <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-          <div>
-            <div class="field-en">TOURISM × AI</div>
-            <h3>AI 투어 메이커</h3>
-            <p>관광 분야 취업을 준비하는 분들을 위한 과정입니다. 여행상품을 기획하고, AI로 홍보물과 자기소개서·면접까지 준비합니다.</p>
+        <article class="field">
+          <div class="field-top">
+            <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5"/><path d="m8.5 13.5-2 7 5.5-3 5.5 3-2-7"/><path d="m10.5 9 1 1 2-2.5"/></svg></div>
+            <div><div class="field-en">NCS</div><h3>NCS 교육</h3></div>
           </div>
+          <p>국가직무능력표준(NCS)에 맞춰 직무에 필요한 능력을 익히는 과정입니다. 기관과 대상에 맞게 직무 단위와 수준을 정해 운영합니다.</p>
+          <ul class="tags"><li>NCS 기반 직무 교육</li><li>직업기초능력</li></ul>
+        </article>
+
+        <article class="field field-dark">
+          <div class="field-top">
+            <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div><div class="field-en">TOURISM × AI</div><h3>AI 투어 메이커</h3></div>
+          </div>
+          <p>관광 분야 취업을 준비하는 분들을 위한 과정입니다. 여행상품을 기획하고, AI로 홍보물과 자기소개서·면접까지 준비합니다.</p>
           <ul class="tags"><li>여행상품 기획</li><li>AI 홍보물</li><li>AI 자소서·면접</li></ul>
         </article>
       </div>
@@ -597,7 +600,7 @@
         <p>문의부터 결과보고서까지, 담당 선생님의 일이 줄어들도록 교육원이 챙깁니다.</p>
       </div>
       <ol class="steps">
-        <li><b>문의</b><span>전화·메일·아래 문의창으로 연락 주세요</span></li>
+        <li><b>문의</b><span>메일이나 아래 문의창으로 연락 주세요</span></li>
         <li><b>협의</b><span>대상·일정·내용을 함께 정합니다</span></li>
         <li><b>견적서</b><span>맞춤 프로그램과 견적서를 보내 드립니다</span></li>
         <li><b>계약</b><span>학교는 S2B 학교장터로 계약할 수 있습니다</span></li>
@@ -619,9 +622,8 @@
       <div class="contact-grid">
         <aside class="contact-info">
           <h3>바로 연락하기</h3>
-          <p>평일 낮 시간에는 전화가 가장 빠릅니다.</p>
+          <p>이메일로 보내 주시면 확인 후 연락드립니다.</p>
           <ul class="info-list">
-            <li><small>전화</small><a href="tel:{{ site.contact.phone }}">{{ site.contact.phone }}</a></li>
             <li><small>이메일</small><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></li>
             <li><small>주소</small><a class="addr" href="https://map.naver.com/p/search/{{ site.contact.address | urlencode }}" target="_blank" rel="noopener">{{ site.contact.address }}</a></li>
           </ul>
@@ -657,6 +659,7 @@
               <label class="check"><input type="checkbox" name="관심분야" value="취업·진로"><span>취업·진로</span></label>
               <label class="check"><input type="checkbox" name="관심분야" value="직업체험"><span>직업체험</span></label>
               <label class="check"><input type="checkbox" name="관심분야" value="창업"><span>창업</span></label>
+              <label class="check"><input type="checkbox" name="관심분야" value="NCS 교육"><span>NCS 교육</span></label>
               <label class="check"><input type="checkbox" name="관심분야" value="AI 투어 메이커"><span>AI 투어 메이커</span></label>
               <label class="check"><input type="checkbox" name="관심분야" value="기타"><span>기타</span></label>
             </div>
@@ -811,7 +814,7 @@
       form.reset();
       show('ok', '문의가 접수되었습니다. 확인 후 빠르게 연락드리겠습니다. 감사합니다.');
     } catch (err) {
-      show('err', (err.message || '전송에 실패했습니다.') + ' 계속 안 되면 {{ site.contact.phone }} 으로 전화 주세요.');
+      show('err', (err.message || '전송에 실패했습니다.') + ' 계속 안 되면 {{ site.contact.email }} 으로 메일 주세요.');
     } finally {
       btn.disabled = false; btn.textContent = '문의 보내기';
     }
