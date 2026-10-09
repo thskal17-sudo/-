@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>한국엑스퍼트교육원</title>
+<meta name="description" content="한국엑스퍼트교육원은 부산·울산·경남 학교와 기관을 찾아가 AI 교육, 취업·진로, 직업체험, 창업 교육을 운영합니다. S2B 학교장터 등록 업체.">
+<meta property="og:title" content="한국엑스퍼트교육원">
+<meta property="og:description" content="AI 교육 · 취업·진로 · 직업체험 · 창업. 학교와 기관에 맞춘 교육을 설계하고 운영합니다.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314306b'/%3E%3Cpath d='M18 46V18h22v6H25v5h13v6H25v5h15v6z' fill='%23fff'/%3E%3Ccircle cx='47' cy='43' r='4' fill='%23ff7a3d'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root {
+    --navy: #14306b;
+    --navy-deep: #0d1f47;
+    --blue: #2457d6;
+    --blue-soft: #e9effd;
+    --accent: #ff7a3d;
+    --accent-soft: #fff1e9;
+    --ink: #1a1f2b;
+    --ink-2: #4a5263;
+    --ink-3: #7a8294;
+    --line: #e3e7ef;
+    --bg: #ffffff;
+    --bg-2: #f6f8fc;
+    --radius: 16px;
+    --shadow: 0 1px 2px rgba(16, 30, 70, .06), 0 8px 24px rgba(16, 30, 70, .07);
+    --max: 1120px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img, svg { display: block; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* ---------- 상단 메뉴 ---------- */
+  .header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255, 255, 255, .92);
+    backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header .wrap { display: flex; align-items: center; height: 68px; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; letter-spacing: -.02em; color: var(--navy); }
+  .brand-mark { width: 34px; height: 34px; }
+  .nav { display: flex; gap: 4px; margin-left: auto; }
+  .nav a { padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 15px; color: var(--ink-2); }
+  .nav a:hover { color: var(--navy); background: var(--bg-2); }
+  .header-links { display: flex; gap: 8px; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: 999px; font-size: 14px; font-weight: 700;
+    border: 1px solid var(--line); color: var(--navy); background: #fff; white-space: nowrap;
+  }
+  .pill:hover { border-color: var(--navy); }
+  .pill svg { width: 14px; height: 14px; }
+  .menu-btn { display: none; margin-left: auto; width: 44px; height: 44px; border: 0; background: none; border-radius: 10px; cursor: pointer; color: var(--navy); }
+  .menu-btn svg { width: 26px; height: 26px; margin: auto; }
+
+  /* ---------- 첫 화면 ---------- */
+  .hero {
+    position: relative; overflow: hidden;
+    background: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 55%, #1f47a8 100%);
+    color: #fff;
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(600px 300px at 85% 20%, rgba(255, 122, 61, .22), transparent 70%),
+      radial-gradient(500px 400px at 10% 110%, rgba(110, 160, 255, .25), transparent 70%);
+  }
+  .hero .wrap { position: relative; padding-top: 88px; padding-bottom: 120px; }
+  .eyebrow { display: inline-block; font-size: 14px; font-weight: 700; letter-spacing: .02em; color: #ffd2bb; margin-bottom: 18px; }
+  .hero h1 { margin: 0 0 20px; font-size: clamp(32px, 5.2vw, 54px); line-height: 1.25; letter-spacing: -.035em; font-weight: 800; }
+  .hero h1 em { font-style: normal; color: #ffb48f; }
+  .hero p.lead { margin: 0 0 32px; max-width: 620px; font-size: clamp(16px, 2vw, 19px); color: rgba(255, 255, 255, .86); }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 36px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 52px; padding: 0 26px; border-radius: 12px;
+    font-size: 16px; font-weight: 700; border: 0; cursor: pointer; font-family: inherit;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-accent { background: var(--accent); color: #fff; box-shadow: 0 8px 20px rgba(255, 122, 61, .35); }
+  .btn-accent:hover { background: #ff6a24; }
+  .btn-ghost { background: rgba(255, 255, 255, .1); color: #fff; border: 1px solid rgba(255, 255, 255, .3); }
+  .btn-ghost:hover { background: rgba(255, 255, 255, .18); }
+  .btn-navy { background: var(--navy); color: #fff; }
+  .btn-navy:hover { background: var(--navy-deep); }
+  .badges { display: flex; flex-wrap: wrap; gap: 10px; padding: 0; margin: 0; list-style: none; }
+  .badges li {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: 999px; font-size: 14px; font-weight: 600;
+    background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .18);
+  }
+  .badges svg { width: 16px; height: 16px; color: #8fe3b0; }
+
+  /* ---------- 바로가기 ---------- */
+  .shortcuts { position: relative; margin-top: -64px; z-index: 2; }
+  .shortcut-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .shortcut {
+    display: flex; align-items: center; gap: 20px;
+    padding: 26px 28px; border-radius: 20px; background: #fff;
+    border: 1px solid var(--line); box-shadow: var(--shadow);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .shortcut:hover { transform: translateY(-3px); border-color: #c9d4ee; box-shadow: 0 2px 4px rgba(16, 30, 70, .06), 0 16px 36px rgba(16, 30, 70, .12); }
+  .shortcut-icon { flex: none; width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center; }
+  .shortcut-icon svg { width: 30px; height: 30px; }
+  .shortcut.s1 .shortcut-icon { background: var(--blue-soft); color: var(--blue); }
+  .shortcut.s2 .shortcut-icon { background: var(--accent-soft); color: #e2611f; }
+  .shortcut-body { flex: 1; min-width: 0; }
+  .shortcut-label { font-size: 13px; font-weight: 700; color: var(--ink-3); }
+  .shortcut-title { font-size: 22px; font-weight: 800; letter-spacing: -.02em; color: var(--ink); margin: 2px 0 4px; }
+  .shortcut-desc { font-size: 15px; color: var(--ink-2); margin: 0; }
+  .shortcut-arrow { flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--bg-2); display: grid; place-items: center; color: var(--navy); }
+  .shortcut-arrow svg { width: 18px; height: 18px; }
+  .shortcut.is-pending { cursor: default; }
+  .shortcut.is-pending:hover { transform: none; box-shadow: var(--shadow); border-color: var(--line); }
+  .shortcut.is-pending .shortcut-arrow { display: none; }
+  .soon { display: none; font-size: 12px; font-weight: 700; color: #e2611f; background: var(--accent-soft); padding: 3px 9px; border-radius: 999px; margin-left: 6px; vertical-align: middle; }
+  .is-pending .soon { display: inline-block; }
+
+  /* ---------- 공통 섹션 ---------- */
+  section.block { padding: 104px 0; }
+  section.alt { background: var(--bg-2); }
+  .section-head { max-width: 680px; margin-bottom: 48px; }
+  .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+  .kicker { font-size: 14px; font-weight: 800; color: var(--blue); letter-spacing: .04em; margin-bottom: 10px; }
+  .section-head h2 { margin: 0 0 14px; font-size: clamp(28px, 3.6vw, 38px); line-height: 1.3; letter-spacing: -.03em; font-weight: 800; }
+  .section-head p { margin: 0; font-size: 17px; color: var(--ink-2); }
+
+  /* ---------- 교육원 소개 ---------- */
+  .about-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: start; }
+  .about-text p { margin: 0 0 18px; font-size: 17px; color: var(--ink-2); }
+  .about-text strong { color: var(--ink); }
+  .about-sign { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 15px; color: var(--ink-3); }
+  .about-sign b { color: var(--ink); font-size: 17px; margin-left: 6px; }
+  .points { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .point { padding: 24px; border-radius: var(--radius); background: var(--bg-2); border: 1px solid var(--line); }
+  .point-num { font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 8px; }
+  .point h3 { margin: 0 0 8px; font-size: 18px; letter-spacing: -.02em; }
+  .point p { margin: 0; font-size: 15px; color: var(--ink-2); }
+
+  .proof { margin-top: 72px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px; }
+  .stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    border-radius: 20px; background: var(--navy); color: #fff; overflow: hidden;
+  }
+  .stat { padding: 30px 24px; }
+  .stat + .stat { border-left: 1px solid rgba(255, 255, 255, .14); }
+  .stat-num { font-size: 40px; font-weight: 800; letter-spacing: -.03em; line-height: 1.1; }
+  .stat-num small { font-size: 22px; margin-left: 2px; }
+  .stat-label { margin-top: 8px; font-size: 14px; color: rgba(255, 255, 255, .78); }
+  .stats-note { grid-column: 1 / -1; padding: 12px 24px; font-size: 13px; color: rgba(255, 255, 255, .6); background: rgba(0, 0, 0, .14); }
+  .schools { padding: 28px; border-radius: 20px; border: 1px solid var(--line); background: #fff; }
+  .schools h3 { margin: 0 0 4px; font-size: 18px; }
+  .schools p { margin: 0 0 16px; font-size: 14px; color: var(--ink-3); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+  .chips li { padding: 7px 13px; border-radius: 999px; background: var(--bg-2); border: 1px solid var(--line); font-size: 14px; font-weight: 600; color: var(--ink-2); }
+
+  /* ---------- 교육 분야 ---------- */
+  .fields { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .field {
+    position: relative; padding: 32px; border-radius: 20px; background: #fff;
+    border: 1px solid var(--line); box-shadow: 0 1px 2px rgba(16, 30, 70, .04);
+  }
+  .field-top { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .field-icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; }
+  .field-icon svg { width: 26px; height: 26px; }
+  .field h3 { margin: 0; font-size: 22px; letter-spacing: -.02em; }
+  .field-en { font-size: 13px; font-weight: 700; color: var(--ink-3); }
+  .field > p { margin: 0 0 18px; color: var(--ink-2); font-size: 16px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+  .tags li { padding: 6px 12px; border-radius: 8px; font-size: 14px; font-weight: 600; }
+  .f-ai .field-icon { background: #ebe9ff; color: #5b4bdb; }
+  .f-ai .tags li { background: #f3f2ff; color: #4b3dc4; }
+  .f-career .field-icon { background: var(--blue-soft); color: var(--blue); }
+  .f-career .tags li { background: #f1f5fe; color: #1d47b3; }
+  .f-job .field-icon { background: #e4f6ee; color: #12895a; }
+  .f-job .tags li { background: #eff9f4; color: #0f7a50; }
+  .f-startup .field-icon { background: var(--accent-soft); color: #e2611f; }
+  .f-startup .tags li { background: #fff6f1; color: #c8501a; }
+  .field-wide {
+    grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center;
+    background: linear-gradient(120deg, #0d1f47, #1b3f93); color: #fff; border: 0;
+  }
+  .field-wide .field-icon { background: rgba(255, 255, 255, .12); color: #ffb48f; }
+  .field-wide h3 { color: #fff; }
+  .field-wide p { margin: 4px 0 0; color: rgba(255, 255, 255, .8); }
+  .field-wide .tags li { background: rgba(255, 255, 255, .12); color: #fff; }
+  .formats { margin-top: 40px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 14px; color: var(--ink-2); font-size: 15px; }
+  .formats b { color: var(--ink); margin-right: 4px; }
+  .formats span { padding: 8px 16px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font-weight: 700; color: var(--navy); }
+
+  /* ---------- 진행 절차 ---------- */
+  .steps { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; padding: 0; margin: 0; list-style: none; counter-reset: step; }
+  .steps li { position: relative; padding: 22px 18px; border-radius: var(--radius); background: var(--bg-2); border: 1px solid var(--line); counter-increment: step; }
+  .steps li::before { content: counter(step, decimal-leading-zero); display: block; font-size: 13px; font-weight: 800; color: var(--blue); margin-bottom: 8px; }
+  .steps b { display: block; font-size: 17px; margin-bottom: 4px; letter-spacing: -.02em; }
+  .steps span { font-size: 14px; color: var(--ink-2); line-height: 1.55; display: block; }
+
+  /* ---------- 문의 ---------- */
+  .contact-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 40px; align-items: start; }
+  .contact-info { padding: 36px; border-radius: 20px; background: var(--navy); color: #fff; position: sticky; top: 96px; }
+  .contact-info h3 { margin: 0 0 8px; font-size: 22px; }
+  .contact-info > p { margin: 0 0 28px; color: rgba(255, 255, 255, .78); font-size: 15px; }
+  .info-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+  .info-list li { display: flex; gap: 14px; align-items: flex-start; }
+  .info-icon { flex: none; width: 40px; height: 40px; border-radius: 12px; background: rgba(255, 255, 255, .1); display: grid; place-items: center; color: #ffb48f; }
+  .info-icon svg { width: 20px; height: 20px; }
+  .info-list small { display: block; font-size: 13px; color: rgba(255, 255, 255, .6); }
+  .info-list a, .info-list span.v { font-size: 17px; font-weight: 700; color: #fff; }
+  .info-list a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .s2b-note { margin-top: 28px; padding: 16px 18px; border-radius: 12px; background: rgba(255, 255, 255, .08); font-size: 14px; color: rgba(255, 255, 255, .85); }
+  .s2b-note b { color: #fff; }
+
+  .form { padding: 36px; border-radius: 20px; background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .fg { margin-bottom: 18px; }
+  .fg > label, .fg > .lbl { display: block; font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--ink); }
+  .req { color: var(--accent); margin-left: 2px; }
+  .opt { color: var(--ink-3); font-weight: 500; margin-left: 4px; font-size: 13px; }
+  input[type=text], input[type=tel], input[type=email], select, textarea {
+    width: 100%; padding: 13px 14px; border-radius: 10px; border: 1px solid #d4dae6; background: #fff;
+    font: inherit; font-size: 16px; color: var(--ink); transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  textarea { min-height: 130px; resize: vertical; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(36, 87, 214, .15); }
+  .checks { display: flex; flex-wrap: wrap; gap: 8px; }
+  .check { position: relative; }
+  .check input { position: absolute; opacity: 0; inset: 0; cursor: pointer; margin: 0; }
+  .check span {
+    display: inline-block; padding: 9px 15px; border-radius: 999px; border: 1px solid #d4dae6;
+    font-size: 15px; font-weight: 600; color: var(--ink-2); background: #fff; transition: all .12s ease;
+  }
+  .check input:checked + span { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .check input:focus-visible + span { box-shadow: 0 0 0 3px rgba(36, 87, 214, .25); }
+  .consent { margin: 6px 0 22px; padding: 16px 18px; border-radius: 12px; background: var(--bg-2); border: 1px solid var(--line); font-size: 14px; color: var(--ink-2); }
+  .consent label { display: flex; gap: 10px; align-items: center; font-weight: 700; color: var(--ink); cursor: pointer; }
+  .consent input { width: 18px; height: 18px; accent-color: var(--navy); }
+  .consent details { margin-top: 8px; }
+  .consent summary { cursor: pointer; color: var(--ink-3); font-size: 13px; }
+  .consent ul { margin: 8px 0 0; padding-left: 18px; font-size: 13px; }
+  .form .btn { width: 100%; }
+  .hp { position: absolute; left: -9999px; }
+  .form-msg { display: none; margin-top: 16px; padding: 14px 16px; border-radius: 10px; font-size: 15px; }
+  .form-msg.ok { display: block; background: #e8f7ef; color: #0f6b45; }
+  .form-msg.err { display: block; background: #fdecec; color: #a62323; }
+  .fallback { display: none; margin-top: 16px; }
+  .fallback.show { display: block; }
+  .fallback p { font-size: 14px; color: var(--ink-2); margin: 0 0 8px; }
+  .fallback textarea { min-height: 180px; font-size: 14px; background: var(--bg-2); }
+  .fallback .btn { margin-top: 10px; min-height: 44px; }
+
+  /* ---------- 하단 ---------- */
+  .footer { background: #0b1736; color: rgba(255, 255, 255, .7); padding: 56px 0 40px; font-size: 14px; }
+  .footer-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 28px; padding-bottom: 28px; border-bottom: 1px solid rgba(255, 255, 255, .1); }
+  .footer .brand { color: #fff; }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .footer-links a { padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .2); color: #fff; font-weight: 600; }
+  .footer-links a:hover { background: rgba(255, 255, 255, .08); }
+  .footer-info { margin-top: 24px; line-height: 1.9; }
+  .footer-info span { display: inline-block; margin-right: 16px; }
+  .footer-copy { margin-top: 16px; color: rgba(255, 255, 255, .45); font-size: 13px; }
+
+  /* ---------- 화면 크기별 ---------- */
+  @media (max-width: 1080px) {
+    .header-links { display: none; }
+    .steps { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 900px) {
+    .about-grid, .proof, .contact-grid { grid-template-columns: 1fr; }
+    .contact-info { position: static; }
+    .field-wide { grid-template-columns: auto 1fr; }
+    .field-wide .tags { grid-column: 1 / -1; }
+  }
+  @media (max-width: 760px) {
+    html { scroll-padding-top: 64px; }
+    .header .wrap { height: 60px; }
+    .menu-btn { display: block; }
+    .nav {
+      display: none; position: absolute; top: 60px; left: 0; right: 0;
+      flex-direction: column; gap: 0; padding: 8px 16px 16px; background: #fff; border-bottom: 1px solid var(--line);
+      box-shadow: 0 12px 24px rgba(16, 30, 70, .08);
+    }
+    .nav.open { display: flex; }
+    .nav a { padding: 14px 8px; font-size: 16px; border-radius: 0; border-bottom: 1px solid var(--line); }
+    .nav .nav-ext { display: flex; gap: 8px; padding-top: 14px; }
+    .nav .nav-ext a { flex: 1; text-align: center; border: 1px solid var(--line); border-radius: 10px; padding: 12px; color: var(--navy); }
+    .wrap { padding: 0 16px; }
+    .hero .wrap { padding-top: 56px; padding-bottom: 104px; }
+    .shortcut-grid, .fields, .points, .form-row { grid-template-columns: 1fr; }
+    .form-row { gap: 0; }
+    .shortcut { padding: 20px; gap: 14px; }
+    .shortcut-icon { width: 50px; height: 50px; }
+    .shortcut-title { font-size: 19px; }
+    .shortcut-desc { font-size: 14px; }
+    section.block { padding: 72px 0; }
+    .stats { grid-template-columns: 1fr; }
+    .stat + .stat { border-left: 0; border-top: 1px solid rgba(255, 255, 255, .14); }
+    .stat { padding: 22px 24px; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .field, .form, .contact-info { padding: 24px; }
+    .field-wide { grid-template-columns: 1fr; }
+  }
+  @media (min-width: 761px) { .nav .nav-ext { display: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 상단 메뉴 -->
+<header class="header">
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="한국엑스퍼트교육원 처음으로">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#14306b"/><path d="M18 46V18h22v6H25v5h13v6H25v5h15v6z" fill="#fff"/><circle cx="47" cy="43" r="4" fill="#ff7a3d"/></svg>
+      한국엑스퍼트교육원
+    </a>
+    <button class="menu-btn" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="주 메뉴">
+      <a href="#about">교육원 소개</a>
+      <a href="#fields">교육 분야</a>
+      <a href="#process">진행 절차</a>
+      <a href="#contact">교육 문의</a>
+      <div class="nav-ext">
+        <a data-link="gangsaitda" target="_blank" rel="noopener">강사잇다</a>
+        <a data-link="gyoannote" target="_blank" rel="noopener">교안노트</a>
+      </div>
+    </nav>
+    <div class="header-links">
+      <a class="pill" data-link="gangsaitda" target="_blank" rel="noopener">강사잇다
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      <a class="pill" data-link="gyoannote" target="_blank" rel="noopener">교안노트
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- 첫 화면 -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">부산 · 울산 · 경남 학교와 기관을 찾아가는 교육</span>
+      <h1>배움이 <em>진로</em>가 되는 교육,<br>한국엑스퍼트교육원</h1>
+      <p class="lead">AI 교육부터 취업·진로, 직업체험, 창업까지. 학교와 기관의 일정·예산·대상에 맞춰 수업을 설계하고, 강사 배치부터 결과보고서까지 교육원이 함께 운영합니다.</p>
+      <div class="cta-row">
+        <a href="#contact" class="btn btn-accent">교육 문의하기</a>
+        <a href="#fields" class="btn btn-ghost">교육 분야 보기</a>
+      </div>
+      <ul class="badges">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>S2B 학교장터 등록 업체</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>초·중·고 운영</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>결과보고서 · 수료증 제공</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 바로가기 -->
+  <section class="shortcuts" aria-label="바로가기">
+    <div class="wrap shortcut-grid">
+      <a class="shortcut s1" data-link="gangsaitda" target="_blank" rel="noopener">
+        <div class="shortcut-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="16" r="3"/><path d="M10.5 10.5l3 3"/><path d="M3 21c0-2.5 2-4.5 5-4.5M21 3c0 2.5-2 4.5-5 4.5"/></svg>
+        </div>
+        <div class="shortcut-body">
+          <div class="shortcut-label">바로가기</div>
+          <div class="shortcut-title">강사잇다<span class="soon">준비 중</span></div>
+          <p class="shortcut-desc">부산·울산·경남 학교·기관 강사 공고를 한곳에 모아 보는 사이트</p>
+        </div>
+        <div class="shortcut-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></div>
+      </a>
+      <a class="shortcut s2" data-link="gyoannote" target="_blank" rel="noopener">
+        <div class="shortcut-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5.5A1.5 1.5 0 0 1 4 19.5z"/><path d="M8 3v18M11 8h5M11 12h5"/></svg>
+        </div>
+        <div class="shortcut-body">
+          <div class="shortcut-label">바로가기</div>
+          <div class="shortcut-title">교안노트<span class="soon">준비 중</span></div>
+          <p class="shortcut-desc">수업에 바로 쓰는 강의교안·활동지 자료</p>
+        </div>
+        <div class="shortcut-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 한국엑스퍼트교육원이란 -->
+  <section class="block" id="about">
+    <div class="wrap">
+      <div class="about-grid">
+        <div>
+          <div class="section-head" style="margin-bottom:28px">
+            <div class="kicker">ABOUT</div>
+            <h2>한국엑스퍼트교육원이란</h2>
+          </div>
+          <div class="about-text">
+            <p>한국엑스퍼트교육원은 부산에 자리한 교육 전문 기관입니다. 학생들이 자신의 강점을 발견하고 미래를 준비할 수 있도록 <strong>AI · 취업·진로 · 직업체험 · 창업</strong> 교육을 기획하고 운영합니다.</p>
+            <p>학교와 기관은 원하는 주제만 정해 주시면 됩니다. 차시 구성과 강사 배치, 교재·활동지와 실습 재료, 운영 후 결과보고서까지 <strong>교육원이 수업 운영을 맡아</strong> 진행합니다.</p>
+            <div class="about-sign">한국엑스퍼트교육원 대표<b>박서현</b></div>
+          </div>
+        </div>
+        <div class="points">
+          <div class="point">
+            <div class="point-num">01</div>
+            <h3>학교에 맞춘 설계</h3>
+            <p>예산·일정·교육과정에 맞춰 차시 수, 대상 반, 내용을 조정합니다. 2차시 단축형이나 학년 전체 동시 운영도 가능합니다.</p>
+          </div>
+          <div class="point">
+            <div class="point-num">02</div>
+            <h3>반마다 전담 강사</h3>
+            <p>반마다 강사 1명이 들어가 모둠 활동과 실습 중심으로 수업합니다.</p>
+          </div>
+          <div class="point">
+            <div class="point-num">03</div>
+            <h3>준비부터 마무리까지</h3>
+            <p>교재·활동지와 기본 실습 재료를 준비하고, 운영 후 사진과 만족도 결과를 담은 결과보고서와 학생별 수료증을 드립니다.</p>
+          </div>
+          <div class="point">
+            <div class="point-num">04</div>
+            <h3>S2B 학교장터 계약</h3>
+            <p>S2B 학교장터 등록 업체입니다. 2천만원 이하 교육은 학교에서 S2B로 바로 견적을 요청하고 계약하실 수 있습니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="proof">
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-num">79<small>%</small></div>
+            <div class="stat-label">“다시 참여하고 싶다”</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">76<small>%</small></div>
+            <div class="stat-label">“진로·관심사를 찾는 데 도움이 됐다”</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">113<small>명</small></div>
+            <div class="stat-label">캠프 참여 학생 설문 응답</div>
+          </div>
+          <div class="stats-note">2025~2026년 캠프 참여 학생 113명 설문 결과 (‘그렇다’와 ‘매우 그렇다’를 합한 비율)</div>
+        </div>
+        <div class="schools">
+          <h3>운영 학교</h3>
+          <p>2025~2026년 · 초·중·고 모두 운영</p>
+          <ul class="chips">
+            <li>계성여고</li><li>삼성여고</li><li>김해중앙여고</li><li>장등중</li><li>봉명중</li><li>율하중</li><li>생림초</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 교육 분야 -->
+  <section class="block alt" id="fields">
+    <div class="wrap">
+      <div class="section-head center">
+        <div class="kicker">PROGRAMS</div>
+        <h2>교육 분야</h2>
+        <p>네 가지 분야를 중심으로, 대상과 목적에 맞게 프로그램을 구성합니다.</p>
+      </div>
+
+      <div class="fields">
+        <article class="field f-ai">
+          <div class="field-top">
+            <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/><path d="M9.5 15l1.6-6h1.8l1.6 6M10.1 13h3.8"/></svg></div>
+            <div><div class="field-en">AI EDUCATION</div><h3>AI 교육</h3></div>
+          </div>
+          <p>생성형 AI를 직접 써 보며 배우는 실습형 수업입니다. AI를 공부와 진로 탐색에 올바르게 활용하는 방법을 익힙니다.</p>
+          <ul class="tags"><li>AI 활용 실습</li><li>초·중·고 맞춤</li></ul>
+        </article>
+
+        <article class="field f-career">
+          <div class="field-top">
+            <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg></div>
+            <div><div class="field-en">CAREER</div><h3>취업·진로</h3></div>
+          </div>
+          <p>나를 표현하는 글과 말을 다듬습니다. 자기소개서부터 면접, 스피치, 이미지까지 실전처럼 연습합니다.</p>
+          <ul class="tags"><li>자기소개서</li><li>면접</li><li>스피치</li><li>이미지</li></ul>
+        </article>
+
+        <article class="field f-job">
+          <div class="field-top">
+            <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></div>
+            <div><div class="field-en">JOB EXPERIENCE</div><h3>직업체험</h3></div>
+          </div>
+          <p>직업 현장을 교실로 옮겨 와 역할을 맡고 미션을 해결하며 직업의 세계를 몸으로 경험합니다.</p>
+          <ul class="tags"><li>서비스·항공·호텔</li><li>미래직업</li><li>역할·미션형</li></ul>
+        </article>
+
+        <article class="field f-startup">
+          <div class="field-top">
+            <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
+            <div><div class="field-en">STARTUP</div><h3>창업</h3></div>
+          </div>
+          <p>아이디어를 찾고 다듬어 발표하기까지, 창업의 과정을 직접 해 보며 도전하는 힘을 기릅니다.</p>
+          <ul class="tags"><li>창업 정규 과정</li><li>창업캠프</li></ul>
+        </article>
+
+        <article class="field field-wide">
+          <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div>
+            <div class="field-en" style="color:rgba(255,255,255,.6)">TOURISM × AI</div>
+            <h3>AI 투어 메이커</h3>
+            <p>관광 분야 취업을 준비하는 분들을 위한 과정입니다. 여행상품을 기획하고, AI로 홍보물과 자기소개서·면접까지 준비합니다.</p>
+          </div>
+          <ul class="tags"><li>여행상품 기획</li><li>AI 홍보물</li><li>AI 자소서·면접</li></ul>
+        </article>
+      </div>
+
+      <div class="formats">
+        <b>운영 형태</b>
+        <span>캠프</span><span>특강</span><span>연수</span><span>방과후</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 진행 절차 -->
+  <section class="block" id="process">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">PROCESS</div>
+        <h2>진행 절차</h2>
+        <p>문의부터 결과보고서까지, 담당 선생님의 일이 줄어들도록 교육원이 챙깁니다.</p>
+      </div>
+      <ol class="steps">
+        <li><b>문의</b><span>전화·메일·아래 문의창으로 연락 주세요</span></li>
+        <li><b>협의</b><span>대상·일정·내용을 함께 정합니다</span></li>
+        <li><b>견적서</b><span>맞춤 프로그램과 견적서를 보내 드립니다</span></li>
+        <li><b>계약</b><span>학교는 S2B 학교장터로 계약할 수 있습니다</span></li>
+        <li><b>운영</b><span>반마다 강사가 들어가 수업합니다</span></li>
+        <li><b>결과보고</b><span>사진·만족도 결과보고서와 수료증을 드립니다</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 교육 문의 -->
+  <section class="block alt" id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">CONTACT</div>
+        <h2>교육 문의</h2>
+        <p>아래 내용을 남겨 주시면 확인 후 연락드리겠습니다. 정해지지 않은 항목은 비워 두셔도 괜찮습니다.</p>
+      </div>
+
+      <div class="contact-grid">
+        <aside class="contact-info">
+          <h3>바로 연락하기</h3>
+          <p>평일 낮 시간에는 전화가 가장 빠릅니다.</p>
+          <ul class="info-list">
+            <li>
+              <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></div>
+              <div><small>전화</small><a href="tel:010-9891-9450">010-9891-9450</a></div>
+            </li>
+            <li>
+              <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></div>
+              <div><small>이메일</small><a href="mailto:koexpert@naver.com">koexpert@naver.com</a></div>
+            </li>
+            <li>
+              <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+              <div><small>주소</small><a href="https://map.naver.com/p/search/%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%81%EA%B5%AC%20%EB%82%99%EB%8F%99%EB%8C%80%EB%A1%9C1694%EB%B2%88%EA%B8%B8%204" target="_blank" rel="noopener" style="font-size:15px;font-weight:600">부산광역시 북구 낙동대로1694번길 4, 3층</a></div>
+            </li>
+          </ul>
+          <div class="s2b-note"><b>학교 담당 선생님께</b><br>S2B 학교장터 등록 업체라 2천만원 이하 교육은 S2B로 바로 견적 요청·계약하실 수 있습니다.</div>
+        </aside>
+
+        <form class="form" id="inquiry" novalidate>
+          <div class="form-row">
+            <div class="fg">
+              <label for="org">학교·기관명<span class="req">*</span></label>
+              <input type="text" id="org" name="기관명" required autocomplete="organization" placeholder="예) ○○중학교">
+            </div>
+            <div class="fg">
+              <label for="name">담당자 성함<span class="req">*</span></label>
+              <input type="text" id="name" name="담당자" required autocomplete="name" placeholder="예) 홍길동 선생님">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="fg">
+              <label for="phone">연락처<span class="req">*</span></label>
+              <input type="tel" id="phone" name="연락처" required autocomplete="tel" inputmode="tel" placeholder="예) 051-000-0000">
+            </div>
+            <div class="fg">
+              <label for="email">이메일<span class="opt">선택</span></label>
+              <input type="email" id="email" name="이메일" autocomplete="email" placeholder="답변 받을 메일 주소">
+            </div>
+          </div>
+
+          <div class="fg">
+            <span class="lbl">관심 분야<span class="opt">여러 개 선택 가능</span></span>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="관심분야" value="AI 교육"><span>AI 교육</span></label>
+              <label class="check"><input type="checkbox" name="관심분야" value="취업·진로"><span>취업·진로</span></label>
+              <label class="check"><input type="checkbox" name="관심분야" value="직업체험"><span>직업체험</span></label>
+              <label class="check"><input type="checkbox" name="관심분야" value="창업"><span>창업</span></label>
+              <label class="check"><input type="checkbox" name="관심분야" value="AI 투어 메이커"><span>AI 투어 메이커</span></label>
+              <label class="check"><input type="checkbox" name="관심분야" value="기타"><span>기타</span></label>
+            </div>
+          </div>
+
+          <div class="fg">
+            <span class="lbl">운영 형태<span class="opt">선택</span></span>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="운영형태" value="캠프"><span>캠프</span></label>
+              <label class="check"><input type="checkbox" name="운영형태" value="특강"><span>특강</span></label>
+              <label class="check"><input type="checkbox" name="운영형태" value="연수"><span>연수</span></label>
+              <label class="check"><input type="checkbox" name="운영형태" value="방과후"><span>방과후</span></label>
+              <label class="check"><input type="checkbox" name="운영형태" value="아직 미정"><span>아직 미정</span></label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="fg">
+              <label for="target">대상·인원<span class="opt">선택</span></label>
+              <input type="text" id="target" name="대상인원" placeholder="예) 중2, 6개 반">
+            </div>
+            <div class="fg">
+              <label for="when">희망 시기<span class="opt">선택</span></label>
+              <input type="text" id="when" name="희망시기" placeholder="예) 12월 둘째 주, 4차시">
+            </div>
+          </div>
+
+          <div class="fg">
+            <label for="msg">문의 내용<span class="opt">선택</span></label>
+            <textarea id="msg" name="문의내용" placeholder="원하시는 교육 내용, 예산, 궁금한 점을 자유롭게 적어 주세요."></textarea>
+          </div>
+
+          <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <div class="consent">
+            <label><input type="checkbox" id="agree" required> 개인정보 수집·이용에 동의합니다 <span class="req">*</span></label>
+            <details>
+              <summary>자세히 보기</summary>
+              <ul>
+                <li>수집 항목: 학교·기관명, 담당자 성함, 연락처, 이메일</li>
+                <li>이용 목적: 교육 문의 확인 및 답변</li>
+                <li>보유 기간: 문의 답변 완료 후 1년, 이후 바로 파기</li>
+                <li>동의하지 않으실 수 있으며, 이 경우 문의창 대신 전화나 이메일로 문의해 주세요.</li>
+              </ul>
+            </details>
+          </div>
+
+          <button type="submit" class="btn btn-navy">문의 보내기</button>
+          <div class="form-msg" role="status" aria-live="polite"></div>
+
+          <div class="fallback">
+            <p>메일 앱이 열리지 않으면 아래 내용을 복사해 <b>koexpert@naver.com</b> 으로 보내 주세요.</p>
+            <textarea readonly aria-label="문의 내용 미리보기"></textarea>
+            <button type="button" class="btn btn-ghost copy-btn" style="color:var(--navy);border-color:var(--line);background:#fff">내용 복사하기</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- 하단 -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <a href="#top" class="brand">
+        <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#2457d6"/><path d="M18 46V18h22v6H25v5h13v6H25v5h15v6z" fill="#fff"/><circle cx="47" cy="43" r="4" fill="#ff7a3d"/></svg>
+        한국엑스퍼트교육원
+      </a>
+      <div class="footer-links">
+        <a data-link="gangsaitda" target="_blank" rel="noopener">강사잇다</a>
+        <a data-link="gyoannote" target="_blank" rel="noopener">교안노트</a>
+        <a href="#contact">교육 문의</a>
+      </div>
+    </div>
+    <div class="footer-info">
+      <span>상호: 한국엑스퍼트교육원</span>
+      <span>대표: 박서현</span>
+      <span>사업자등록번호: 169-10-02403</span><br>
+      <span>주소: 부산광역시 북구 낙동대로1694번길 4, 3층</span>
+      <span>전화: 010-9891-9450</span>
+      <span>이메일: koexpert@naver.com</span>
+    </div>
+    <div class="footer-copy">© <span id="year">2026</span> 한국엑스퍼트교육원. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  /* =========================================================
+     여기만 고치면 됩니다
+     - LINKS: 바로가기 주소. 비워 두면 '준비 중'으로 표시됩니다.
+     - FORM_ENDPOINT: 문의를 자동으로 받을 주소(예: Formspree).
+       비워 두면 '문의 보내기'를 눌렀을 때 메일 앱이 열립니다.
+     ========================================================= */
+  const LINKS = {
+    gangsaitda: 'https://gangsaitda.com',
+    gyoannote: ''   // 예) 'https://smartstore.naver.com/교안노트주소'
+  };
+  const FORM_ENDPOINT = '';   // 예) 'https://formspree.io/f/xxxxxxx'
+  const CONTACT_EMAIL = 'koexpert@naver.com';
+
+  /* ---------- 바로가기 주소 넣기 ---------- */
+  document.querySelectorAll('[data-link]').forEach(function (a) {
+    const url = LINKS[a.dataset.link];
+    if (url) {
+      a.href = url;
+    } else {
+      a.removeAttribute('href');
+      a.removeAttribute('target');
+      a.classList.add('is-pending');
+      a.setAttribute('aria-disabled', 'true');
+      a.title = '준비 중입니다';
+      if (!a.classList.contains('shortcut')) a.style.opacity = '.5';
+    }
+  });
+
+  /* ---------- 모바일 메뉴 ---------- */
+  const menuBtn = document.querySelector('.menu-btn');
+  const nav = document.getElementById('nav');
+  menuBtn.addEventListener('click', function () {
+    const open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  nav.addEventListener('click', function (e) {
+    if (e.target.closest('a')) { nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ---------- 문의창 ---------- */
+  const form = document.getElementById('inquiry');
+  const msg = form.querySelector('.form-msg');
+  const fallback = form.querySelector('.fallback');
+  const fallbackText = fallback.querySelector('textarea');
+
+  function show(type, text) {
+    msg.className = 'form-msg ' + type;
+    msg.textContent = text;
+  }
+
+  function collect() {
+    const fd = new FormData(form);
+    const pick = function (k) { return fd.getAll(k).join(', '); };
+    return {
+      기관명: pick('기관명').trim(),
+      담당자: pick('담당자').trim(),
+      연락처: pick('연락처').trim(),
+      이메일: pick('이메일').trim(),
+      관심분야: pick('관심분야'),
+      운영형태: pick('운영형태'),
+      대상인원: pick('대상인원').trim(),
+      희망시기: pick('희망시기').trim(),
+      문의내용: pick('문의내용').trim(),
+      _gotcha: pick('_gotcha')
+    };
+  }
+
+  function toText(d) {
+    return [
+      '[홈페이지 교육 문의]',
+      '',
+      '학교·기관명: ' + d.기관명,
+      '담당자: ' + d.담당자,
+      '연락처: ' + d.연락처,
+      '이메일: ' + (d.이메일 || '-'),
+      '관심 분야: ' + (d.관심분야 || '-'),
+      '운영 형태: ' + (d.운영형태 || '-'),
+      '대상·인원: ' + (d.대상인원 || '-'),
+      '희망 시기: ' + (d.희망시기 || '-'),
+      '',
+      '문의 내용:',
+      d.문의내용 || '-'
+    ].join('\n');
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const d = collect();
+    if (d._gotcha) return;
+
+    // 필수 칸 확인
+    const required = [['org', '학교·기관명을'], ['name', '담당자 성함을'], ['phone', '연락처를']];
+    for (const [id, label] of required) {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { show('err', label + ' 입력해 주세요.'); el.focus(); return; }
+    }
+    const phoneDigits = d.연락처.replace(/[^0-9]/g, '');
+    if (phoneDigits.length < 9 || phoneDigits.length > 12) {
+      show('err', '연락처를 다시 확인해 주세요.'); document.getElementById('phone').focus(); return;
+    }
+    const emailEl = document.getElementById('email');
+    if (d.이메일 && !emailEl.checkValidity()) { show('err', '이메일 주소를 다시 확인해 주세요.'); emailEl.focus(); return; }
+    if (!document.getElementById('agree').checked) {
+      show('err', '개인정보 수집·이용에 동의해 주세요.'); document.getElementById('agree').focus(); return;
+    }
+
+    const subject = '[홈페이지 문의] ' + d.기관명 + (d.관심분야 ? ' - ' + d.관심분야 : '');
+    const body = toText(d);
+    const btn = form.querySelector('button[type=submit]');
+
+    if (FORM_ENDPOINT) {
+      btn.disabled = true; btn.textContent = '보내는 중…';
+      try {
+        const payload = Object.assign({}, d, { _subject: subject });
+        delete payload._gotcha;
+        const res = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error(res.status);
+        form.reset();
+        show('ok', '문의가 접수되었습니다. 확인 후 빠르게 연락드리겠습니다. 감사합니다.');
+      } catch (err) {
+        show('err', '전송에 실패했습니다. 잠시 후 다시 시도하시거나 010-9891-9450 으로 전화 주세요.');
+      } finally {
+        btn.disabled = false; btn.textContent = '문의 보내기';
+      }
+      return;
+    }
+
+    // 문의 받을 주소가 없으면 메일 앱으로 보냅니다
+    fallbackText.value = '받는 사람: ' + CONTACT_EMAIL + '\n제목: ' + subject + '\n\n' + body;
+    fallback.classList.add('show');
+    show('ok', '메일 앱에 문의 내용을 채워 두었습니다. 메일 앱에서 ‘보내기’를 눌러 주세요.');
+    window.location.href = 'mailto:' + CONTACT_EMAIL +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+  });
+
+  form.querySelector('.copy-btn').addEventListener('click', async function () {
+    try {
+      await navigator.clipboard.writeText(fallbackText.value);
+      this.textContent = '복사했습니다';
+    } catch (err) {
+      fallbackText.select();
+      document.execCommand('copy');
+      this.textContent = '복사했습니다';
+    }
+  });
+</script>
+</body>
+</html>
