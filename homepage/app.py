@@ -26,6 +26,11 @@ from fastapi.staticfiles import StaticFiles
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from PIL import Image, ImageOps
 
+import sys as _sys
+
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from notify import Notifier  # noqa: E402
+
 HERE = Path(__file__).resolve().parent
 TEMPLATES_DIR = HERE / "templates"
 STATIC_DIR = HERE / "static"  # 로고 등 고정 파일
@@ -56,6 +61,11 @@ LINK_KEYS = tuple(DEFAULT_SITE["links"])
 CONTACT_KEYS = tuple(DEFAULT_SITE["contact"])
 INQUIRY_FIELDS = ("기관명", "담당자", "연락처", "이메일", "관심분야", "운영형태", "대상인원", "희망시기", "문의내용")
 INQUIRY_REQUIRED = ("기관명", "담당자", "연락처")
+NOTIFY_DEFAULTS = {
+    "notify_email": "", "smtp_host": "smtp.naver.com", "smtp_port": "465", "smtp_user": "", "smtp_pass": "",
+    "kakao_rest_key": "", "kakao_client_secret": "", "base_url": "",
+}
+NOTIFY_SECRETS = ("smtp_pass", "kakao_client_secret")  # 비워 두면 기존 값을 유지하는 칸
 
 
 # ---------------------------------------------------------------- 저장소
@@ -254,6 +264,39 @@ class Store:
                     return True
         return False
 
+    # ---- 알림 설정 (비밀번호가 들어 있으므로 파일 권한을 소유자만으로 둔다)
+    def notify_config(self) -> dict:
+        saved = self._read("notify.json", {}) or {}
+        cfg = dict(NOTIFY_DEFAULTS)
+        for k in cfg:
+            v = saved.get(k)
+            if isinstance(v, str) and v:
+                cfg[k] = v
+            env = os.environ.get("HOMEPAGE_" + k.upper())  # 서버 환경변수가 있으면 그쪽이 우선
+            if env:
+                cfg[k] = env
+        if not cfg["notify_email"]:
+            cfg["notify_email"] = self.site()["contact"]["email"]
+        return cfg
+
+    def save_notify_config(self, cfg: dict) -> None:
+        with self._lock:
+            self._write("notify.json", {k: cfg.get(k, "") for k in NOTIFY_DEFAULTS})
+            os.chmod(self.dir / "notify.json", 0o600)
+
+    def kakao_tokens(self) -> dict | None:
+        t = self._read("kakao.json", None)
+        return t if t and t.get("access_token") else None
+
+    def save_kakao_tokens(self, tokens: dict) -> None:
+        with self._lock:
+            self._write("kakao.json", tokens)
+            os.chmod(self.dir / "kakao.json", 0o600)
+
+    def delete_kakao_tokens(self) -> None:
+        with self._lock:
+            (self.dir / "kakao.json").unlink(missing_ok=True)
+
     def delete_inquiry(self, iid: str) -> bool:
         with self._lock:
             items = self.inquiries()
@@ -337,6 +380,8 @@ def create_app(data_dir: Path | str = DEFAULT_DATA_DIR) -> FastAPI:
     store = Store(Path(data_dir))
     guard = LoginGuard()
     inquiry_limit = RateLimit()
+    notifier = Notifier(store)
+    kakao_states: dict[str, float] = {}  # 카카오 로그인 왕복 확인용 임시 값
     app = FastAPI(title="한국엑스퍼트교육원", docs_url=None, redoc_url=None, openapi_url=None)
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
     env = Environment(loader=FileSystemLoader(TEMPLATES_DIR), autoescape=select_autoescape(["html"]))
@@ -354,6 +399,10 @@ def create_app(data_dir: Path | str = DEFAULT_DATA_DIR) -> FastAPI:
     def require_admin(request: Request) -> None:
         if not is_admin(request):
             raise HTTPException(401)
+
+    def site_url(request: Request) -> str:
+        """알림 링크와 카카오 로그인 돌아올 주소에 쓰는 홈페이지 주소. 설정이 없으면 지금 접속한 주소."""
+        return (store.notify_config()["base_url"] or str(request.base_url)).rstrip("/")
 
     def back(section: str = "", msg: str = "", error: str = "") -> RedirectResponse:
         q = []
@@ -428,7 +477,11 @@ def create_app(data_dir: Path | str = DEFAULT_DATA_DIR) -> FastAPI:
         ip = request.client.host if request.client else "?"
         if not inquiry_limit.allow(ip):
             raise HTTPException(429, "문의가 너무 많이 접수되었습니다. 잠시 후 다시 시도해 주세요.")
-        store.add_inquiry(fields)
+        entry = store.add_inquiry(fields)
+        try:
+            notifier.notify_inquiry(entry, site_url(request) + "/admin")
+        except Exception:  # noqa: BLE001 - 알림이 안 가도 문의 접수는 성공이다
+            pass
         return JSONResponse({"ok": True})
 
     # ---------------- 관리자: 로그인
@@ -492,9 +545,68 @@ def create_app(data_dir: Path | str = DEFAULT_DATA_DIR) -> FastAPI:
             hero=store.hero(),
             inquiries=inquiries,
             new_count=sum(1 for i in inquiries if i.get("status") == "new"),
+            notify=store.notify_config(),
+            email_ready=notifier.email_ready(),
+            kakao=store.kakao_tokens(),
+            kakao_ready=notifier.kakao_ready(),
+            notify_last=notifier.last,
+            site_url=site_url(request),
             msg=msg[:200],
             error=error[:200],
         )
+
+    # ---------------- 관리자: 알림 (이메일 · 카카오톡)
+    @app.post("/admin/notify")
+    async def notify_settings(request: Request):
+        require_admin(request)
+        form = await request.form()
+        cfg = store.notify_config()
+        saved = store._read("notify.json", {}) or {}
+        for k in NOTIFY_DEFAULTS:
+            v = str(form.get(k, "")).strip()[:300]
+            if k in NOTIFY_SECRETS and not v:
+                cfg[k] = saved.get(k, "")  # 비워 두면 그대로
+            else:
+                cfg[k] = v
+        cfg["base_url"] = cfg["base_url"].rstrip("/")
+        store.save_notify_config(cfg)
+        return back("notify", msg="알림 설정을 저장했습니다. ‘테스트 알림 보내기’로 확인해 보세요.")
+
+    @app.post("/admin/notify/test")
+    def notify_test(request: Request):
+        require_admin(request)
+        result = notifier.test(site_url(request) + "/admin")
+        text = f"이메일: {result['email']} · 카카오톡: {result['kakao']}"
+        ok = all(v == "성공" for v in result.values())
+        return back("notify", msg=text if ok else "", error="" if ok else text)
+
+    @app.get("/admin/kakao/connect")
+    def kakao_connect(request: Request):
+        require_admin(request)
+        if not store.notify_config()["kakao_rest_key"]:
+            return back("notify", error="먼저 카카오 REST API 키를 저장해 주세요.")
+        state = secrets.token_urlsafe(16)
+        kakao_states[state] = time.time()
+        return RedirectResponse(notifier.kakao_auth_url(site_url(request) + "/admin/kakao/callback", state), status_code=303)
+
+    @app.get("/admin/kakao/callback")
+    def kakao_callback(request: Request, code: str = "", state: str = "", error: str = "", error_description: str = ""):
+        require_admin(request)
+        if error:
+            return back("notify", error=f"카카오 로그인이 취소되었습니다: {error_description or error}")
+        if not code or state not in kakao_states or time.time() - kakao_states.pop(state, 0) > 600:
+            return back("notify", error="카카오 연결 요청이 맞지 않습니다. 다시 눌러 주세요.")
+        try:
+            notifier.kakao_exchange(code, site_url(request) + "/admin/kakao/callback")
+        except Exception as e:  # noqa: BLE001
+            return back("notify", error=f"카카오 연결 실패: {e}"[:300])
+        return back("notify", msg="카카오톡을 연결했습니다. ‘테스트 알림 보내기’로 확인해 보세요.")
+
+    @app.post("/admin/kakao/disconnect")
+    def kakao_disconnect(request: Request):
+        require_admin(request)
+        store.delete_kakao_tokens()
+        return back("notify", msg="카카오톡 연결을 해제했습니다.")
 
     @app.post("/admin/settings")
     async def settings(request: Request):
@@ -613,6 +725,7 @@ def create_app(data_dir: Path | str = DEFAULT_DATA_DIR) -> FastAPI:
         return HTMLResponse(f"<h1>{exc.status_code}</h1><p>{exc.detail or ''}</p>", status_code=exc.status_code)
 
     app.state.store = store
+    app.state.notifier = notifier
     return app
 
 
