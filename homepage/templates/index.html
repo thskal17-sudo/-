@@ -610,7 +610,7 @@
         <p>문의부터 결과보고서까지, 담당 선생님의 일이 줄어들도록 교육원이 챙깁니다.</p>
       </div>
       <ol class="steps">
-        <li><b>문의</b><span>전화·메일·아래 문의창으로 연락 주세요</span></li>
+        <li><b>문의</b><span>메일이나 아래 문의창으로 연락 주세요</span></li>
         <li><b>협의</b><span>대상·일정·내용을 함께 정합니다</span></li>
         <li><b>견적서</b><span>맞춤 프로그램과 견적서를 보내 드립니다</span></li>
         <li><b>계약</b><span>학교는 S2B 학교장터로 계약할 수 있습니다</span></li>
@@ -632,9 +632,8 @@
       <div class="contact-grid">
         <aside class="contact-info">
           <h3>바로 연락하기</h3>
-          <p>평일 낮 시간에는 전화가 가장 빠릅니다.</p>
+          <p>이메일로 보내 주시면 확인 후 연락드립니다.</p>
           <ul class="info-list">
-            <li><small>휴대폰</small><a href="tel:{{ site.contact.phone }}">{{ site.contact.phone }}</a></li>
             <li><small>이메일</small><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></li>
             <li><small>주소</small><a class="addr" href="https://map.naver.com/p/search/{{ site.contact.address | urlencode }}" target="_blank" rel="noopener">{{ site.contact.address }}</a></li>
           </ul>
@@ -654,8 +653,8 @@
           </div>
           <div class="form-row">
             <div class="fg">
-              <label for="phone">연락처<span class="req">*</span></label>
-              <input type="tel" id="phone" name="연락처" required autocomplete="tel" inputmode="tel" placeholder="예) 051-000-0000">
+              <label for="phone">휴대폰 번호<span class="req">*</span></label>
+              <input type="tel" id="phone" name="연락처" required autocomplete="tel" inputmode="tel" placeholder="예) 010-0000-0000">
             </div>
             <div class="fg">
               <label for="email">이메일<span class="opt">선택</span></label>
@@ -710,7 +709,7 @@
             <details>
               <summary>자세히 보기</summary>
               <ul>
-                <li>수집 항목: 학교·기관명, 담당자 성함, 연락처, 이메일</li>
+                <li>수집 항목: 학교·기관명, 담당자 성함, 휴대폰 번호, 이메일</li>
                 <li>이용 목적: 교육 문의 확인 및 답변</li>
                 <li>보유 기간: 문의 답변 완료 후 1년, 이후 바로 파기</li>
                 <li>동의하지 않으실 수 있으며, 이 경우 문의창 대신 전화나 이메일로 문의해 주세요.</li>
@@ -753,7 +752,6 @@
       <span>대표: 박서현</span>
       <span>사업자등록번호: 169-10-02403</span><br>
       <span>주소: {{ site.contact.address }}</span>
-      <span>휴대폰: {{ site.contact.phone }}</span>
       <span>이메일: {{ site.contact.email }}</span>
     </div>
     <div class="footer-copy">© <span id="year">2026</span> 한국엑스퍼트교육원. All rights reserved.</div>
@@ -805,13 +803,14 @@
     d.관심분야 = fd.getAll('관심분야');
     d.운영형태 = fd.getAll('운영형태');
 
-    const required = [['org', '학교·기관명을'], ['name', '담당자 성함을'], ['phone', '연락처를']];
+    const required = [['org', '학교·기관명을'], ['name', '담당자 성함을'], ['phone', '휴대폰 번호를']];
     for (const [id, label] of required) {
       const el = document.getElementById(id);
       if (!el.value.trim()) { show('err', label + ' 입력해 주세요.'); el.focus(); return; }
     }
     const digits = d.연락처.replace(/[^0-9]/g, '');
-    if (digits.length < 9 || digits.length > 12) { show('err', '연락처를 다시 확인해 주세요.'); document.getElementById('phone').focus(); return; }
+    if (!/^01[016789]\d{7,8}$/.test(digits)) { show('err', '휴대폰 번호를 다시 확인해 주세요. 예) 010-1234-5678'); document.getElementById('phone').focus(); return; }
+    d.연락처 = digits.replace(/^(\d{3})(\d{3,4})(\d{4})$/, '$1-$2-$3');
     const emailEl = document.getElementById('email');
     if (d.이메일 && !emailEl.checkValidity()) { show('err', '이메일 주소를 다시 확인해 주세요.'); emailEl.focus(); return; }
     if (!document.getElementById('agree').checked) { show('err', '개인정보 수집·이용에 동의해 주세요.'); document.getElementById('agree').focus(); return; }
@@ -825,7 +824,7 @@
       form.reset();
       show('ok', '문의가 접수되었습니다. 확인 후 빠르게 연락드리겠습니다. 감사합니다.');
     } catch (err) {
-      show('err', (err.message || '전송에 실패했습니다.') + ' 계속 안 되면 {{ site.contact.phone }} 으로 전화 주세요.');
+      show('err', (err.message || '전송에 실패했습니다.') + ' 계속 안 되면 {{ site.contact.email }} 으로 메일 주세요.');
     } finally {
       btn.disabled = false; btn.textContent = '문의 보내기';
     }

@@ -76,7 +76,7 @@ def test_settings_change_public_links(admin):
     html = admin.get("/").text
     assert 'href="https://smartstore.naver.com/gyoannote"' in html
     assert 'href="https://blog.naver.com/koexpert"' in html
-    assert "010-0000-0000" in html and "부산 어딘가" in html
+    assert "010-0000-0000" not in html and "부산 어딘가" in html  # 교육원 전화번호는 페이지에 싣지 않는다
     assert 'class="yt is-pending"' in html
 
 
@@ -134,18 +134,19 @@ def test_brochure_upload_and_download(admin):
 def test_inquiry_flow(admin):
     bad = admin.post("/api/inquiry", json={"기관명": "", "담당자": "홍", "연락처": "051-123-4567"})
     assert bad.status_code == 400 and "기관명" in bad.json()["error"]
-    bad = admin.post("/api/inquiry", json={"기관명": "학교", "담당자": "홍", "연락처": "12"})
-    assert bad.status_code == 400
-    spam = admin.post("/api/inquiry", json={"기관명": "x", "담당자": "x", "연락처": "0511234567", "_gotcha": "bot"})
+    bad = admin.post("/api/inquiry", json={"기관명": "학교", "담당자": "홍", "연락처": "051-123-4567"})
+    assert bad.status_code == 400 and "휴대폰" in bad.json()["error"]  # 일반 전화는 받지 않는다
+    spam = admin.post("/api/inquiry", json={"기관명": "x", "담당자": "x", "연락처": "01012345678", "_gotcha": "bot"})
     assert spam.json() == {"ok": True} and admin.app.state.store.inquiries() == []
 
     ok = admin.post("/api/inquiry", json={
-        "기관명": "테스트중학교", "담당자": "홍길동", "연락처": "051-123-4567",
+        "기관명": "테스트중학교", "담당자": "홍길동", "연락처": "010 1234 5678",
         "관심분야": ["AI 교육", "창업"], "운영형태": [], "문의내용": "12월 캠프 <b>문의</b>",
     })
     assert ok.json() == {"ok": True}
     page = admin.get("/admin").text
     assert "테스트중학교" in page and "AI 교육, 창업" in page
+    assert "010-1234-5678" in page  # 휴대폰 번호는 010-0000-0000 꼴로 정리해 저장한다
     assert "&lt;b&gt;문의&lt;/b&gt;" in page  # HTML 은 그대로 글자로 보인다
     assert 'class="badge">1<' in page
 

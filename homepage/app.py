@@ -418,8 +418,9 @@ def create_app(data_dir: Path | str = DEFAULT_DATA_DIR) -> FastAPI:
             if not fields[k]:
                 raise HTTPException(400, f"{k}을(를) 입력해 주세요.")
         digits = re.sub(r"\D", "", fields["연락처"])
-        if not 9 <= len(digits) <= 12:
-            raise HTTPException(400, "연락처를 다시 확인해 주세요.")
+        if not re.fullmatch(r"01[016789]\d{7,8}", digits):
+            raise HTTPException(400, "휴대폰 번호를 다시 확인해 주세요. 예) 010-1234-5678")
+        fields["연락처"] = re.sub(r"^(\d{3})(\d{3,4})(\d{4})$", r"\1-\2-\3", digits)
         if fields["이메일"] and not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", fields["이메일"]):
             raise HTTPException(400, "이메일 주소를 다시 확인해 주세요.")
         ip = request.client.host if request.client else "?"
