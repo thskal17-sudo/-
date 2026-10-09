@@ -2,7 +2,7 @@
 {%- macro ext(url, cls) -%}
 {%- if url -%}<a href="{{ url }}" class="{{ cls }}" target="_blank" rel="noopener">{%- else -%}<a class="{{ cls }} is-pending" aria-disabled="true" title="준비 중입니다">{%- endif -%}{{ caller() }}</a>
 {%- endmacro -%}
-{%- set arrow -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>{%- endset -%}
+{%- set arrow -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>{%- endset -%}
 <!doctype html>
 <html lang="ko">
 <head>
@@ -13,60 +13,56 @@
 <meta property="og:title" content="한국엑스퍼트교육원">
 <meta property="og:description" content="AI 교육 · 취업·진로 · 직업체험 · 창업. 학교와 기관에 맞춘 교육을 설계하고 운영합니다.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314306b'/%3E%3Cpath d='M18 46V18h22v6H25v5h13v6H25v5h15v6z' fill='%23fff'/%3E%3Ccircle cx='47' cy='43' r='4' fill='%23ff7a3d'/%3E%3C/svg%3E">
+<meta property="og:image" content="/static/logo-v.png">
+<link rel="icon" type="image/png" href="/static/favicon.png">
+<link rel="apple-touch-icon" href="/static/favicon.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
+  /* 브랜드 색: 로고 네이비·청록. 강조 파랑과 회색 단계는 참고 리포트(토스증권) 톤을 따른다. */
   :root {
-    --navy: #14306b;
-    --navy-deep: #0d1f47;
-    --blue: #2457d6;
-    --blue-soft: #e9effd;
-    --accent: #ff7a3d;
-    --accent-soft: #fff1e9;
-    --ink: #1a1f2b;
-    --ink-2: #4a5263;
-    --ink-3: #7a8294;
-    --line: #e3e7ef;
+    --navy: #152b3d;
+    --teal: #223e49;
+    --blue: #3182f6;
+    --blue-soft: #e8f3ff;
+    --ink: #191f28;
+    --ink-2: #4e5968;
+    --ink-3: #8b95a1;
+    --line: #e5e8eb;
+    --line-dark: #191f28;
     --bg: #ffffff;
-    --bg-2: #f6f8fc;
-    --radius: 16px;
-    --shadow: 0 1px 2px rgba(16, 30, 70, .06), 0 8px 24px rgba(16, 30, 70, .07);
-    --max: 1120px;
+    --bg-2: #f7f8fa;
+    --radius: 10px;
+    --max: 1080px;
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-family: "Toss Product Sans", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
     font-size: 16px;
-    line-height: 1.65;
+    line-height: 1.7;
     word-break: keep-all;
+    letter-spacing: -.01em;
     -webkit-font-smoothing: antialiased;
   }
   a { color: inherit; text-decoration: none; }
   img, svg { display: block; }
-  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
-  .is-pending { opacity: .5; cursor: default; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+  .is-pending { opacity: .45; cursor: default; }
 
   /* ---------- 상단 메뉴 ---------- */
-  .header {
-    position: sticky; top: 0; z-index: 50;
-    background: rgba(255, 255, 255, .92);
-    backdrop-filter: saturate(1.4) blur(10px);
-    border-bottom: 1px solid var(--line);
-  }
-  .header .wrap { display: flex; align-items: center; height: 68px; gap: 24px; }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; letter-spacing: -.02em; color: var(--navy); }
-  .brand-mark { width: 34px; height: 34px; }
-  .nav { display: flex; gap: 4px; margin-left: auto; }
+  .header { position: sticky; top: 0; z-index: 50; background: rgba(255, 255, 255, .94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .header .wrap { display: flex; align-items: center; height: 72px; gap: 24px; }
+  .brand img { height: 42px; width: auto; }
+  .nav { display: flex; gap: 2px; margin-left: auto; }
   .nav a { padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 15px; color: var(--ink-2); }
-  .nav a:hover { color: var(--navy); background: var(--bg-2); }
+  .nav a:hover { color: var(--ink); background: var(--bg-2); }
   .header-links { display: flex; gap: 8px; }
   .pill {
     display: inline-flex; align-items: center; gap: 6px;
-    padding: 8px 14px; border-radius: 999px; font-size: 14px; font-weight: 700;
+    padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: 700;
     border: 1px solid var(--line); color: var(--navy); background: #fff; white-space: nowrap;
   }
   .pill:not(.is-pending):hover { border-color: var(--navy); }
@@ -74,216 +70,186 @@
   .menu-btn { display: none; margin-left: auto; width: 44px; height: 44px; border: 0; background: none; border-radius: 10px; cursor: pointer; color: var(--navy); }
   .menu-btn svg { width: 26px; height: 26px; margin: auto; }
 
-  /* ---------- 첫 화면 ---------- */
-  .hero {
-    position: relative; overflow: hidden;
-    background: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 55%, #1f47a8 100%);
-    color: #fff;
-  }
+  /* ---------- 첫 화면: 리포트 표지처럼 ---------- */
+  .hero { position: relative; overflow: hidden; color: #fff; background: #3b8df0; }
   .hero::before {
     content: ""; position: absolute; inset: 0;
     background:
-      radial-gradient(600px 300px at 85% 20%, rgba(255, 122, 61, .22), transparent 70%),
-      radial-gradient(500px 400px at 10% 110%, rgba(110, 160, 255, .25), transparent 70%);
+      radial-gradient(120% 50% at 50% -10%, #ffffff 0%, #eaf4ff 30%, rgba(234, 244, 255, 0) 65%),
+      radial-gradient(80% 40% at 50% 28%, rgba(214, 235, 255, .9) 0%, rgba(214, 235, 255, 0) 70%),
+      linear-gradient(180deg, #f2f8ff 0%, #d4e8ff 16%, #8fc1ff 36%, #4a97f2 58%, #2f7fe0 100%);
   }
-  .hero .wrap { position: relative; padding-top: 88px; padding-bottom: 120px; }
-  .eyebrow { display: inline-block; font-size: 14px; font-weight: 700; letter-spacing: .02em; color: #ffd2bb; margin-bottom: 18px; }
-  .hero h1 { margin: 0 0 20px; font-size: clamp(32px, 5.2vw, 54px); line-height: 1.25; letter-spacing: -.035em; font-weight: 800; }
-  .hero h1 em { font-style: normal; color: #ffb48f; }
-  .hero p.lead { margin: 0 0 32px; max-width: 620px; font-size: clamp(16px, 2vw, 19px); color: rgba(255, 255, 255, .86); }
-  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 36px; }
+  .hero .wrap { position: relative; display: flex; flex-direction: column; min-height: 700px; padding-top: 28px; padding-bottom: 150px; }
+  .hero h1, .hero p.lead { text-shadow: 0 1px 2px rgba(20, 60, 120, .12); }
+  .meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding-top: 18px; border-top: 1px solid var(--line-dark); color: var(--ink); }
+  .meta small { display: block; font-size: 13px; font-weight: 700; color: var(--ink-2); }
+  .meta b { font-size: 15px; font-weight: 700; }
+  .hero-body { margin-top: auto; padding-top: 170px; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: end; }
+  .hero h1 { margin: 0 0 18px; font-size: clamp(42px, 7vw, 86px); line-height: 1.08; letter-spacing: -.04em; font-weight: 800; color: #fff; }
+  .hero p.lead { margin: 0 0 28px; max-width: 600px; font-size: clamp(16px, 2vw, 19px); line-height: 1.6; color: rgba(255, 255, 255, .95); font-weight: 500; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    min-height: 52px; padding: 0 26px; border-radius: 12px;
+    min-height: 50px; padding: 0 22px; border-radius: 12px;
     font-size: 16px; font-weight: 700; border: 0; cursor: pointer; font-family: inherit;
-    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    transition: background .15s ease, transform .15s ease, border-color .15s ease;
   }
   .btn svg { width: 18px; height: 18px; }
   .btn:hover { transform: translateY(-1px); }
-  .btn-accent { background: var(--accent); color: #fff; box-shadow: 0 8px 20px rgba(255, 122, 61, .35); }
-  .btn-accent:hover { background: #ff6a24; }
-  .btn-ghost { background: rgba(255, 255, 255, .1); color: #fff; border: 1px solid rgba(255, 255, 255, .3); }
-  .btn-ghost:hover { background: rgba(255, 255, 255, .18); }
   .btn-navy { background: var(--navy); color: #fff; }
-  .btn-navy:hover { background: var(--navy-deep); }
-  .btn-light { background: #fff; color: var(--navy); border: 1px solid var(--line); }
-  .btn-light:hover { border-color: var(--navy); }
-  .badges { display: flex; flex-wrap: wrap; gap: 10px; padding: 0; margin: 0; list-style: none; }
-  .badges li {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 8px 14px; border-radius: 999px; font-size: 14px; font-weight: 600;
-    background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .18);
-  }
-  .badges svg { width: 16px; height: 16px; color: #8fe3b0; }
+  .btn-navy:hover { background: var(--teal); }
+  .btn-blue { background: var(--blue); color: #fff; }
+  .btn-blue:hover { background: #1b64da; }
+  .btn-white { background: #fff; color: var(--navy); }
+  .btn-white:hover { background: #f0f6ff; }
+  .btn-line { background: transparent; color: var(--navy); border: 1px solid var(--line); }
+  .btn-line:hover { border-color: var(--navy); }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 0; margin: 0; list-style: none; font-size: 14px; font-weight: 600; color: #fff; }
+  .badges li { display: inline-flex; align-items: center; gap: 6px; }
+  .badges svg { width: 16px; height: 16px; }
+  .hero-symbol { width: 150px; height: auto; opacity: .95; }
 
   /* ---------- 바로가기 ---------- */
-  .shortcuts { position: relative; margin-top: -64px; z-index: 2; }
-  .shortcut-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .shortcuts { position: relative; margin-top: -88px; z-index: 2; }
+  .shortcut-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .shortcut {
-    display: flex; align-items: center; gap: 20px;
-    padding: 26px 28px; border-radius: 20px; background: #fff;
-    border: 1px solid var(--line); box-shadow: var(--shadow);
-    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    display: flex; align-items: center; gap: 18px;
+    padding: 24px 26px; border-radius: 14px; background: #fff;
+    border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(25, 31, 40, .08);
+    transition: border-color .15s ease, transform .15s ease;
   }
-  .shortcut:not(.is-pending):hover { transform: translateY(-3px); border-color: #c9d4ee; box-shadow: 0 2px 4px rgba(16, 30, 70, .06), 0 16px 36px rgba(16, 30, 70, .12); }
+  .shortcut:not(.is-pending):hover { transform: translateY(-2px); border-color: var(--navy); }
   .shortcut.is-pending { opacity: 1; }
-  .shortcut-icon { flex: none; width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center; }
-  .shortcut-icon svg { width: 30px; height: 30px; }
-  .shortcut.s1 .shortcut-icon { background: var(--blue-soft); color: var(--blue); }
-  .shortcut.s2 .shortcut-icon { background: #e6f8ee; color: #03a24b; }
+  .shortcut-icon { flex: none; width: 56px; height: 56px; border-radius: 12px; display: grid; place-items: center; background: var(--bg-2); color: var(--navy); }
+  .shortcut-icon svg { width: 28px; height: 28px; }
   .shortcut-body { flex: 1; min-width: 0; }
   .shortcut-label { font-size: 13px; font-weight: 700; color: var(--ink-3); }
-  .shortcut-title { font-size: 22px; font-weight: 800; letter-spacing: -.02em; color: var(--ink); margin: 2px 0 4px; }
-  .shortcut-desc { font-size: 15px; color: var(--ink-2); margin: 0; }
-  .shortcut-arrow { flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--bg-2); display: grid; place-items: center; color: var(--navy); }
-  .shortcut-arrow svg { width: 18px; height: 18px; }
+  .shortcut-title { font-size: 21px; font-weight: 800; letter-spacing: -.02em; color: var(--ink); margin: 1px 0 3px; }
+  .shortcut-desc { font-size: 14px; color: var(--ink-2); margin: 0; }
+  .shortcut-arrow { flex: none; color: var(--navy); }
+  .shortcut-arrow svg { width: 20px; height: 20px; }
   .is-pending .shortcut-arrow { display: none; }
-  .soon { display: none; font-size: 12px; font-weight: 700; color: #e2611f; background: var(--accent-soft); padding: 3px 9px; border-radius: 999px; margin-left: 6px; vertical-align: middle; }
+  .soon { display: none; font-size: 12px; font-weight: 700; color: var(--ink-3); background: var(--bg-2); padding: 3px 9px; border-radius: 6px; margin-left: 8px; vertical-align: middle; }
   .is-pending .soon { display: inline-block; }
+  .is-pending .shortcut-title, .is-pending .shortcut-icon { opacity: .5; }
 
-  /* ---------- 공통 섹션 ---------- */
-  section.block { padding: 104px 0; }
+  /* ---------- 공통 섹션: 리포트 본문처럼 ---------- */
+  section.block { padding: 110px 0; }
   section.alt { background: var(--bg-2); }
-  .section-head { max-width: 680px; margin-bottom: 48px; }
-  .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
-  .kicker { font-size: 14px; font-weight: 800; color: var(--blue); letter-spacing: .04em; margin-bottom: 10px; }
-  .section-head h2 { margin: 0 0 14px; font-size: clamp(28px, 3.6vw, 38px); line-height: 1.3; letter-spacing: -.03em; font-weight: 800; }
+  .section-head { max-width: 720px; margin-bottom: 44px; }
+  .part { font-size: 15px; font-weight: 500; color: var(--ink-3); margin-bottom: 14px; }
+  .section-head h2 { margin: 0 0 16px; font-size: clamp(30px, 4vw, 42px); line-height: 1.25; letter-spacing: -.035em; font-weight: 800; }
   .section-head p { margin: 0; font-size: 17px; color: var(--ink-2); }
+  .lead-blue { color: var(--blue); font-weight: 600; }
+
+  /* 리포트의 [Data-n] 상자 */
+  .data { border-top: 1px solid var(--line-dark); border-bottom: 1px solid var(--line-dark); padding: 12px 0 10px; }
+  .data-label { font-size: 14px; font-weight: 700; margin: 0 0 14px; }
+  .data-source { font-size: 13px; color: var(--ink-3); margin: 12px 0 0; }
 
   /* ---------- 교육원 소개 ---------- */
-  .about-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: start; }
-  .about-text p { margin: 0 0 18px; font-size: 17px; color: var(--ink-2); }
-  .about-text strong { color: var(--ink); }
-  .about-sign { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 15px; color: var(--ink-3); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .about-text p { margin: 0 0 18px; font-size: 17px; color: var(--ink); line-height: 1.8; }
+  .about-text p.quiet { color: var(--ink-2); }
+  .about-text strong { font-weight: 700; }
+  .about-sign { margin-top: 26px; font-size: 15px; color: var(--ink-3); }
   .about-sign b { color: var(--ink); font-size: 17px; margin-left: 6px; }
   .brochure-card {
-    margin-top: 22px; display: flex; align-items: center; gap: 14px;
-    padding: 16px 18px; border-radius: 14px; background: var(--blue-soft); color: var(--navy);
-    border: 1px solid #d5dff7; transition: border-color .15s ease, background .15s ease;
+    margin-top: 22px; display: inline-flex; align-items: center; gap: 14px;
+    padding: 14px 20px 14px 16px; border-radius: 12px; background: var(--blue-soft); color: var(--navy);
+    transition: background .15s ease;
   }
-  .brochure-card:hover { border-color: var(--blue); background: #e1e9fb; }
-  .brochure-card svg { width: 26px; height: 26px; flex: none; }
-  .brochure-card b { display: block; font-size: 16px; }
+  .brochure-card:hover { background: #d9eaff; }
+  .brochure-card svg { width: 26px; height: 26px; flex: none; color: var(--blue); }
+  .brochure-card b { display: block; font-size: 15px; }
   .brochure-card small { font-size: 13px; color: var(--ink-2); }
-  .points { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .point { padding: 24px; border-radius: var(--radius); background: var(--bg-2); border: 1px solid var(--line); }
-  .point-num { font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 8px; }
-  .point h3 { margin: 0 0 8px; font-size: 18px; letter-spacing: -.02em; }
+  .points { display: grid; gap: 0; border-top: 1px solid var(--line-dark); }
+  .point { display: grid; grid-template-columns: 54px 1fr; gap: 12px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .point-num { font-size: 14px; font-weight: 700; color: var(--blue); padding-top: 3px; }
+  .point h3 { margin: 0 0 6px; font-size: 18px; letter-spacing: -.02em; }
   .point p { margin: 0; font-size: 15px; color: var(--ink-2); }
 
-  .stats {
-    margin-top: 72px;
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    border-radius: 20px; background: var(--navy); color: #fff; overflow: hidden;
-  }
-  .stat { padding: 30px 28px; }
-  .stat + .stat { border-left: 1px solid rgba(255, 255, 255, .14); }
-  .stat-num { font-size: 40px; font-weight: 800; letter-spacing: -.03em; line-height: 1.1; }
-  .stat-num small { font-size: 22px; margin-left: 2px; }
-  .stat-label { margin-top: 8px; font-size: 15px; color: rgba(255, 255, 255, .8); }
-  .stats-note { grid-column: 1 / -1; padding: 12px 28px; font-size: 13px; color: rgba(255, 255, 255, .6); background: rgba(0, 0, 0, .14); }
+  .stats { margin-top: 80px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .stat { padding: 10px 0 6px; }
+  .stat-num { font-size: 52px; font-weight: 800; letter-spacing: -.04em; line-height: 1; color: var(--navy); }
+  .stat-num small { font-size: 24px; margin-left: 3px; font-weight: 700; }
+  .stat-label { margin-top: 10px; font-size: 15px; color: var(--ink-2); }
 
   /* ---------- 교육 분야 ---------- */
-  .fields { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-  .field {
-    position: relative; padding: 32px; border-radius: 20px; background: #fff;
-    border: 1px solid var(--line); box-shadow: 0 1px 2px rgba(16, 30, 70, .04);
-  }
+  .fields { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .field { padding: 30px; border-radius: 14px; background: #fff; border: 1px solid var(--line); }
   .field-top { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
-  .field-icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; }
-  .field-icon svg { width: 26px; height: 26px; }
+  .field-icon { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; background: var(--blue-soft); color: var(--navy); }
+  .field-icon svg { width: 24px; height: 24px; }
   .field h3 { margin: 0; font-size: 22px; letter-spacing: -.02em; }
-  .field-en { font-size: 13px; font-weight: 700; color: var(--ink-3); }
-  .field > p { margin: 0 0 18px; color: var(--ink-2); font-size: 16px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
-  .tags li { padding: 6px 12px; border-radius: 8px; font-size: 14px; font-weight: 600; }
-  .f-ai .field-icon { background: #ebe9ff; color: #5b4bdb; }
-  .f-ai .tags li { background: #f3f2ff; color: #4b3dc4; }
-  .f-career .field-icon { background: var(--blue-soft); color: var(--blue); }
-  .f-career .tags li { background: #f1f5fe; color: #1d47b3; }
-  .f-job .field-icon { background: #e4f6ee; color: #12895a; }
-  .f-job .tags li { background: #eff9f4; color: #0f7a50; }
-  .f-startup .field-icon { background: var(--accent-soft); color: #e2611f; }
-  .f-startup .tags li { background: #fff6f1; color: #c8501a; }
-  .field-wide {
-    grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center;
-    background: linear-gradient(120deg, #0d1f47, #1b3f93); color: #fff; border: 0;
-  }
-  .field-wide .field-icon { background: rgba(255, 255, 255, .12); color: #ffb48f; }
+  .field-en { font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--ink-3); }
+  .field > p { margin: 0 0 16px; color: var(--ink-2); font-size: 16px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; list-style: none; }
+  .tags li { padding: 5px 11px; border-radius: 6px; font-size: 13px; font-weight: 600; background: var(--bg-2); color: var(--ink-2); }
+  .field-wide { grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center; background: var(--navy); color: #fff; border: 0; }
+  .field-wide .field-icon { background: rgba(255, 255, 255, .12); color: #fff; }
   .field-wide h3 { color: #fff; }
-  .field-wide p { margin: 4px 0 0; color: rgba(255, 255, 255, .8); }
+  .field-wide .field-en { color: rgba(255, 255, 255, .6); }
+  .field-wide p { margin: 4px 0 0; color: rgba(255, 255, 255, .82); }
   .field-wide .tags li { background: rgba(255, 255, 255, .12); color: #fff; }
-  .formats { margin-top: 40px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 14px; color: var(--ink-2); font-size: 15px; }
+  .formats { margin-top: 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; color: var(--ink-2); font-size: 15px; }
   .formats b { color: var(--ink); margin-right: 4px; }
-  .formats span { padding: 8px 16px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font-weight: 700; color: var(--navy); }
+  .formats span { padding: 7px 14px; border-radius: 8px; background: #fff; border: 1px solid var(--line); font-weight: 700; color: var(--navy); }
 
   /* ---------- 활동 사진 ---------- */
-  .gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-  .gallery figure {
-    margin: 0; position: relative; border-radius: 14px; overflow: hidden; aspect-ratio: 4 / 3;
-    background: var(--bg-2); cursor: zoom-in; border: 1px solid var(--line);
-  }
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 20px; }
+  .gallery figure { margin: 0; cursor: zoom-in; }
+  .gallery .pic { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 8px; background: var(--bg-2); }
   .gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform .25s ease; }
-  .gallery figure:hover img { transform: scale(1.04); }
-  .gallery figcaption {
-    position: absolute; left: 0; right: 0; bottom: 0; padding: 28px 14px 12px;
-    color: #fff; font-size: 14px; font-weight: 600; line-height: 1.4;
-    background: linear-gradient(transparent, rgba(5, 10, 30, .72));
-  }
+  .gallery figure:hover img { transform: scale(1.03); }
+  .gallery .data-label { margin: 0 0 10px; }
   .lightbox { border: 0; padding: 0; background: transparent; max-width: 96vw; }
-  .lightbox::backdrop { background: rgba(5, 10, 30, .92); }
-  .lightbox img { max-width: 96vw; max-height: 84vh; border-radius: 12px; margin: 0 auto; }
+  .lightbox::backdrop { background: rgba(25, 31, 40, .94); }
+  .lightbox img { max-width: 96vw; max-height: 84vh; border-radius: 8px; margin: 0 auto; }
   .lightbox figcaption { color: #fff; text-align: center; margin-top: 12px; font-size: 15px; }
-  .lightbox .close {
-    position: fixed; top: 16px; right: 16px; width: 44px; height: 44px; border-radius: 50%;
-    border: 0; background: rgba(255, 255, 255, .15); color: #fff; font-size: 24px; cursor: pointer;
-  }
+  .lightbox .close { position: fixed; top: 16px; right: 16px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .15); color: #fff; font-size: 24px; cursor: pointer; }
 
   /* ---------- 진행 절차 ---------- */
-  .steps { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; padding: 0; margin: 0; list-style: none; counter-reset: step; }
-  .steps li { position: relative; padding: 22px 18px; border-radius: var(--radius); background: #fff; border: 1px solid var(--line); counter-increment: step; }
-  .steps li::before { content: counter(step, decimal-leading-zero); display: block; font-size: 13px; font-weight: 800; color: var(--blue); margin-bottom: 8px; }
-  .steps b { display: block; font-size: 17px; margin-bottom: 4px; letter-spacing: -.02em; }
+  .steps { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; padding: 0; margin: 0; list-style: none; counter-reset: step; border-top: 1px solid var(--line-dark); }
+  .steps li { padding: 22px 18px 22px 0; border-bottom: 1px solid var(--line); counter-increment: step; }
+  .steps li::before { content: counter(step, decimal-leading-zero); display: block; font-size: 13px; font-weight: 700; color: var(--blue); margin-bottom: 10px; }
+  .steps b { display: block; font-size: 18px; margin-bottom: 6px; letter-spacing: -.02em; }
   .steps span { font-size: 14px; color: var(--ink-2); line-height: 1.55; display: block; }
 
   /* ---------- 문의 ---------- */
-  .contact-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 40px; align-items: start; }
-  .contact-info { padding: 36px; border-radius: 20px; background: var(--navy); color: #fff; position: sticky; top: 96px; }
-  .contact-info h3 { margin: 0 0 8px; font-size: 22px; }
-  .contact-info > p { margin: 0 0 28px; color: rgba(255, 255, 255, .78); font-size: 15px; }
-  .info-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
-  .info-list li { display: flex; gap: 14px; align-items: flex-start; }
-  .info-icon { flex: none; width: 40px; height: 40px; border-radius: 12px; background: rgba(255, 255, 255, .1); display: grid; place-items: center; color: #ffb48f; }
-  .info-icon svg { width: 20px; height: 20px; }
-  .info-list small { display: block; font-size: 13px; color: rgba(255, 255, 255, .6); }
-  .info-list a { font-size: 17px; font-weight: 700; color: #fff; }
-  .info-list a.addr { font-size: 15px; font-weight: 600; }
+  .contact-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 48px; align-items: start; }
+  .contact-info { position: sticky; top: 100px; }
+  .contact-info h3 { margin: 0 0 6px; font-size: 22px; letter-spacing: -.02em; }
+  .contact-info > p { margin: 0 0 26px; color: var(--ink-2); font-size: 15px; }
+  .info-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-dark); }
+  .info-list li { display: grid; grid-template-columns: 64px 1fr; gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .info-list small { font-size: 14px; color: var(--ink-3); font-weight: 600; }
+  .info-list a { font-size: 18px; font-weight: 700; color: var(--ink); }
+  .info-list a.addr { font-size: 15px; font-weight: 500; color: var(--ink-2); }
   .info-list a:hover { text-decoration: underline; text-underline-offset: 3px; }
-  .s2b-note { margin-top: 28px; padding: 16px 18px; border-radius: 12px; background: rgba(255, 255, 255, .08); font-size: 14px; color: rgba(255, 255, 255, .85); }
-  .s2b-note b { color: #fff; }
+  .s2b-note { margin-top: 24px; padding: 16px 18px; border-radius: 10px; background: var(--blue-soft); font-size: 14px; color: var(--ink-2); }
+  .s2b-note b { color: var(--navy); }
 
-  .form { padding: 36px; border-radius: 20px; background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); }
+  .form { padding: 36px; border-radius: 14px; background: #fff; border: 1px solid var(--line); }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .fg { margin-bottom: 18px; }
   .fg > label, .fg > .lbl { display: block; font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--ink); }
-  .req { color: var(--accent); margin-left: 2px; }
+  .req { color: var(--blue); margin-left: 2px; }
   .opt { color: var(--ink-3); font-weight: 500; margin-left: 4px; font-size: 13px; }
   input[type=text], input[type=tel], input[type=email], textarea {
-    width: 100%; padding: 13px 14px; border-radius: 10px; border: 1px solid #d4dae6; background: #fff;
+    width: 100%; padding: 13px 14px; border-radius: 10px; border: 1px solid #d1d6db; background: #fff;
     font: inherit; font-size: 16px; color: var(--ink); transition: border-color .15s ease, box-shadow .15s ease;
   }
   textarea { min-height: 130px; resize: vertical; }
-  input:focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(36, 87, 214, .15); }
+  input:focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(49, 130, 246, .18); }
   .checks { display: flex; flex-wrap: wrap; gap: 8px; }
   .check { position: relative; }
   .check input { position: absolute; opacity: 0; inset: 0; cursor: pointer; margin: 0; }
-  .check span {
-    display: inline-block; padding: 9px 15px; border-radius: 999px; border: 1px solid #d4dae6;
-    font-size: 15px; font-weight: 600; color: var(--ink-2); background: #fff; transition: all .12s ease;
-  }
+  .check span { display: inline-block; padding: 9px 14px; border-radius: 8px; border: 1px solid #d1d6db; font-size: 15px; font-weight: 600; color: var(--ink-2); background: #fff; transition: all .12s ease; }
   .check input:checked + span { background: var(--navy); border-color: var(--navy); color: #fff; }
-  .check input:focus-visible + span { box-shadow: 0 0 0 3px rgba(36, 87, 214, .25); }
-  .consent { margin: 6px 0 22px; padding: 16px 18px; border-radius: 12px; background: var(--bg-2); border: 1px solid var(--line); font-size: 14px; color: var(--ink-2); }
+  .check input:focus-visible + span { box-shadow: 0 0 0 3px rgba(49, 130, 246, .3); }
+  .consent { margin: 6px 0 22px; padding: 16px 18px; border-radius: 10px; background: var(--bg-2); font-size: 14px; color: var(--ink-2); }
   .consent label { display: flex; gap: 10px; align-items: center; font-weight: 700; color: var(--ink); cursor: pointer; }
   .consent input { width: 18px; height: 18px; accent-color: var(--navy); }
   .consent details { margin-top: 8px; }
@@ -292,37 +258,32 @@
   .form .btn { width: 100%; }
   .hp { position: absolute; left: -9999px; }
   .form-msg { display: none; margin-top: 16px; padding: 14px 16px; border-radius: 10px; font-size: 15px; }
-  .form-msg.ok { display: block; background: #e8f7ef; color: #0f6b45; }
+  .form-msg.ok { display: block; background: #e6f6ee; color: #0f6b45; }
   .form-msg.err { display: block; background: #fdecec; color: #a62323; }
 
-  /* ---------- 하단 ---------- */
-  .footer { background: #0b1736; color: rgba(255, 255, 255, .7); padding: 56px 0 40px; font-size: 14px; }
-  .footer-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 28px; padding-bottom: 28px; border-bottom: 1px solid rgba(255, 255, 255, .1); }
-  .footer .brand { color: #fff; }
+  /* ---------- 하단: 로고 청록 배경판 ---------- */
+  .footer { background: var(--teal); color: rgba(255, 255, 255, .72); padding: 60px 0 44px; font-size: 14px; }
+  .footer-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 28px; padding-bottom: 32px; border-bottom: 1px solid rgba(255, 255, 255, .14); }
+  .footer-logo { height: 52px; width: auto; }
   .footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
-  .footer-links { display: flex; flex-wrap: wrap; gap: 10px; }
-  .footer-links a { padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .2); color: #fff; font-weight: 600; }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .footer-links a { padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, .22); color: #fff; font-weight: 600; }
   .footer-links a:not(.is-pending):hover { background: rgba(255, 255, 255, .08); }
-  .social { display: flex; flex-wrap: wrap; gap: 10px; }
-  .social a {
-    display: inline-flex; align-items: center; gap: 9px; padding: 6px 16px 6px 6px; border-radius: 999px;
-    background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .14); color: #fff; font-weight: 700; font-size: 14px;
-    transition: background .15s ease, transform .15s ease;
-  }
-  .social a:not(.is-pending):hover { background: rgba(255, 255, 255, .14); transform: translateY(-1px); }
+  .social { display: flex; flex-wrap: wrap; gap: 8px; }
+  .social a { display: inline-flex; align-items: center; gap: 9px; padding: 6px 16px 6px 6px; border-radius: 999px; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .14); color: #fff; font-weight: 700; font-size: 14px; transition: background .15s ease; }
+  .social a:not(.is-pending):hover { background: rgba(255, 255, 255, .16); }
   .social .ic { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; color: #fff; }
   .social .ic svg { width: 17px; height: 17px; }
   .social .blog .ic { background: #03c75a; }
   .social .yt .ic { background: #ff0033; }
-  .footer-info { margin-top: 24px; line-height: 1.9; }
+  .footer-info { margin-top: 26px; line-height: 1.9; }
   .footer-info span { display: inline-block; margin-right: 16px; }
-  .footer-copy { margin-top: 16px; color: rgba(255, 255, 255, .45); font-size: 13px; }
+  .footer-copy { margin-top: 14px; color: rgba(255, 255, 255, .42); font-size: 13px; }
 
   /* ---------- 화면 크기별 ---------- */
   @media (max-width: 1080px) {
     .header-links { display: none; }
     .steps { grid-template-columns: repeat(3, 1fr); }
-    .gallery { grid-template-columns: repeat(3, 1fr); }
   }
   @media (max-width: 900px) {
     .about-grid, .contact-grid { grid-template-columns: 1fr; }
@@ -330,36 +291,40 @@
     .field-wide { grid-template-columns: auto 1fr; }
     .field-wide .tags { grid-column: 1 / -1; }
     .footer-right { align-items: flex-start; }
+    .hero-symbol { width: 110px; }
   }
   @media (max-width: 760px) {
     html { scroll-padding-top: 64px; }
-    .header .wrap { height: 60px; }
+    .header .wrap { height: 62px; }
+    .brand img { height: 34px; }
     .menu-btn { display: block; }
-    .nav {
-      display: none; position: absolute; top: 60px; left: 0; right: 0;
-      flex-direction: column; gap: 0; padding: 8px 16px 16px; background: #fff; border-bottom: 1px solid var(--line);
-      box-shadow: 0 12px 24px rgba(16, 30, 70, .08);
-    }
+    .nav { display: none; position: absolute; top: 62px; left: 0; right: 0; flex-direction: column; gap: 0; padding: 8px 16px 16px; background: #fff; border-bottom: 1px solid var(--line); box-shadow: 0 12px 24px rgba(25, 31, 40, .08); }
     .nav.open { display: flex; }
     .nav a { padding: 14px 8px; font-size: 16px; border-radius: 0; border-bottom: 1px solid var(--line); }
     .nav .nav-ext { display: flex; gap: 8px; padding-top: 14px; }
     .nav .nav-ext a { flex: 1; text-align: center; border: 1px solid var(--line); border-radius: 10px; padding: 12px; color: var(--navy); }
     .wrap { padding: 0 16px; }
-    .hero .wrap { padding-top: 56px; padding-bottom: 104px; }
-    .shortcut-grid, .fields, .points, .form-row { grid-template-columns: 1fr; }
+    .hero .wrap { min-height: 0; padding-top: 20px; padding-bottom: 120px; }
+    .meta { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .meta .meta-wide { grid-column: 1 / -1; }
+    .hero-body { grid-template-columns: 1fr; padding-top: 120px; }
+    .hero-symbol { display: none; }
+    .shortcuts { margin-top: -72px; }
+    .shortcut-grid, .fields, .form-row { grid-template-columns: 1fr; }
     .form-row { gap: 0; }
     .shortcut { padding: 20px; gap: 14px; }
-    .shortcut-icon { width: 50px; height: 50px; }
+    .shortcut-icon { width: 48px; height: 48px; }
     .shortcut-title { font-size: 19px; }
-    .shortcut-desc { font-size: 14px; }
     section.block { padding: 72px 0; }
-    .stats { grid-template-columns: 1fr; margin-top: 48px; }
-    .stat + .stat { border-left: 0; border-top: 1px solid rgba(255, 255, 255, .14); }
-    .stat { padding: 22px 24px; }
-    .steps { grid-template-columns: 1fr 1fr; }
-    .gallery { grid-template-columns: 1fr 1fr; gap: 10px; }
-    .field, .form, .contact-info { padding: 24px; }
+    .stat-grid { grid-template-columns: 1fr; gap: 0; }
+    .stat { padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .stat:last-child { border-bottom: 0; }
+    .stat-num { font-size: 44px; }
+    .steps { grid-template-columns: 1fr 1fr; gap: 0 16px; }
+    .gallery { grid-template-columns: 1fr 1fr; gap: 22px 12px; }
+    .field, .form { padding: 22px; }
     .field-wide { grid-template-columns: 1fr; }
+    .footer-logo { height: 44px; }
   }
   @media (min-width: 761px) { .nav .nav-ext { display: none; } }
   @media (prefers-reduced-motion: reduce) {
@@ -374,8 +339,7 @@
 <header class="header">
   <div class="wrap">
     <a href="#top" class="brand" aria-label="한국엑스퍼트교육원 처음으로">
-      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#14306b"/><path d="M18 46V18h22v6H25v5h13v6H25v5h15v6z" fill="#fff"/><circle cx="47" cy="43" r="4" fill="#ff7a3d"/></svg>
-      한국엑스퍼트교육원
+      <img src="/static/logo-h.png" alt="한국엑스퍼트교육원 KOREAN EXPERT EDUCATION INSTITUTE" width="1400" height="344">
     </a>
     <button class="menu-btn" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -403,31 +367,40 @@
   <!-- 첫 화면 -->
   <section class="hero">
     <div class="wrap">
-      <span class="eyebrow">부산 · 울산 · 경남 학교와 기관을 찾아가는 교육</span>
-      <h1>배움이 <em>진로</em>가 되는 교육,<br>한국엑스퍼트교육원</h1>
-      <p class="lead">AI 교육부터 취업·진로, 직업체험, 창업까지. 학교와 기관의 일정·예산·대상에 맞춰 수업을 설계하고, 강사 배치부터 결과보고서까지 교육원이 함께 운영합니다.</p>
-      <div class="cta-row">
-        <a href="#contact" class="btn btn-accent">교육 문의하기</a>
-        <a href="#fields" class="btn btn-ghost">교육 분야 보기</a>
-        {% if brochure %}
-        <a href="/brochure.pdf" class="btn btn-ghost" download>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-          회사소개서 받기
-        </a>
-        {% endif %}
+      <div class="meta">
+        <div><small>Institute</small><b>한국엑스퍼트교육원</b></div>
+        <div><small>Director</small><b>대표 박서현</b></div>
+        <div class="meta-wide"><small>Area</small><b>부산 · 울산 · 경남</b></div>
       </div>
-      <ul class="badges">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>S2B 학교장터 등록 업체</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>초·중·고 운영</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>결과보고서 · 수료증 제공</li>
-      </ul>
+      <div class="hero-body">
+        <div>
+          <h1>배움이<br>진로가 되는 교육</h1>
+          <p class="lead">AI 교육부터 취업·진로, 직업체험, 창업까지. 학교와 기관의 일정·예산·대상에 맞춰 수업을 설계하고, 강사 배치부터 결과보고서까지 교육원이 함께 운영합니다.</p>
+          <div class="cta-row">
+            <a href="#contact" class="btn btn-navy">교육 문의하기</a>
+            <a href="#fields" class="btn btn-white">교육 분야 보기</a>
+            {% if brochure %}
+            <a href="/brochure.pdf" class="btn btn-white" download>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+              회사소개서 받기
+            </a>
+            {% endif %}
+          </div>
+          <ul class="badges">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>S2B 학교장터 등록 업체</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>초·중·고 운영</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>결과보고서 · 수료증 제공</li>
+          </ul>
+        </div>
+        <img class="hero-symbol" src="/static/symbol-white.png" alt="" width="512" height="603">
+      </div>
     </div>
   </section>
 
   <!-- 바로가기 -->
   <section class="shortcuts" aria-label="바로가기">
     <div class="wrap shortcut-grid">
-      {% call ext(site.links.gangsaitda, 'shortcut s1') %}
+      {% call ext(site.links.gangsaitda, 'shortcut') %}
         <div class="shortcut-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="16" r="3"/><path d="M10.5 10.5l3 3"/><path d="M3 21c0-2.5 2-4.5 5-4.5M21 3c0 2.5-2 4.5-5 4.5"/></svg>
         </div>
@@ -438,7 +411,7 @@
         </div>
         <div class="shortcut-arrow">{{ arrow }}</div>
       {% endcall %}
-      {% call ext(site.links.gyoannote, 'shortcut s2') %}
+      {% call ext(site.links.gyoannote, 'shortcut') %}
         <div class="shortcut-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
         </div>
@@ -452,18 +425,19 @@
     </div>
   </section>
 
-  <!-- 한국엑스퍼트교육원이란 -->
+  <!-- 1. 한국엑스퍼트교육원이란 -->
   <section class="block" id="about">
     <div class="wrap">
       <div class="about-grid">
         <div>
           <div class="section-head" style="margin-bottom:28px">
-            <div class="kicker">ABOUT</div>
-            <h2>한국엑스퍼트교육원이란</h2>
+            <div class="part">Part 1.</div>
+            <h2>1. 한국엑스퍼트교육원이란</h2>
           </div>
           <div class="about-text">
             <p>한국엑스퍼트교육원은 부산에 자리한 교육 전문 기관입니다. 학생들이 자신의 강점을 발견하고 미래를 준비할 수 있도록 <strong>AI · 취업·진로 · 직업체험 · 창업</strong> 교육을 기획하고 운영합니다.</p>
-            <p>학교와 기관은 원하는 주제만 정해 주시면 됩니다. 차시 구성과 강사 배치, 교재·활동지와 실습 재료, 운영 후 결과보고서까지 <strong>교육원이 수업 운영을 맡아</strong> 진행합니다.</p>
+            <p class="lead-blue">학교와 기관은 원하는 주제만 정해 주시면 됩니다.</p>
+            <p class="quiet">차시 구성과 강사 배치, 교재·활동지와 실습 재료, 운영 후 결과보고서까지 <strong>교육원이 수업 운영을 맡아</strong> 진행합니다.</p>
             <div class="about-sign">한국엑스퍼트교육원 대표<b>박서현</b></div>
             {% if brochure %}
             <a class="brochure-card" href="/brochure.pdf" download>
@@ -476,56 +450,55 @@
         <div class="points">
           <div class="point">
             <div class="point-num">01</div>
-            <h3>학교에 맞춘 설계</h3>
-            <p>예산·일정·교육과정에 맞춰 차시 수, 대상 반, 내용을 조정합니다. 2차시 단축형이나 학년 전체 동시 운영도 가능합니다.</p>
+            <div><h3>학교에 맞춘 설계</h3><p>예산·일정·교육과정에 맞춰 차시 수, 대상 반, 내용을 조정합니다. 2차시 단축형이나 학년 전체 동시 운영도 가능합니다.</p></div>
           </div>
           <div class="point">
             <div class="point-num">02</div>
-            <h3>반마다 전담 강사</h3>
-            <p>반마다 강사 1명이 들어가 모둠 활동과 실습 중심으로 수업합니다.</p>
+            <div><h3>반마다 전담 강사</h3><p>반마다 강사 1명이 들어가 모둠 활동과 실습 중심으로 수업합니다.</p></div>
           </div>
           <div class="point">
             <div class="point-num">03</div>
-            <h3>준비부터 마무리까지</h3>
-            <p>교재·활동지와 기본 실습 재료를 준비하고, 운영 후 사진과 만족도 결과를 담은 결과보고서와 학생별 수료증을 드립니다.</p>
+            <div><h3>준비부터 마무리까지</h3><p>교재·활동지와 기본 실습 재료를 준비하고, 운영 후 사진과 만족도 결과를 담은 결과보고서와 학생별 수료증을 드립니다.</p></div>
           </div>
           <div class="point">
             <div class="point-num">04</div>
-            <h3>S2B 학교장터 계약</h3>
-            <p>S2B 학교장터 등록 업체입니다. 2천만원 이하 교육은 학교에서 S2B로 바로 견적을 요청하고 계약하실 수 있습니다.</p>
+            <div><h3>S2B 학교장터 계약</h3><p>S2B 학교장터 등록 업체입니다. 2천만원 이하 교육은 학교에서 S2B로 바로 견적을 요청하고 계약하실 수 있습니다.</p></div>
           </div>
         </div>
       </div>
 
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-num">79<small>%</small></div>
-          <div class="stat-label">“다시 참여하고 싶다”</div>
+      <div class="stats data">
+        <p class="data-label">[Data-1] 캠프 참여 학생 만족도</p>
+        <div class="stat-grid">
+          <div class="stat">
+            <div class="stat-num">79<small>%</small></div>
+            <div class="stat-label">“다시 참여하고 싶다”</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">76<small>%</small></div>
+            <div class="stat-label">“진로·관심사를 찾는 데 도움이 됐다”</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">113<small>명</small></div>
+            <div class="stat-label">설문 응답 학생 수</div>
+          </div>
         </div>
-        <div class="stat">
-          <div class="stat-num">76<small>%</small></div>
-          <div class="stat-label">“진로·관심사를 찾는 데 도움이 됐다”</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">113<small>명</small></div>
-          <div class="stat-label">캠프 참여 학생 설문 응답</div>
-        </div>
-        <div class="stats-note">2025~2026년 부산·경남 초·중·고 캠프 참여 학생 113명 설문 결과 (‘그렇다’와 ‘매우 그렇다’를 합한 비율)</div>
+        <p class="data-source">출처: 한국엑스퍼트교육원, 2025~2026년 부산·경남 초·중·고 캠프 참여 학생 설문 (‘그렇다’와 ‘매우 그렇다’를 합한 비율)</p>
       </div>
     </div>
   </section>
 
-  <!-- 교육 분야 -->
+  <!-- 2. 교육 분야 -->
   <section class="block alt" id="fields">
     <div class="wrap">
-      <div class="section-head center">
-        <div class="kicker">PROGRAMS</div>
-        <h2>교육 분야</h2>
+      <div class="section-head">
+        <div class="part">Part 2.</div>
+        <h2>2. 교육 분야</h2>
         <p>네 가지 분야를 중심으로, 대상과 목적에 맞게 프로그램을 구성합니다.</p>
       </div>
 
       <div class="fields">
-        <article class="field f-ai">
+        <article class="field">
           <div class="field-top">
             <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/><path d="M9.5 15l1.6-6h1.8l1.6 6M10.1 13h3.8"/></svg></div>
             <div><div class="field-en">AI EDUCATION</div><h3>AI 교육</h3></div>
@@ -534,7 +507,7 @@
           <ul class="tags"><li>AI 활용 실습</li><li>초·중·고 맞춤</li></ul>
         </article>
 
-        <article class="field f-career">
+        <article class="field">
           <div class="field-top">
             <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg></div>
             <div><div class="field-en">CAREER</div><h3>취업·진로</h3></div>
@@ -543,7 +516,7 @@
           <ul class="tags"><li>자기소개서</li><li>면접</li><li>스피치</li><li>이미지</li></ul>
         </article>
 
-        <article class="field f-job">
+        <article class="field">
           <div class="field-top">
             <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></div>
             <div><div class="field-en">JOB EXPERIENCE</div><h3>직업체험</h3></div>
@@ -552,7 +525,7 @@
           <ul class="tags"><li>서비스·항공·호텔</li><li>미래직업</li><li>역할·미션형</li></ul>
         </article>
 
-        <article class="field f-startup">
+        <article class="field">
           <div class="field-top">
             <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
             <div><div class="field-en">STARTUP</div><h3>창업</h3></div>
@@ -564,7 +537,7 @@
         <article class="field field-wide">
           <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
           <div>
-            <div class="field-en" style="color:rgba(255,255,255,.6)">TOURISM × AI</div>
+            <div class="field-en">TOURISM × AI</div>
             <h3>AI 투어 메이커</h3>
             <p>관광 분야 취업을 준비하는 분들을 위한 과정입니다. 여행상품을 기획하고, AI로 홍보물과 자기소개서·면접까지 준비합니다.</p>
           </div>
@@ -580,19 +553,20 @@
   </section>
 
   {% if photos %}
-  <!-- 활동 사진 -->
+  <!-- 3. 활동 사진 -->
   <section class="block" id="gallery">
     <div class="wrap">
-      <div class="section-head center">
-        <div class="kicker">GALLERY</div>
-        <h2>활동 사진</h2>
+      <div class="section-head">
+        <div class="part">Part 3.</div>
+        <h2>3. 활동 사진</h2>
         <p>교실에서 함께한 순간들입니다. 사진을 누르면 크게 볼 수 있습니다.</p>
       </div>
       <div class="gallery">
         {% for p in photos %}
-        <figure data-full="/photos/{{ p.id }}.jpg" data-caption="{{ p.caption }}" tabindex="0" role="button" aria-label="{{ p.caption or '활동 사진' }} 크게 보기">
-          <img src="/photos/{{ p.id }}_t.jpg" alt="{{ p.caption or '활동 사진' }}" loading="lazy">
-          {% if p.caption %}<figcaption>{{ p.caption }}</figcaption>{% endif %}
+        <figure class="data" data-full="/photos/{{ p.id }}.jpg" data-caption="{{ p.caption }}" tabindex="0" role="button" aria-label="{{ p.caption or '활동 사진' }} 크게 보기">
+          <p class="data-label">[활동-{{ loop.index }}] {{ p.caption or '현장 수업' }}</p>
+          <div class="pic"><img src="/photos/{{ p.id }}_t.jpg" alt="{{ p.caption or '활동 사진' }}" loading="lazy"></div>
+          <p class="data-source">출처: 한국엑스퍼트교육원</p>
         </figure>
         {% endfor %}
       </div>
@@ -608,8 +582,8 @@
   <section class="block {{ 'alt' if photos else '' }}" id="process">
     <div class="wrap">
       <div class="section-head">
-        <div class="kicker">PROCESS</div>
-        <h2>진행 절차</h2>
+        <div class="part">Part {{ 4 if photos else 3 }}.</div>
+        <h2>{{ 4 if photos else 3 }}. 진행 절차</h2>
         <p>문의부터 결과보고서까지, 담당 선생님의 일이 줄어들도록 교육원이 챙깁니다.</p>
       </div>
       <ol class="steps">
@@ -627,7 +601,7 @@
   <section class="block {{ '' if photos else 'alt' }}" id="contact">
     <div class="wrap">
       <div class="section-head">
-        <div class="kicker">CONTACT</div>
+        <div class="part">Contact.</div>
         <h2>교육 문의</h2>
         <p>아래 내용을 남겨 주시면 확인 후 연락드리겠습니다. 정해지지 않은 항목은 비워 두셔도 괜찮습니다.</p>
       </div>
@@ -637,18 +611,9 @@
           <h3>바로 연락하기</h3>
           <p>평일 낮 시간에는 전화가 가장 빠릅니다.</p>
           <ul class="info-list">
-            <li>
-              <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></div>
-              <div><small>전화</small><a href="tel:{{ site.contact.phone }}">{{ site.contact.phone }}</a></div>
-            </li>
-            <li>
-              <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></div>
-              <div><small>이메일</small><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></div>
-            </li>
-            <li>
-              <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-              <div><small>주소</small><a class="addr" href="https://map.naver.com/p/search/{{ site.contact.address | urlencode }}" target="_blank" rel="noopener">{{ site.contact.address }}</a></div>
-            </li>
+            <li><small>전화</small><a href="tel:{{ site.contact.phone }}">{{ site.contact.phone }}</a></li>
+            <li><small>이메일</small><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></li>
+            <li><small>주소</small><a class="addr" href="https://map.naver.com/p/search/{{ site.contact.address | urlencode }}" target="_blank" rel="noopener">{{ site.contact.address }}</a></li>
           </ul>
           <div class="s2b-note"><b>학교 담당 선생님께</b><br>S2B 학교장터 등록 업체라 2천만원 이하 교육은 S2B로 바로 견적 요청·계약하실 수 있습니다.</div>
         </aside>
@@ -729,7 +694,7 @@
             </details>
           </div>
 
-          <button type="submit" class="btn btn-navy">문의 보내기</button>
+          <button type="submit" class="btn btn-blue">문의 보내기</button>
           <div class="form-msg" role="status" aria-live="polite"></div>
         </form>
       </div>
@@ -741,10 +706,7 @@
 <footer class="footer">
   <div class="wrap">
     <div class="footer-top">
-      <a href="#top" class="brand">
-        <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#2457d6"/><path d="M18 46V18h22v6H25v5h13v6H25v5h15v6z" fill="#fff"/><circle cx="47" cy="43" r="4" fill="#ff7a3d"/></svg>
-        한국엑스퍼트교육원
-      </a>
+      <a href="#top"><img class="footer-logo" src="/static/logo-h-white.png" alt="한국엑스퍼트교육원" width="1400" height="343"></a>
       <div class="footer-right">
         <div class="footer-links">
           {% call ext(site.links.gangsaitda, '') %}강사잇다{% endcall %}

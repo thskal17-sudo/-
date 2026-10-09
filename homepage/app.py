@@ -22,11 +22,13 @@ from urllib.parse import quote
 
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from PIL import Image, ImageOps
 
 HERE = Path(__file__).resolve().parent
 TEMPLATES_DIR = HERE / "templates"
+STATIC_DIR = HERE / "static"  # 로고 등 고정 파일
 DEFAULT_DATA_DIR = Path(os.environ.get("HOMEPAGE_DATA", HERE / "data"))
 
 MAX_PHOTO_MB = 20
@@ -312,6 +314,7 @@ def create_app(data_dir: Path | str = DEFAULT_DATA_DIR) -> FastAPI:
     guard = LoginGuard()
     inquiry_limit = RateLimit()
     app = FastAPI(title="한국엑스퍼트교육원", docs_url=None, redoc_url=None, openapi_url=None)
+    app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
     env = Environment(loader=FileSystemLoader(TEMPLATES_DIR), autoescape=select_autoescape(["html"]))
 
     initial = os.environ.get("HOMEPAGE_ADMIN_PASSWORD")
@@ -341,6 +344,10 @@ def create_app(data_dir: Path | str = DEFAULT_DATA_DIR) -> FastAPI:
     @app.get("/", response_class=HTMLResponse)
     def index():
         return render("index.html", site=store.site(), photos=store.photos(), brochure=store.brochure())
+
+    @app.get("/favicon.ico", include_in_schema=False)
+    def favicon():
+        return FileResponse(STATIC_DIR / "favicon.png", media_type="image/png")
 
     @app.get("/photos/{name}")
     def photo(name: str):
