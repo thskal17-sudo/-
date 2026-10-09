@@ -38,7 +38,7 @@ def _png(color=(200, 40, 40), size=(2400, 1800)) -> bytes:
 
 def test_index_renders_with_defaults(client):
     html = client.get("/").text
-    assert "한국엑스퍼트교육원이란" in html
+    assert "1. 한국엑스퍼트교육원</h2>" in html
     assert 'href="https://gangsaitda.com"' in html
     assert 'href="https://smartstore.naver.com/gyoannote"' in html
     assert 'href="https://blog.naver.com/sangsangcareer"' in html
