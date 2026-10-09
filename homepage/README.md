@@ -1,6 +1,9 @@
 # 한국엑스퍼트교육원 홈페이지
 
-공개 홈페이지와 관리자 페이지가 함께 들어 있는 작은 웹 서버입니다.
+두 가지 방식으로 쓸 수 있습니다.
+
+- **서버 없이 올리기 (지금 쓰는 방식):** `docs/` 폴더가 완성된 홈페이지입니다. GitHub Pages 같은 무료 정적 호스팅에 그대로 올리면 되고, 문의창은 Formspree 를 거쳐 메일로 옵니다. 아래 '서버 없이 올리기' 참고.
+- **서버에 올리기:** 관리자 페이지(사진·소개서 올리기, 문의 내역, 카톡 알림)까지 쓰려면 Python 서버 한 대가 필요합니다. 아래 '관리자 페이지' 이후 참고.
 
 | 주소 | 무엇 |
 |---|---|
@@ -48,7 +51,20 @@ http://localhost:8080/admin 이 관리자 페이지입니다.
 카카오 토큰은 `data/kakao.json` 에 두고 만료 전에 자동 갱신합니다. 두 달 넘게 문의가 하나도 없으면 연결이 끊길 수 있으니 그때는 '다시 연결'을 누르면 됩니다.
 알림 설정 값은 서버 환경변수 `HOMEPAGE_SMTP_USER`, `HOMEPAGE_SMTP_PASS`, `HOMEPAGE_NOTIFY_EMAIL`, `HOMEPAGE_KAKAO_REST_KEY`, `HOMEPAGE_BASE_URL` 로도 넣을 수 있습니다 (환경변수가 우선).
 
-## 인터넷에 올리기
+## 서버 없이 올리기 (GitHub Pages + Formspree)
+
+`docs/` 폴더는 `python homepage/build_static.py` 가 만든 결과물입니다. 관리자 페이지 없이 홈페이지 한 장만 들어 있고,
+사진·소개서는 `homepage/site_content/` 에 있는 파일을 씁니다.
+
+- **처음 켜기 (한 번만):** GitHub 저장소 → Settings → Pages → Build and deployment 의 Source 를 **Deploy from a branch**,
+  Branch 를 이 브랜치와 **/docs** 로 고르고 Save. 1~2분 뒤 `https://<계정>.github.io/<저장소>/` 에서 열립니다.
+- **문의창:** `https://formspree.io/f/xwlvodan` 으로 보내고, Formspree 가 등록된 메일(koexpert@naver.com)로 전달합니다.
+  무료 요금제는 한 달 50건까지입니다. 양식 주소를 바꾸려면 `build_static.py` 의 `FORM_ENDPOINT` 를 고치고 다시 만듭니다.
+- **내용 고치기:** 글은 `homepage/templates/index.html`, 사진은 `homepage/site_content/photos/` + `photos.json`,
+  소개서는 `homepage/site_content/brochure.pdf` 를 바꾼 뒤 `python homepage/build_static.py` 를 다시 실행하고 커밋합니다.
+- **도메인 연결:** Settings → Pages → Custom domain 에 산 도메인을 넣고, 도메인 업체에서 안내대로 DNS 를 잡습니다.
+
+## 서버에 올리기
 
 Python 이 도는 서버 한 대면 됩니다. 가장 쉬운 길은 [Render](https://render.com) 나
 [Railway](https://railway.app) 같은 서비스에 이 폴더를 올리고 실행 명령을 `python app.py` 로 두는 것입니다.
@@ -68,5 +84,5 @@ Python 이 도는 서버 한 대면 됩니다. 가장 쉬운 길은 [Render](htt
 
 ```bash
 pip install -r homepage/requirements.txt pytest httpx
-pytest tests/test_homepage.py
+pytest tests/test_homepage.py tests/test_homepage_notify.py tests/test_build_static.py
 ```

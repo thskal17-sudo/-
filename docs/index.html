@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>한국엑스퍼트교육원</title>
+<meta name="description" content="한국엑스퍼트교육원은 부산·울산·경남 학교와 기관을 찾아가 AI 교육, 취업·진로, 직업체험, 창업, NCS 교육을 운영합니다. S2B 학교장터 등록 업체.">
+<meta property="og:title" content="한국엑스퍼트교육원">
+<meta property="og:description" content="AI 교육 · 취업·진로 · 직업체험 · 창업 · NCS. 학교와 기관에 맞춘 교육을 설계하고 운영합니다.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="static/logo-v.png">
+<link rel="icon" type="image/png" href="static/favicon.png">
+<link rel="apple-touch-icon" href="static/favicon.png">
+<style>@font-face{font-family:"Pretendard Variable";src:url("fonts/PretendardVariable.woff2") format("woff2-variations");font-weight:45 920;font-display:swap}</style>
+<style>
+  /* 브랜드 색: 로고 네이비·청록. 강조 파랑과 회색 단계는 참고 리포트(토스증권) 톤을 따른다. */
+  :root {
+    --navy: #152b3d;
+    --teal: #223e49;
+    --blue: #3182f6;
+    --blue-soft: #e8f3ff;
+    --ink: #191f28;
+    --ink-2: #4e5968;
+    --ink-3: #8b95a1;
+    --line: #e5e8eb;
+    --line-dark: #191f28;
+    --bg: #ffffff;
+    --bg-2: #f7f8fa;
+    --radius: 10px;
+    --max: 1080px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Toss Product Sans", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    word-break: keep-all;
+    letter-spacing: -.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img, svg { display: block; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+  .is-pending { opacity: .45; cursor: default; }
+
+  /* ---------- 상단 메뉴 ---------- */
+  .header { position: sticky; top: 0; z-index: 50; background: rgba(255, 255, 255, .94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .header .wrap { display: flex; align-items: center; height: 72px; gap: 24px; }
+  .brand img { height: 42px; width: auto; }
+  .nav { display: flex; gap: 2px; margin-left: auto; }
+  .nav a { padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 15px; color: var(--ink-2); }
+  .nav a:hover { color: var(--ink); background: var(--bg-2); }
+  .header-links { display: flex; gap: 8px; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: 700;
+    border: 1px solid var(--line); color: var(--navy); background: #fff; white-space: nowrap;
+  }
+  .pill:not(.is-pending):hover { border-color: var(--navy); }
+  .pill svg { width: 14px; height: 14px; }
+  .menu-btn { display: none; margin-left: auto; width: 44px; height: 44px; border: 0; background: none; border-radius: 10px; cursor: pointer; color: var(--navy); }
+  .menu-btn svg { width: 26px; height: 26px; margin: auto; }
+
+  /* ---------- 첫 화면: 리포트 표지처럼. 사진이 있으면 사진 위에 네이비 톤, 없으면 로고 청록 바탕 ---------- */
+  .hero { position: relative; overflow: hidden; color: #fff; background: var(--teal); }
+  .hero.has-photo { background: var(--navy) url("/hero.jpg") center / cover no-repeat; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(21, 43, 61, .55) 0%, rgba(21, 43, 61, .35) 40%, rgba(21, 43, 61, .82) 100%);
+    opacity: 0;
+  }
+  .hero.has-photo::before { opacity: 1; }
+  .hero::after {
+    /* 사진이 없을 때 은은한 로고 심볼 */
+    content: ""; position: absolute; right: -4%; bottom: -14%; width: 520px; height: 612px;
+    background: url("static/symbol-white.png") center / contain no-repeat; opacity: .06; pointer-events: none;
+  }
+  .hero.has-photo::after { display: none; }
+  .hero .wrap { position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 680px; padding-top: 28px; padding-bottom: 150px; }
+  .meta { display: grid; grid-template-columns: repeat(2, max-content); gap: 16px 96px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, .55); color: #fff; }
+  .meta small { display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, .7); }
+  .meta b { font-size: 15px; font-weight: 700; }
+  .hero-body { margin-top: auto; padding-top: 140px; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: end; }
+  .hero h1 { margin: 0 0 18px; font-size: clamp(42px, 7vw, 86px); line-height: 1.08; letter-spacing: -.04em; font-weight: 800; color: #fff; }
+  .hero h1 em { font-style: normal; color: #7cc1ff; }
+  .hero p.lead { margin: 0 0 28px; max-width: 600px; font-size: clamp(16px, 2vw, 19px); line-height: 1.6; color: rgba(255, 255, 255, .9); font-weight: 500; }
+  .has-photo h1, .has-photo p.lead { text-shadow: 0 2px 12px rgba(0, 0, 0, .25); }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 50px; padding: 0 22px; border-radius: 12px;
+    font-size: 16px; font-weight: 700; border: 0; cursor: pointer; font-family: inherit;
+    transition: background .15s ease, transform .15s ease, border-color .15s ease;
+  }
+  .btn svg { width: 18px; height: 18px; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-navy { background: var(--navy); color: #fff; }
+  .btn-navy:hover { background: var(--teal); }
+  .btn-blue { background: var(--blue); color: #fff; }
+  .btn-blue:hover { background: #1b64da; }
+  .btn-white { background: #fff; color: var(--navy); }
+  .btn-white:hover { background: #f0f6ff; }
+  .btn-glass { background: rgba(255, 255, 255, .12); color: #fff; border: 1px solid rgba(255, 255, 255, .45); backdrop-filter: blur(6px); }
+  .btn-glass:hover { background: rgba(255, 255, 255, .22); }
+  .btn-line { background: transparent; color: var(--navy); border: 1px solid var(--line); }
+  .btn-line:hover { border-color: var(--navy); }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 0; margin: 0; list-style: none; font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, .92); }
+  .badges li { display: inline-flex; align-items: center; gap: 6px; }
+  .badges svg { width: 16px; height: 16px; color: #7fd6a4; }
+  .hero-symbol { width: 150px; height: auto; opacity: .95; }
+  .has-photo .hero-symbol { opacity: .9; filter: drop-shadow(0 6px 20px rgba(0, 0, 0, .25)); }
+
+  /* ---------- 바로가기 ---------- */
+  .shortcuts { position: relative; margin-top: -88px; z-index: 2; }
+  .shortcut-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .shortcut {
+    display: flex; align-items: center; gap: 18px;
+    padding: 24px 26px; border-radius: 14px; background: #fff;
+    border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(25, 31, 40, .08);
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .shortcut:not(.is-pending):hover { transform: translateY(-2px); border-color: var(--navy); }
+  .shortcut.is-pending { opacity: 1; }
+  .shortcut-icon { flex: none; width: 56px; height: 56px; border-radius: 12px; display: grid; place-items: center; background: var(--bg-2); color: var(--navy); }
+  .shortcut-icon svg { width: 28px; height: 28px; }
+  .shortcut-body { flex: 1; min-width: 0; }
+  .shortcut-label { font-size: 13px; font-weight: 700; color: var(--ink-3); }
+  .shortcut-title { font-size: 21px; font-weight: 800; letter-spacing: -.02em; color: var(--ink); margin: 1px 0 3px; }
+  .shortcut-desc { font-size: 14px; color: var(--ink-2); margin: 0; }
+  .shortcut-arrow { flex: none; color: var(--navy); }
+  .shortcut-arrow svg { width: 20px; height: 20px; }
+  .is-pending .shortcut-arrow { display: none; }
+  .soon { display: none; font-size: 12px; font-weight: 700; color: var(--ink-3); background: var(--bg-2); padding: 3px 9px; border-radius: 6px; margin-left: 8px; vertical-align: middle; }
+  .is-pending .soon { display: inline-block; }
+  .is-pending .shortcut-title, .is-pending .shortcut-icon { opacity: .5; }
+
+  /* ---------- 공통 섹션: 리포트 본문처럼 ---------- */
+  section.block { padding: 110px 0; }
+  section.alt { background: var(--bg-2); }
+  .section-head { max-width: 720px; margin-bottom: 44px; }
+  .part { font-size: 15px; font-weight: 500; color: var(--ink-3); margin-bottom: 14px; }
+  .section-head h2 { margin: 0 0 16px; font-size: clamp(30px, 4vw, 42px); line-height: 1.25; letter-spacing: -.035em; font-weight: 800; }
+  .section-head p { margin: 0; font-size: 17px; color: var(--ink-2); }
+  .lead-blue { color: var(--blue); font-weight: 600; }
+
+  /* 리포트의 [Data-n] 상자 */
+  .data { border-top: 1px solid var(--line-dark); border-bottom: 1px solid var(--line-dark); padding: 12px 0 10px; }
+  .data-label { font-size: 14px; font-weight: 700; margin: 0 0 14px; }
+  .data-source { font-size: 13px; color: var(--ink-3); margin: 12px 0 0; }
+
+  /* ---------- 교육원 소개 ---------- */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .about-text p { margin: 0 0 18px; font-size: 17px; color: var(--ink); line-height: 1.8; }
+  .about-text p.quiet { color: var(--ink-2); }
+  .about-text strong { font-weight: 700; }
+  .about-sign { margin-top: 26px; font-size: 15px; color: var(--ink-3); display: flex; align-items: center; flex-wrap: wrap; gap: 4px 6px; }
+  .about-sign b { color: var(--ink); font-size: 17px; letter-spacing: .02em; }
+  .brochure-row { margin-top: 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+  .brochure-dl { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--ink-2); }
+  .brochure-dl svg { width: 16px; height: 16px; }
+  .brochure-dl:hover { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+  .brochure-card {
+    display: inline-flex; align-items: center; gap: 14px;
+    padding: 14px 20px 14px 16px; border-radius: 12px; background: var(--blue-soft); color: var(--navy);
+    transition: background .15s ease;
+  }
+  .brochure-card:hover { background: #d9eaff; }
+  .brochure-card svg { width: 26px; height: 26px; flex: none; color: var(--blue); }
+  .brochure-card b { display: block; font-size: 15px; }
+  .brochure-card small { font-size: 13px; color: var(--ink-2); }
+  .points { display: grid; gap: 0; border-top: 1px solid var(--line-dark); }
+  .point { display: grid; grid-template-columns: 54px 1fr; gap: 12px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .point-num { font-size: 14px; font-weight: 700; color: var(--blue); padding-top: 3px; }
+  .point h3 { margin: 0 0 6px; font-size: 18px; letter-spacing: -.02em; }
+  .point p { margin: 0; font-size: 15px; color: var(--ink-2); }
+
+  .stats { margin-top: 80px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .stat { padding: 10px 0 6px; }
+  .stat-num { font-size: 52px; font-weight: 800; letter-spacing: -.04em; line-height: 1; color: var(--navy); }
+  .stat-num small { font-size: 24px; margin-left: 3px; font-weight: 700; }
+  .stat-label { margin-top: 10px; font-size: 15px; color: var(--ink-2); }
+
+  /* ---------- 교육 분야 ---------- */
+  .fields { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .field { padding: 30px; border-radius: 14px; background: #fff; border: 1px solid var(--line); }
+  .field-top { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .field-icon { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; background: var(--blue-soft); color: var(--navy); }
+  .field-icon svg { width: 24px; height: 24px; }
+  .field h3 { margin: 0; font-size: 22px; letter-spacing: -.02em; }
+  .field-en { font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--ink-3); }
+  .field > p { margin: 0 0 16px; color: var(--ink-2); font-size: 16px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; list-style: none; }
+  .tags li { padding: 5px 11px; border-radius: 6px; font-size: 13px; font-weight: 600; background: var(--bg-2); color: var(--ink-2); }
+  .field-dark { background: var(--navy); color: #fff; border: 0; }
+  .field-dark .field-icon { background: rgba(255, 255, 255, .12); color: #fff; }
+  .field-dark h3 { color: #fff; }
+  .field-dark .field-en { color: rgba(255, 255, 255, .6); }
+  .field-dark > p { color: rgba(255, 255, 255, .82); }
+  .field-dark .tags li { background: rgba(255, 255, 255, .12); color: #fff; }
+  .formats { margin-top: 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; color: var(--ink-2); font-size: 15px; }
+  .formats b { color: var(--ink); margin-right: 4px; }
+  .formats span { padding: 7px 14px; border-radius: 8px; background: #fff; border: 1px solid var(--line); font-weight: 700; color: var(--navy); }
+
+  /* ---------- 활동 사진 ---------- */
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 20px; }
+  .gallery figure { margin: 0; cursor: zoom-in; }
+  .gallery .pic { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 8px; background: var(--bg-2); }
+  .gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform .25s ease; }
+  .gallery figure:hover img { transform: scale(1.03); }
+  .gallery .data-label { margin: 0 0 10px; }
+  .lightbox { border: 0; padding: 0; background: transparent; max-width: 96vw; }
+  .lightbox::backdrop { background: rgba(25, 31, 40, .94); }
+  .lightbox img { max-width: 96vw; max-height: 84vh; border-radius: 8px; margin: 0 auto; }
+  .lightbox figcaption { color: #fff; text-align: center; margin-top: 12px; font-size: 15px; }
+  .lightbox .close { position: fixed; top: 16px; right: 16px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .15); color: #fff; font-size: 24px; cursor: pointer; }
+
+  /* ---------- 진행 절차 ---------- */
+  .steps { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; padding: 0; margin: 0; list-style: none; counter-reset: step; border-top: 1px solid var(--line-dark); }
+  .steps li { padding: 22px 18px 22px 0; border-bottom: 1px solid var(--line); counter-increment: step; }
+  .steps li::before { content: counter(step, decimal-leading-zero); display: block; font-size: 13px; font-weight: 700; color: var(--blue); margin-bottom: 10px; }
+  .steps b { display: block; font-size: 18px; margin-bottom: 6px; letter-spacing: -.02em; }
+  .steps span { font-size: 14px; color: var(--ink-2); line-height: 1.55; display: block; }
+
+  /* ---------- 문의 ---------- */
+  .contact-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 48px; align-items: start; }
+  .contact-info { position: sticky; top: 100px; }
+  .contact-info h3 { margin: 0 0 6px; font-size: 22px; letter-spacing: -.02em; }
+  .contact-info > p { margin: 0 0 26px; color: var(--ink-2); font-size: 15px; }
+  .info-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-dark); }
+  .info-list li { display: grid; grid-template-columns: 64px 1fr; gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .info-list small { font-size: 14px; color: var(--ink-3); font-weight: 600; }
+  .info-list a { font-size: 18px; font-weight: 700; color: var(--ink); }
+  .info-list a.addr { font-size: 15px; font-weight: 500; color: var(--ink-2); }
+  .info-list a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .s2b-note { margin-top: 24px; padding: 16px 18px; border-radius: 10px; background: var(--blue-soft); font-size: 14px; color: var(--ink-2); }
+  .s2b-note b { color: var(--navy); }
+
+  .form { padding: 36px; border-radius: 14px; background: #fff; border: 1px solid var(--line); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .fg { margin-bottom: 18px; }
+  .fg > label, .fg > .lbl { display: block; font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--ink); }
+  .req { color: var(--blue); margin-left: 2px; }
+  .opt { color: var(--ink-3); font-weight: 500; margin-left: 4px; font-size: 13px; }
+  input[type=text], input[type=tel], input[type=email], textarea {
+    width: 100%; padding: 13px 14px; border-radius: 10px; border: 1px solid #d1d6db; background: #fff;
+    font: inherit; font-size: 16px; color: var(--ink); transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  textarea { min-height: 130px; resize: vertical; }
+  input:focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(49, 130, 246, .18); }
+  .checks { display: flex; flex-wrap: wrap; gap: 8px; }
+  .check { position: relative; }
+  .check input { position: absolute; opacity: 0; inset: 0; cursor: pointer; margin: 0; }
+  .check span { display: inline-block; padding: 9px 14px; border-radius: 8px; border: 1px solid #d1d6db; font-size: 15px; font-weight: 600; color: var(--ink-2); background: #fff; transition: all .12s ease; }
+  .check input:checked + span { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .check input:focus-visible + span { box-shadow: 0 0 0 3px rgba(49, 130, 246, .3); }
+  .consent { margin: 6px 0 22px; padding: 16px 18px; border-radius: 10px; background: var(--bg-2); font-size: 14px; color: var(--ink-2); }
+  .consent label { display: flex; gap: 10px; align-items: center; font-weight: 700; color: var(--ink); cursor: pointer; }
+  .consent input { width: 18px; height: 18px; accent-color: var(--navy); }
+  .consent details { margin-top: 8px; }
+  .consent summary { cursor: pointer; color: var(--ink-3); font-size: 13px; }
+  .consent ul { margin: 8px 0 0; padding-left: 18px; font-size: 13px; }
+  .form .btn { width: 100%; }
+  .hp { position: absolute; left: -9999px; }
+  .form-msg { display: none; margin-top: 16px; padding: 14px 16px; border-radius: 10px; font-size: 15px; }
+  .form-msg.ok { display: block; background: #e6f6ee; color: #0f6b45; }
+  .form-msg.err { display: block; background: #fdecec; color: #a62323; }
+
+  /* ---------- 하단: 로고 청록 배경판 ---------- */
+  .footer { background: var(--teal); color: rgba(255, 255, 255, .72); padding: 60px 0 44px; font-size: 14px; }
+  .footer-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 28px; padding-bottom: 32px; border-bottom: 1px solid rgba(255, 255, 255, .14); }
+  .footer-logo { height: 52px; width: auto; }
+  .footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .footer-links a { padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, .22); color: #fff; font-weight: 600; }
+  .footer-links a:not(.is-pending):hover { background: rgba(255, 255, 255, .08); }
+  .social { display: flex; flex-wrap: wrap; gap: 8px; }
+  .social a { display: inline-flex; align-items: center; gap: 9px; padding: 6px 16px 6px 6px; border-radius: 999px; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .14); color: #fff; font-weight: 700; font-size: 14px; transition: background .15s ease; }
+  .social a:not(.is-pending):hover { background: rgba(255, 255, 255, .16); }
+  .social .ic { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; color: #fff; }
+  .social .ic svg { width: 17px; height: 17px; }
+  .social .blog .ic { background: #03c75a; }
+  .social .yt .ic { background: #ff0033; }
+  .footer-info { margin-top: 26px; line-height: 1.9; }
+  .footer-info span { display: inline-block; margin-right: 16px; }
+  .footer-copy { margin-top: 14px; color: rgba(255, 255, 255, .42); font-size: 13px; }
+
+  /* ---------- 화면 크기별 ---------- */
+  @media (max-width: 1080px) {
+    .header-links { display: none; }
+    .steps { grid-template-columns: repeat(3, 1fr); }
+    .fields { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 900px) {
+    .about-grid, .contact-grid { grid-template-columns: 1fr; }
+    .contact-info { position: static; }
+    .footer-right { align-items: flex-start; }
+    .hero-symbol { width: 110px; }
+  }
+  @media (max-width: 760px) {
+    html { scroll-padding-top: 64px; }
+    .header .wrap { height: 62px; }
+    .brand img { height: 34px; }
+    .menu-btn { display: block; }
+    .nav { display: none; position: absolute; top: 62px; left: 0; right: 0; flex-direction: column; gap: 0; padding: 8px 16px 16px; background: #fff; border-bottom: 1px solid var(--line); box-shadow: 0 12px 24px rgba(25, 31, 40, .08); }
+    .nav.open { display: flex; }
+    .nav a { padding: 14px 8px; font-size: 16px; border-radius: 0; border-bottom: 1px solid var(--line); }
+    .nav .nav-ext { display: flex; gap: 8px; padding-top: 14px; }
+    .nav .nav-ext a { flex: 1; text-align: center; border: 1px solid var(--line); border-radius: 10px; padding: 12px; color: var(--navy); }
+    .wrap { padding: 0 16px; }
+    .hero .wrap { min-height: 0; padding-top: 20px; padding-bottom: 120px; }
+    .hero::after { width: 300px; height: 353px; right: -20%; }
+    .meta { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .hero-body { grid-template-columns: 1fr; padding-top: 90px; }
+    .hero-symbol { display: none; }
+    .shortcuts { margin-top: -72px; }
+    .shortcut-grid, .fields, .form-row { grid-template-columns: 1fr; }
+    .form-row { gap: 0; }
+    .shortcut { padding: 20px; gap: 14px; }
+    .shortcut-icon { width: 48px; height: 48px; }
+    .shortcut-title { font-size: 19px; }
+    section.block { padding: 72px 0; }
+    .stat-grid { grid-template-columns: 1fr; gap: 0; }
+    .stat { padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .stat:last-child { border-bottom: 0; }
+    .stat-num { font-size: 44px; }
+    .steps { grid-template-columns: 1fr 1fr; gap: 0 16px; }
+    .gallery { grid-template-columns: 1fr 1fr; gap: 22px 12px; }
+    .field, .form { padding: 22px; }
+    .footer-logo { height: 44px; }
+  }
+  @media (min-width: 761px) { .nav .nav-ext { display: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 상단 메뉴 -->
+<header class="header">
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="한국엑스퍼트교육원 처음으로">
+      <img src="static/logo-h.png" alt="한국엑스퍼트교육원 KOREAN EXPERT EDUCATION INSTITUTE" width="1400" height="344">
+    </a>
+    <button class="menu-btn" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="주 메뉴">
+      <a href="#about">교육원 소개</a>
+      <a href="#fields">교육 분야</a>
+      <a href="#gallery">활동 사진</a>
+      <a href="#process">진행 절차</a>
+      <a href="#contact">교육 문의</a>
+      <div class="nav-ext">
+        <a href="https://gangsaitda.com" class="" target="_blank" rel="noopener">강사잇다</a>
+        <a href="https://smartstore.naver.com/sangsangcareerdesign" class="" target="_blank" rel="noopener">교안노트</a>
+      </div>
+    </nav>
+    <div class="header-links">
+      <a href="https://gangsaitda.com" class="pill" target="_blank" rel="noopener">강사잇다 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      <a href="https://smartstore.naver.com/sangsangcareerdesign" class="pill" target="_blank" rel="noopener">교안노트 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- 첫 화면 -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="meta">
+        <div><small>Institute</small><b>한국엑스퍼트교육원</b></div>
+        <div><small>Director</small><b>대표 박 서 현</b></div>
+      </div>
+      <div class="hero-body">
+        <div>
+          <h1>배움이<br><em>진로</em>가 되는 교육</h1>
+          <p class="lead">AI 교육부터 취업·진로, 직업체험, 창업, NCS 교육까지. 학교와 기관의 일정·예산·대상에 맞춰 수업을 설계하고, 강사 배치부터 결과보고서까지 교육원이 함께 운영합니다.</p>
+          <div class="cta-row">
+            <a href="#contact" class="btn btn-blue">교육 문의하기</a>
+            <a href="#fields" class="btn btn-glass">교육 분야 보기</a>
+            
+            <a href="brochure.pdf" class="btn btn-glass" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 14h6M9 18h6"/></svg>
+              회사소개서 보기
+            </a>
+            
+          </div>
+          <ul class="badges">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>수업의 80%가 활동</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>S2B 학교장터 등록 업체</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>초·중·고 운영</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>결과보고서 · 수료증 제공</li>
+          </ul>
+        </div>
+        <img class="hero-symbol" src="static/symbol-white.png" alt="" width="512" height="603">
+      </div>
+    </div>
+  </section>
+
+  <!-- 바로가기 -->
+  <section class="shortcuts" aria-label="바로가기">
+    <div class="wrap shortcut-grid">
+      <a href="https://gangsaitda.com" class="shortcut" target="_blank" rel="noopener">
+        <div class="shortcut-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="16" r="3"/><path d="M10.5 10.5l3 3"/><path d="M3 21c0-2.5 2-4.5 5-4.5M21 3c0 2.5-2 4.5-5 4.5"/></svg>
+        </div>
+        <div class="shortcut-body">
+          <div class="shortcut-label">바로가기</div>
+          <div class="shortcut-title">강사잇다<span class="soon">준비 중</span></div>
+          <p class="shortcut-desc">부산·울산·경남 학교·기관 강사 공고를 한곳에 모아 보는 사이트</p>
+        </div>
+        <div class="shortcut-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></div>
+      </a>
+      <a href="https://smartstore.naver.com/sangsangcareerdesign" class="shortcut" target="_blank" rel="noopener">
+        <div class="shortcut-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+        </div>
+        <div class="shortcut-body">
+          <div class="shortcut-label">네이버 스마트스토어</div>
+          <div class="shortcut-title">교안노트<span class="soon">준비 중</span></div>
+          <p class="shortcut-desc">수업에 바로 쓰는 강의교안·활동지 자료</p>
+        </div>
+        <div class="shortcut-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 1. 한국엑스퍼트교육원이란 -->
+  <section class="block" id="about">
+    <div class="wrap">
+      <div class="about-grid">
+        <div>
+          <div class="section-head" style="margin-bottom:28px">
+            <div class="part">Part 1.</div>
+            <h2>1. 한국엑스퍼트교육원</h2>
+          </div>
+          <div class="about-text">
+            <p>한국엑스퍼트교육원은 부산에 자리한 교육 전문 기관입니다. 학생들이 자신의 강점을 발견하고 미래를 준비할 수 있도록 <strong>AI · 취업·진로 · 직업체험 · 창업 · NCS</strong> 교육을 기획하고 운영합니다.</p>
+            <p class="lead-blue">이론 설명은 20%, 학생이 직접 해 보는 활동이 80%인 수업입니다.</p>
+            <p class="quiet">학교와 기관은 원하는 주제만 정해 주시면 됩니다. 차시 구성과 강사 배치, 교재·활동지와 실습 재료, 운영 후 결과보고서까지 <strong>교육원이 수업 운영을 맡아</strong> 진행합니다.</p>
+            <div class="about-sign">한국엑스퍼트교육원 대표<b>박 서 현</b></div>
+            
+            <div class="brochure-row">
+              <a class="brochure-card" href="brochure.pdf" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 14h6M9 18h6"/></svg>
+                <span><b>회사소개서 보기 (PDF)</b><small>교육원 소개와 프로그램 안내를 한 파일로 · 새 창에서 열립니다</small></span>
+              </a>
+              <a class="brochure-dl" href="brochure.pdf" download>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+                파일로 내려받기
+              </a>
+            </div>
+            
+          </div>
+        </div>
+        <div class="points">
+          <div class="point">
+            <div class="point-num">01</div>
+            <div><h3>이론보다 활동, 수업의 80%</h3><p>설명은 짧게, 직접 해 보는 시간은 길게. 수업 시간의 80%를 학생이 손과 머리로 움직이는 활동으로 채웁니다.</p></div>
+          </div>
+          <div class="point">
+            <div class="point-num">02</div>
+            <div><h3>학교에 맞춘 설계</h3><p>예산·일정·교육과정에 맞춰 차시 수, 대상 반, 내용을 조정합니다. 2차시 단축형이나 학년 전체 동시 운영도 가능합니다.</p></div>
+          </div>
+          <div class="point">
+            <div class="point-num">03</div>
+            <div><h3>반마다 전담 강사</h3><p>반마다 강사 1명이 들어가 모둠 활동과 실습을 이끕니다.</p></div>
+          </div>
+          <div class="point">
+            <div class="point-num">04</div>
+            <div><h3>꾸준한 강사 역량 강화</h3><p>강의 품질을 위해 강사 역량 강화 수업을 꾸준히 진행합니다. 어느 강사가 맡아도 같은 수준의 수업이 되도록 합니다.</p></div>
+          </div>
+          <div class="point">
+            <div class="point-num">05</div>
+            <div><h3>준비부터 마무리까지</h3><p>교재·활동지와 기본 실습 재료를 준비하고, 운영 후 사진과 만족도 결과를 담은 결과보고서와 학생별 수료증을 드립니다.</p></div>
+          </div>
+          <div class="point">
+            <div class="point-num">06</div>
+            <div><h3>S2B 학교장터 계약</h3><p>S2B 학교장터 등록 업체입니다. 2천만원 이하 교육은 학교에서 S2B로 바로 견적을 요청하고 계약하실 수 있습니다.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats data">
+        <p class="data-label">[Data-1] 캠프 참여 학생 만족도</p>
+        <div class="stat-grid">
+          <div class="stat">
+            <div class="stat-num">92<small>%</small></div>
+            <div class="stat-label">“다시 참여하고 싶다”</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">88<small>%</small></div>
+            <div class="stat-label">“진로·관심사를 찾는 데 도움이 됐다”</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">1,000<small>+</small></div>
+            <div class="stat-label">누적 참여 학생</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 교육 분야 -->
+  <section class="block alt" id="fields">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="part">Part 2.</div>
+        <h2>2. 교육 분야</h2>
+        <p>다섯 가지 분야를 중심으로, 대상과 목적에 맞게 프로그램을 구성합니다.</p>
+      </div>
+
+      <div class="fields">
+        <article class="field">
+          <div class="field-top">
+            <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/><path d="M9.5 15l1.6-6h1.8l1.6 6M10.1 13h3.8"/></svg></div>
+            <div><div class="field-en">AI EDUCATION</div><h3>AI 교육</h3></div>
+          </div>
+          <p>생성형 AI를 직접 써 보며 배우는 실습형 수업입니다. AI를 공부와 진로 탐색에 올바르게 활용하는 방법을 익히고, AI를 활용한 주제탐구 수업도 운영합니다.</p>
+          <ul class="tags"><li>AI 활용 실습</li><li>AI 활용 주제탐구</li><li>초·중·고 맞춤</li></ul>
+        </article>
+
+        <article class="field">
+          <div class="field-top">
+            <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg></div>
+            <div><div class="field-en">CAREER</div><h3>취업·진로</h3></div>
+          </div>
+          <p>나를 표현하는 글과 말을 다듬습니다. 자기소개서부터 면접, 스피치, 이미지까지 실전처럼 연습합니다.</p>
+          <ul class="tags"><li>자기소개서</li><li>면접</li><li>스피치</li><li>이미지</li></ul>
+        </article>
+
+        <article class="field">
+          <div class="field-top">
+            <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></div>
+            <div><div class="field-en">JOB EXPERIENCE</div><h3>직업체험</h3></div>
+          </div>
+          <p>직업 현장을 교실로 옮겨 와 역할을 맡고 미션을 해결하며 직업의 세계를 몸으로 경험합니다.</p>
+          <ul class="tags"><li>서비스·항공·호텔</li><li>미래직업</li><li>역할·미션형</li></ul>
+        </article>
+
+        <article class="field">
+          <div class="field-top">
+            <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
+            <div><div class="field-en">STARTUP</div><h3>창업</h3></div>
+          </div>
+          <p>아이디어를 찾고 다듬어 발표하기까지, 창업의 과정을 직접 해 보며 도전하는 힘을 기릅니다.</p>
+          <ul class="tags"><li>창업 정규 과정</li><li>창업캠프</li></ul>
+        </article>
+
+        <article class="field">
+          <div class="field-top">
+            <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5"/><path d="m8.5 13.5-2 7 5.5-3 5.5 3-2-7"/><path d="m10.5 9 1 1 2-2.5"/></svg></div>
+            <div><div class="field-en">NCS</div><h3>NCS 교육</h3></div>
+          </div>
+          <p>특성화고 학생을 위한 국가직무능력표준(NCS) 수업입니다. 취업을 앞둔 학생이 직무에 필요한 능력을 활동으로 익히고, 학과와 학년에 맞춰 내용을 구성합니다.</p>
+          <ul class="tags"><li>특성화고</li><li>NCS 직업기초능력</li><li>취업 준비</li></ul>
+        </article>
+
+        <article class="field field-dark">
+          <div class="field-top">
+            <div class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div><div class="field-en">TOURISM × AI</div><h3>AI 투어 메이커</h3></div>
+          </div>
+          <p>관광 분야 취업을 준비하는 분들을 위한 과정입니다. 여행상품을 기획하고, AI로 홍보물과 자기소개서·면접까지 준비합니다.</p>
+          <ul class="tags"><li>여행상품 기획</li><li>AI 홍보물</li><li>AI 자소서·면접</li></ul>
+        </article>
+      </div>
+
+      <div class="formats">
+        <b>운영 형태</b>
+        <span>캠프</span><span>특강</span><span>연수</span><span>방과후</span>
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- 3. 활동 사진 -->
+  <section class="block" id="gallery">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="part">Part 3.</div>
+        <h2>3. 활동 사진</h2>
+        <p>교실에서 함께한 순간들입니다. 사진을 누르면 크게 볼 수 있습니다.</p>
+      </div>
+      <div class="gallery">
+        
+        <figure class="data" data-full="photos/27f0b00cfd0d.jpg" data-caption="모둠 미션 활동" tabindex="0" role="button" aria-label="모둠 미션 활동 크게 보기">
+          <p class="data-label">[활동-1] 모둠 미션 활동</p>
+          <div class="pic"><img src="photos/27f0b00cfd0d_t.jpg" alt="모둠 미션 활동" loading="lazy"></div>
+          <p class="data-source">출처: 한국엑스퍼트교육원</p>
+        </figure>
+        
+        <figure class="data" data-full="photos/22339f5533a0.jpg" data-caption="취업역량 강화 교육" tabindex="0" role="button" aria-label="취업역량 강화 교육 크게 보기">
+          <p class="data-label">[활동-2] 취업역량 강화 교육</p>
+          <div class="pic"><img src="photos/22339f5533a0_t.jpg" alt="취업역량 강화 교육" loading="lazy"></div>
+          <p class="data-source">출처: 한국엑스퍼트교육원</p>
+        </figure>
+        
+        <figure class="data" data-full="photos/105cf2bd183a.jpg" data-caption="자기소개서 작성 실습" tabindex="0" role="button" aria-label="자기소개서 작성 실습 크게 보기">
+          <p class="data-label">[활동-3] 자기소개서 작성 실습</p>
+          <div class="pic"><img src="photos/105cf2bd183a_t.jpg" alt="자기소개서 작성 실습" loading="lazy"></div>
+          <p class="data-source">출처: 한국엑스퍼트교육원</p>
+        </figure>
+        
+        <figure class="data" data-full="photos/2cce6e35bc9b.jpg" data-caption="발표·스피치 실습" tabindex="0" role="button" aria-label="발표·스피치 실습 크게 보기">
+          <p class="data-label">[활동-4] 발표·스피치 실습</p>
+          <div class="pic"><img src="photos/2cce6e35bc9b_t.jpg" alt="발표·스피치 실습" loading="lazy"></div>
+          <p class="data-source">출처: 한국엑스퍼트교육원</p>
+        </figure>
+        
+        <figure class="data" data-full="photos/b7eee51c1d2a.jpg" data-caption="창업캠프 아이디어 발표" tabindex="0" role="button" aria-label="창업캠프 아이디어 발표 크게 보기">
+          <p class="data-label">[활동-5] 창업캠프 아이디어 발표</p>
+          <div class="pic"><img src="photos/b7eee51c1d2a_t.jpg" alt="창업캠프 아이디어 발표" loading="lazy"></div>
+          <p class="data-source">출처: 한국엑스퍼트교육원</p>
+        </figure>
+        
+      </div>
+    </div>
+  </section>
+  <dialog class="lightbox" id="lightbox">
+    <button type="button" class="close" aria-label="닫기">×</button>
+    <figure style="margin:0"><img src="" alt=""><figcaption></figcaption></figure>
+  </dialog>
+  
+
+  <!-- 진행 절차 -->
+  <section class="block alt" id="process">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="part">Part 4.</div>
+        <h2>4. 진행 절차</h2>
+        <p>문의부터 결과보고서까지, 담당 선생님의 일이 줄어들도록 교육원이 챙깁니다.</p>
+      </div>
+      <ol class="steps">
+        <li><b>문의</b><span>메일이나 아래 문의창으로 연락 주세요</span></li>
+        <li><b>협의</b><span>대상·일정·내용을 함께 정합니다</span></li>
+        <li><b>견적서</b><span>맞춤 프로그램과 견적서를 보내 드립니다</span></li>
+        <li><b>계약</b><span>학교는 S2B 학교장터로 계약할 수 있습니다</span></li>
+        <li><b>운영</b><span>반마다 강사가 들어가 수업합니다</span></li>
+        <li><b>결과보고</b><span>사진·만족도 결과보고서와 수료증을 드립니다</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 교육 문의 -->
+  <section class="block " id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="part">Contact.</div>
+        <h2>교육 문의</h2>
+        <p>아래 내용을 남겨 주시면 확인 후 연락드리겠습니다. 정해지지 않은 항목은 비워 두셔도 괜찮습니다.</p>
+      </div>
+
+      <div class="contact-grid">
+        <aside class="contact-info">
+          <h3>바로 연락하기</h3>
+          <p>이메일로 보내 주시면 확인 후 연락드립니다.</p>
+          <ul class="info-list">
+            <li><small>이메일</small><a href="mailto:koexpert@naver.com">koexpert@naver.com</a></li>
+            <li><small>주소</small><a class="addr" href="https://map.naver.com/p/search/%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%81%EA%B5%AC%20%EB%82%99%EB%8F%99%EB%8C%80%EB%A1%9C1694%EB%B2%88%EA%B8%B8%204%2C%203%EC%B8%B5" target="_blank" rel="noopener">부산광역시 북구 낙동대로1694번길 4, 3층</a></li>
+          </ul>
+          <div class="s2b-note"><b>학교 담당 선생님께</b><br>S2B 학교장터 등록 업체라 2천만원 이하 교육은 S2B로 바로 견적 요청·계약하실 수 있습니다.</div>
+        </aside>
+
+        <form class="form" id="inquiry" novalidate>
+          <div class="form-row">
+            <div class="fg">
+              <label for="org">학교·기관명<span class="req">*</span></label>
+              <input type="text" id="org" name="기관명" required autocomplete="organization" placeholder="예) ○○중학교">
+            </div>
+            <div class="fg">
+              <label for="name">담당자 성함<span class="req">*</span></label>
+              <input type="text" id="name" name="담당자" required autocomplete="name" placeholder="예) 홍길동 선생님">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="fg">
+              <label for="phone">휴대폰 번호<span class="req">*</span></label>
+              <input type="tel" id="phone" name="연락처" required autocomplete="tel" inputmode="tel" placeholder="예) 010-0000-0000">
+            </div>
+            <div class="fg">
+              <label for="email">이메일<span class="opt">선택</span></label>
+              <input type="email" id="email" name="이메일" autocomplete="email" placeholder="답변 받을 메일 주소">
+            </div>
+          </div>
+
+          <div class="fg">
+            <span class="lbl">관심 분야<span class="opt">여러 개 선택 가능</span></span>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="관심분야" value="AI 교육"><span>AI 교육</span></label>
+              <label class="check"><input type="checkbox" name="관심분야" value="취업·진로"><span>취업·진로</span></label>
+              <label class="check"><input type="checkbox" name="관심분야" value="직업체험"><span>직업체험</span></label>
+              <label class="check"><input type="checkbox" name="관심분야" value="창업"><span>창업</span></label>
+              <label class="check"><input type="checkbox" name="관심분야" value="NCS 교육 (특성화고)"><span>NCS 교육 (특성화고)</span></label>
+              <label class="check"><input type="checkbox" name="관심분야" value="AI 투어 메이커"><span>AI 투어 메이커</span></label>
+              <label class="check"><input type="checkbox" name="관심분야" value="기타"><span>기타</span></label>
+            </div>
+          </div>
+
+          <div class="fg">
+            <span class="lbl">운영 형태<span class="opt">선택</span></span>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="운영형태" value="캠프"><span>캠프</span></label>
+              <label class="check"><input type="checkbox" name="운영형태" value="특강"><span>특강</span></label>
+              <label class="check"><input type="checkbox" name="운영형태" value="연수"><span>연수</span></label>
+              <label class="check"><input type="checkbox" name="운영형태" value="방과후"><span>방과후</span></label>
+              <label class="check"><input type="checkbox" name="운영형태" value="아직 미정"><span>아직 미정</span></label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="fg">
+              <label for="target">대상·인원<span class="opt">선택</span></label>
+              <input type="text" id="target" name="대상인원" placeholder="예) 중2, 6개 반">
+            </div>
+            <div class="fg">
+              <label for="when">희망 시기<span class="opt">선택</span></label>
+              <input type="text" id="when" name="희망시기" placeholder="예) 12월 둘째 주, 4차시">
+            </div>
+          </div>
+
+          <div class="fg">
+            <label for="msg">문의 내용<span class="opt">선택</span></label>
+            <textarea id="msg" name="문의내용" placeholder="원하시는 교육 내용, 예산, 궁금한 점을 자유롭게 적어 주세요."></textarea>
+          </div>
+
+          <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <div class="consent">
+            <label><input type="checkbox" id="agree" required> 개인정보 수집·이용에 동의합니다 <span class="req">*</span></label>
+            <details>
+              <summary>자세히 보기</summary>
+              <ul>
+                <li>수집 항목: 학교·기관명, 담당자 성함, 휴대폰 번호, 이메일</li>
+                <li>이용 목적: 교육 문의 확인 및 답변</li>
+                <li>보유 기간: 문의 답변 완료 후 1년, 이후 바로 파기</li>
+                <li>동의하지 않으실 수 있으며, 이 경우 문의창 대신 전화나 이메일로 문의해 주세요.</li>
+              </ul>
+            </details>
+          </div>
+
+          <button type="submit" class="btn btn-blue">문의 보내기</button>
+          <div class="form-msg" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- 하단 -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <a href="#top"><img class="footer-logo" src="static/logo-h-white.png" alt="한국엑스퍼트교육원" width="1400" height="343"></a>
+      <div class="footer-right">
+        <div class="footer-links">
+          <a href="https://gangsaitda.com" class="" target="_blank" rel="noopener">강사잇다</a>
+          <a href="https://smartstore.naver.com/sangsangcareerdesign" class="" target="_blank" rel="noopener">교안노트</a>
+          <a href="brochure.pdf" target="_blank" rel="noopener">회사소개서</a>
+          <a href="#contact">교육 문의</a>
+        </div>
+        <div class="social" aria-label="블로그와 유튜브">
+          <a href="https://blog.naver.com/sangsangcareer" class="blog" target="_blank" rel="noopener">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 5h16v11h-7l-5 4v-4H4z"/></svg></span>블로그
+          </a>
+          <a href="https://www.youtube.com/@%ED%95%9C%EA%B5%AD%EC%97%91%EC%8A%A4%ED%8D%BC%ED%8A%B8%EA%B5%90%EC%9C%A1%EC%9B%90" class="yt" target="_blank" rel="noopener">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/></svg></span>유튜브
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-info">
+      <span>상호: 한국엑스퍼트교육원</span>
+      <span>대표: 박서현</span>
+      <span>사업자등록번호: 169-10-02403</span><br>
+      <span>주소: 부산광역시 북구 낙동대로1694번길 4, 3층</span>
+      <span>이메일: koexpert@naver.com</span>
+    </div>
+    <div class="footer-copy">© <span id="year">2026</span> 한국엑스퍼트교육원. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  /* ---------- 모바일 메뉴 ---------- */
+  const menuBtn = document.querySelector('.menu-btn');
+  const nav = document.getElementById('nav');
+  menuBtn.addEventListener('click', function () {
+    const open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  nav.addEventListener('click', function (e) {
+    if (e.target.closest('a[href]')) { nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }
+  });
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ---------- 사진 크게 보기 ---------- */
+  const lightbox = document.getElementById('lightbox');
+  if (lightbox) {
+    const img = lightbox.querySelector('img');
+    const cap = lightbox.querySelector('figcaption');
+    const open = function (fig) {
+      img.src = fig.dataset.full; img.alt = fig.dataset.caption || '활동 사진';
+      cap.textContent = fig.dataset.caption || '';
+      lightbox.showModal();
+    };
+    document.querySelectorAll('.gallery figure').forEach(function (fig) {
+      fig.addEventListener('click', function () { open(fig); });
+      fig.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(fig); } });
+    });
+    lightbox.querySelector('.close').addEventListener('click', function () { lightbox.close(); });
+    lightbox.addEventListener('click', function (e) { if (e.target === lightbox) lightbox.close(); });
+    lightbox.addEventListener('close', function () { img.src = ''; });
+  }
+
+  /* ---------- 문의창 ---------- */
+  const form = document.getElementById('inquiry');
+  const msg = form.querySelector('.form-msg');
+  function show(type, text) { msg.className = 'form-msg ' + type; msg.textContent = text; }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const d = {};
+    ['기관명', '담당자', '연락처', '이메일', '대상인원', '희망시기', '문의내용', '_gotcha'].forEach(function (k) { d[k] = (fd.get(k) || '').trim(); });
+    d.관심분야 = fd.getAll('관심분야');
+    d.운영형태 = fd.getAll('운영형태');
+
+    const required = [['org', '학교·기관명을'], ['name', '담당자 성함을'], ['phone', '휴대폰 번호를']];
+    for (const [id, label] of required) {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { show('err', label + ' 입력해 주세요.'); el.focus(); return; }
+    }
+    const digits = d.연락처.replace(/[^0-9]/g, '');
+    if (!/^01[016789]\d{7,8}$/.test(digits)) { show('err', '휴대폰 번호를 다시 확인해 주세요. 예) 010-1234-5678'); document.getElementById('phone').focus(); return; }
+    d.연락처 = digits.replace(/^(\d{3})(\d{3,4})(\d{4})$/, '$1-$2-$3');
+    const emailEl = document.getElementById('email');
+    if (d.이메일 && !emailEl.checkValidity()) { show('err', '이메일 주소를 다시 확인해 주세요.'); emailEl.focus(); return; }
+    if (!document.getElementById('agree').checked) { show('err', '개인정보 수집·이용에 동의해 주세요.'); document.getElementById('agree').focus(); return; }
+
+    const btn = form.querySelector('button[type=submit]');
+    btn.disabled = true; btn.textContent = '보내는 중…';
+    try {
+      const payload = {
+        _subject: '[홈페이지 문의] ' + d.기관명 + ' · ' + d.담당자,
+        _replyto: d.이메일,
+        _gotcha: d._gotcha,
+        기관명: d.기관명, 담당자: d.담당자, 연락처: d.연락처, 이메일: d.이메일,
+        관심분야: d.관심분야.join(', '), 운영형태: d.운영형태.join(', '),
+        대상인원: d.대상인원, 희망시기: d.희망시기, 문의내용: d.문의내용,
+      };
+      const res = await fetch('https://formspree.io/f/xwlvodan', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) });
+      const out = await res.json().catch(function () { return {}; });
+      if (!res.ok || !out.ok) throw new Error((out.errors && out.errors[0] && out.errors[0].message) || out.error || '');
+      form.reset();
+      show('ok', '문의가 접수되었습니다. 확인 후 빠르게 연락드리겠습니다. 감사합니다.');
+    } catch (err) {
+      show('err', (err.message || '전송에 실패했습니다.') + ' 계속 안 되면 koexpert@naver.com 으로 메일 주세요.');
+    } finally {
+      btn.disabled = false; btn.textContent = '문의 보내기';
+    }
+  });
+</script>
+</body>
+</html>

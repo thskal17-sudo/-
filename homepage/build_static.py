@@ -1,0 +1,94 @@
+"""서버 없이 올리는 '보여 주기용' 홈페이지를 만든다.
+
+관리자 페이지 없이 홈페이지 한 장만 내보낸다. 문의창은 Formspree(https://formspree.io) 로 보내서
+메일(koexpert@naver.com)로 받는다. 내용은 homepage/site_content/ 에 있는 사진·소개서를 쓴다.
+
+    python homepage/build_static.py            # docs/ 폴더에 만든다 (GitHub Pages 용)
+    python homepage/build_static.py 다른폴더    # 다른 폴더에 만든다
+
+사진을 바꾸려면 site_content/photos/ 와 photos.json 을, 소개서는 site_content/brochure.pdf 를 바꾸고
+다시 실행하면 된다.
+"""
+from __future__ import annotations
+
+import json
+import re
+import shutil
+import sys
+from pathlib import Path
+
+from jinja2 import Environment, FileSystemLoader, select_autoescape
+
+HERE = Path(__file__).resolve().parent
+CONTENT = HERE / "site_content"
+DEFAULT_OUT = HERE.parent / "docs"
+
+# 문의창이 보내는 곳. Formspree 양식 주소 (받는 메일은 Formspree 쪽에서 정한다).
+FORM_ENDPOINT = "https://formspree.io/f/xwlvodan"
+
+FONT_CDN = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">'
+FONT_LOCAL = ('<style>@font-face{font-family:"Pretendard Variable";src:url("fonts/PretendardVariable.woff2") '
+              'format("woff2-variations");font-weight:45 920;font-display:swap}</style>')
+
+# 서버 버전은 /api/inquiry 로 보냈다. 정적 버전은 Formspree 로 바로 보낸다.
+SERVER_FETCH = re.compile(r"const res = await fetch\('/api/inquiry'.*?\);", re.S)
+FORM_FETCH = """const payload = {
+        _subject: '[홈페이지 문의] ' + d.기관명 + ' · ' + d.담당자,
+        _replyto: d.이메일,
+        _gotcha: d._gotcha,
+        기관명: d.기관명, 담당자: d.담당자, 연락처: d.연락처, 이메일: d.이메일,
+        관심분야: d.관심분야.join(', '), 운영형태: d.운영형태.join(', '),
+        대상인원: d.대상인원, 희망시기: d.희망시기, 문의내용: d.문의내용,
+      };
+      const res = await fetch('%s', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) });""" % FORM_ENDPOINT
+SERVER_ERROR = "if (!res.ok || !out.ok) throw new Error(out.error || '');"
+FORM_ERROR = "if (!res.ok || !out.ok) throw new Error((out.errors && out.errors[0] && out.errors[0].message) || out.error || '');"
+
+
+def site_config() -> dict:
+    sys.path.insert(0, str(HERE))
+    from app import DEFAULT_SITE  # 바로가기·연락처는 서버 버전과 같은 기본값을 쓴다
+
+    return json.loads(json.dumps(DEFAULT_SITE))
+
+
+def render_index() -> str:
+    env = Environment(loader=FileSystemLoader(str(HERE / "templates")), autoescape=select_autoescape(["html"]))
+    photos = json.loads((CONTENT / "photos.json").read_text("utf-8")) if (CONTENT / "photos.json").exists() else []
+    brochure = {"name": "회사소개서.pdf"} if (CONTENT / "brochure.pdf").exists() else None
+    html = env.get_template("index.html").render(site=site_config(), photos=photos, brochure=brochure, hero=None)
+
+    if FONT_CDN not in html:
+        raise SystemExit("템플릿에서 글꼴 링크를 찾지 못했습니다.")
+    html = html.replace(FONT_CDN, FONT_LOCAL)
+    # 서버 경로(/static/…)를 폴더 안 상대 경로로 바꾼다. 어느 주소 아래에 올려도 동작한다.
+    html = html.replace('"/static/', '"static/').replace('url("/static/', 'url("static/').replace('"/photos/', '"photos/')
+    html = html.replace('href="/brochure.pdf?download=1"', 'href="brochure.pdf"').replace('href="/brochure.pdf"', 'href="brochure.pdf"')
+
+    html, n = SERVER_FETCH.subn(FORM_FETCH, html)
+    if n != 1 or SERVER_ERROR not in html:
+        raise SystemExit("문의창 전송 코드를 찾지 못했습니다. templates/index.html 이 바뀌었으면 build_static.py 도 맞춰 주세요.")
+    html = html.replace(SERVER_ERROR, FORM_ERROR)
+    return html
+
+
+def build(out: Path = DEFAULT_OUT) -> Path:
+    html = render_index()
+    out.mkdir(parents=True, exist_ok=True)
+    for sub in ("static", "photos", "fonts"):
+        if (out / sub).exists():
+            shutil.rmtree(out / sub)
+    shutil.copytree(HERE / "static", out / "static")
+    if (CONTENT / "photos").exists():
+        shutil.copytree(CONTENT / "photos", out / "photos")
+    shutil.copytree(CONTENT / "fonts", out / "fonts")
+    if (CONTENT / "brochure.pdf").exists():
+        shutil.copy(CONTENT / "brochure.pdf", out / "brochure.pdf")
+    (out / "index.html").write_text(html, "utf-8")
+    (out / ".nojekyll").write_text("", "utf-8")  # GitHub Pages 가 파일을 그대로 올리게 한다
+    return out
+
+
+if __name__ == "__main__":
+    target = build(Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_OUT)
+    print(f"만들었습니다: {target}")
