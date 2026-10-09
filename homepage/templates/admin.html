@@ -118,6 +118,7 @@
 <div class="wrap layout">
   <nav class="side" aria-label="관리 메뉴">
     <a href="#inquiries">문의 내역 {% if new_count %}<span class="badge">{{ new_count }}</span>{% endif %}</a>
+    <a href="#hero">첫 화면 배경</a>
     <a href="#photos">활동 사진</a>
     <a href="#brochure">회사소개서</a>
     <a href="#settings">바로가기·연락처</a>
@@ -163,6 +164,27 @@
         </div>
       </article>
       {% endfor %}
+    </section>
+
+    <!-- 첫 화면 배경 -->
+    <section class="card" id="hero">
+      <h2>첫 화면 배경 사진</h2>
+      <p class="help">홈페이지 맨 위 큰 제목 뒤에 깔리는 사진입니다. 가로로 긴 사진(가로 1920px 이상)이 좋고, 글자가 잘 보이도록 위에 네이비 색을 살짝 덮어 보여 줍니다. 사진이 없으면 로고의 청록색 바탕으로 나옵니다. 상업용으로 써도 되는 사진만 올려 주세요(직접 찍은 사진, 또는 Unsplash·Pexels·Pixabay 처럼 상업 이용이 허용된 무료 사진).</p>
+      {% if hero %}
+      <div class="file-box" style="padding:0;overflow:hidden;display:block">
+        <img src="/hero.jpg?v={{ hero.uploaded | urlencode }}" alt="첫 화면 배경" style="width:100%;max-height:260px;object-fit:cover">
+        <div class="row" style="padding:12px 16px">
+          <small style="color:var(--ink-2)">{{ hero.width }}×{{ hero.height }} · {{ hero.uploaded }} 올림</small>
+          <form class="inline-form" method="post" action="/admin/hero/delete" style="margin-left:auto" onsubmit="return confirm('배경 사진을 내릴까요? 첫 화면이 기본 색으로 돌아갑니다.')"><button class="btn sm danger" type="submit">내리기</button></form>
+        </div>
+      </div>
+      {% else %}
+      <div class="empty" style="margin-bottom:18px">아직 배경 사진이 없습니다. 지금은 청록색 바탕으로 나옵니다.</div>
+      {% endif %}
+      <form method="post" action="/admin/hero" enctype="multipart/form-data" class="row">
+        <input type="file" name="file" accept="image/*" required>
+        <button class="btn" type="submit">{{ '다른 사진으로 바꾸기' if hero else '배경 사진 올리기' }}</button>
+      </form>
     </section>
 
     <!-- 사진 -->

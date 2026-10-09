@@ -102,6 +102,20 @@ def test_photo_upload_resize_and_delete(admin):
     assert admin.get(f'/photos/{photos[0]["id"]}.jpg').status_code == 404
 
 
+def test_hero_background(admin):
+    assert 'class="hero"' in admin.get("/").text
+    assert admin.get("/hero.jpg").status_code == 404
+    bad = admin.post("/admin/hero", files={"file": ("x.txt", b"hi", "text/plain")})
+    assert "error=" in bad.headers["location"]
+    admin.post("/admin/hero", files={"file": ("bg.png", _png((10, 20, 30), (3000, 1200)), "image/png")})
+    assert 'class="hero has-photo"' in admin.get("/").text
+    r = admin.get("/hero.jpg")
+    assert r.status_code == 200 and r.headers["content-type"] == "image/jpeg"
+    assert admin.app.state.store.hero()["width"] == 2400  # 가로 2400 으로 줄인다
+    admin.post("/admin/hero/delete")
+    assert admin.get("/hero.jpg").status_code == 404
+
+
 def test_brochure_upload_and_download(admin):
     bad = admin.post("/admin/brochure", files={"file": ("x.pdf", b"not a pdf", "application/pdf")})
     assert "PDF" in bad.headers["location"]

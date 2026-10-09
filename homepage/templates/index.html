@@ -70,23 +70,29 @@
   .menu-btn { display: none; margin-left: auto; width: 44px; height: 44px; border: 0; background: none; border-radius: 10px; cursor: pointer; color: var(--navy); }
   .menu-btn svg { width: 26px; height: 26px; margin: auto; }
 
-  /* ---------- 첫 화면: 리포트 표지처럼 ---------- */
-  .hero { position: relative; overflow: hidden; color: #fff; background: #3b8df0; }
+  /* ---------- 첫 화면: 리포트 표지처럼. 사진이 있으면 사진 위에 네이비 톤, 없으면 로고 청록 바탕 ---------- */
+  .hero { position: relative; overflow: hidden; color: #fff; background: var(--teal); }
+  .hero.has-photo { background: var(--navy) url("/hero.jpg") center / cover no-repeat; }
   .hero::before {
     content: ""; position: absolute; inset: 0;
-    background:
-      radial-gradient(120% 50% at 50% -10%, #ffffff 0%, #eaf4ff 30%, rgba(234, 244, 255, 0) 65%),
-      radial-gradient(80% 40% at 50% 28%, rgba(214, 235, 255, .9) 0%, rgba(214, 235, 255, 0) 70%),
-      linear-gradient(180deg, #f2f8ff 0%, #d4e8ff 16%, #8fc1ff 36%, #4a97f2 58%, #2f7fe0 100%);
+    background: linear-gradient(180deg, rgba(21, 43, 61, .55) 0%, rgba(21, 43, 61, .35) 40%, rgba(21, 43, 61, .82) 100%);
+    opacity: 0;
   }
-  .hero .wrap { position: relative; display: flex; flex-direction: column; min-height: 700px; padding-top: 28px; padding-bottom: 150px; }
-  .hero h1, .hero p.lead { text-shadow: 0 1px 2px rgba(20, 60, 120, .12); }
-  .meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding-top: 18px; border-top: 1px solid var(--line-dark); color: var(--ink); }
-  .meta small { display: block; font-size: 13px; font-weight: 700; color: var(--ink-2); }
+  .hero.has-photo::before { opacity: 1; }
+  .hero::after {
+    /* 사진이 없을 때 은은한 로고 심볼 */
+    content: ""; position: absolute; right: -4%; bottom: -14%; width: 520px; height: 612px;
+    background: url("/static/symbol-white.png") center / contain no-repeat; opacity: .06; pointer-events: none;
+  }
+  .hero.has-photo::after { display: none; }
+  .hero .wrap { position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 680px; padding-top: 28px; padding-bottom: 150px; }
+  .meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, .55); color: #fff; }
+  .meta small { display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, .7); }
   .meta b { font-size: 15px; font-weight: 700; }
-  .hero-body { margin-top: auto; padding-top: 170px; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: end; }
+  .hero-body { margin-top: auto; padding-top: 140px; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: end; }
   .hero h1 { margin: 0 0 18px; font-size: clamp(42px, 7vw, 86px); line-height: 1.08; letter-spacing: -.04em; font-weight: 800; color: #fff; }
-  .hero p.lead { margin: 0 0 28px; max-width: 600px; font-size: clamp(16px, 2vw, 19px); line-height: 1.6; color: rgba(255, 255, 255, .95); font-weight: 500; }
+  .hero p.lead { margin: 0 0 28px; max-width: 600px; font-size: clamp(16px, 2vw, 19px); line-height: 1.6; color: rgba(255, 255, 255, .9); font-weight: 500; }
+  .has-photo h1, .has-photo p.lead { text-shadow: 0 2px 12px rgba(0, 0, 0, .25); }
   .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -102,12 +108,15 @@
   .btn-blue:hover { background: #1b64da; }
   .btn-white { background: #fff; color: var(--navy); }
   .btn-white:hover { background: #f0f6ff; }
+  .btn-glass { background: rgba(255, 255, 255, .12); color: #fff; border: 1px solid rgba(255, 255, 255, .45); backdrop-filter: blur(6px); }
+  .btn-glass:hover { background: rgba(255, 255, 255, .22); }
   .btn-line { background: transparent; color: var(--navy); border: 1px solid var(--line); }
   .btn-line:hover { border-color: var(--navy); }
-  .badges { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 0; margin: 0; list-style: none; font-size: 14px; font-weight: 600; color: #fff; }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 0; margin: 0; list-style: none; font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, .92); }
   .badges li { display: inline-flex; align-items: center; gap: 6px; }
-  .badges svg { width: 16px; height: 16px; }
+  .badges svg { width: 16px; height: 16px; color: #7fd6a4; }
   .hero-symbol { width: 150px; height: auto; opacity: .95; }
+  .has-photo .hero-symbol { opacity: .9; filter: drop-shadow(0 6px 20px rgba(0, 0, 0, .25)); }
 
   /* ---------- 바로가기 ---------- */
   .shortcuts { position: relative; margin-top: -88px; z-index: 2; }
@@ -305,9 +314,10 @@
     .nav .nav-ext a { flex: 1; text-align: center; border: 1px solid var(--line); border-radius: 10px; padding: 12px; color: var(--navy); }
     .wrap { padding: 0 16px; }
     .hero .wrap { min-height: 0; padding-top: 20px; padding-bottom: 120px; }
+    .hero::after { width: 300px; height: 353px; right: -20%; }
     .meta { grid-template-columns: 1fr 1fr; gap: 12px; }
     .meta .meta-wide { grid-column: 1 / -1; }
-    .hero-body { grid-template-columns: 1fr; padding-top: 120px; }
+    .hero-body { grid-template-columns: 1fr; padding-top: 90px; }
     .hero-symbol { display: none; }
     .shortcuts { margin-top: -72px; }
     .shortcut-grid, .fields, .form-row { grid-template-columns: 1fr; }
@@ -365,7 +375,7 @@
 <main id="top">
 
   <!-- 첫 화면 -->
-  <section class="hero">
+  <section class="hero{{ ' has-photo' if hero else '' }}">
     <div class="wrap">
       <div class="meta">
         <div><small>Institute</small><b>한국엑스퍼트교육원</b></div>
@@ -377,10 +387,10 @@
           <h1>배움이<br>진로가 되는 교육</h1>
           <p class="lead">AI 교육부터 취업·진로, 직업체험, 창업까지. 학교와 기관의 일정·예산·대상에 맞춰 수업을 설계하고, 강사 배치부터 결과보고서까지 교육원이 함께 운영합니다.</p>
           <div class="cta-row">
-            <a href="#contact" class="btn btn-navy">교육 문의하기</a>
-            <a href="#fields" class="btn btn-white">교육 분야 보기</a>
+            <a href="#contact" class="btn btn-blue">교육 문의하기</a>
+            <a href="#fields" class="btn btn-glass">교육 분야 보기</a>
             {% if brochure %}
-            <a href="/brochure.pdf" class="btn btn-white" download>
+            <a href="/brochure.pdf" class="btn btn-glass" download>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
               회사소개서 받기
             </a>

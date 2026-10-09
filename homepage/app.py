@@ -187,6 +187,30 @@ class Store:
             (self.photos_dir / f"{pid}{suffix}").unlink(missing_ok=True)
         return True
 
+    # ---- 첫 화면 배경 사진
+    def hero(self) -> dict | None:
+        h = self._read("hero.json", None)
+        return h if h and (self.dir / "hero.jpg").exists() else None
+
+    def save_hero(self, data: bytes) -> None:
+        try:
+            im = Image.open(io.BytesIO(data))
+            im.load()
+        except Exception:  # noqa: BLE001
+            raise ValueError("이미지 파일을 읽을 수 없습니다. JPG, PNG, WEBP 파일을 올려 주세요.") from None
+        im = ImageOps.exif_transpose(im)
+        if im.mode != "RGB":
+            im = im.convert("RGB")
+        im.thumbnail((2400, 2400))
+        with self._lock:
+            im.save(self.dir / "hero.jpg", "JPEG", quality=84, optimize=True, progressive=True)
+            self._write("hero.json", {"width": im.width, "height": im.height, "uploaded": _now()})
+
+    def delete_hero(self) -> None:
+        with self._lock:
+            (self.dir / "hero.jpg").unlink(missing_ok=True)
+            (self.dir / "hero.json").unlink(missing_ok=True)
+
     # ---- 회사소개서
     def brochure(self) -> dict | None:
         b = self._read("brochure.json", None)
@@ -343,7 +367,15 @@ def create_app(data_dir: Path | str = DEFAULT_DATA_DIR) -> FastAPI:
     # ---------------- 공개 페이지
     @app.get("/", response_class=HTMLResponse)
     def index():
-        return render("index.html", site=store.site(), photos=store.photos(), brochure=store.brochure())
+        return render("index.html", site=store.site(), photos=store.photos(), brochure=store.brochure(), hero=store.hero())
+
+    @app.get("/hero.jpg")
+    def hero_image():
+        h = store.hero()
+        if not h:
+            raise HTTPException(404)
+        return FileResponse(store.dir / "hero.jpg", media_type="image/jpeg",
+                            headers={"Cache-Control": "public, max-age=3600", "ETag": f'"{h["uploaded"]}"'})
 
     @app.get("/favicon.ico", include_in_schema=False)
     def favicon():
@@ -454,6 +486,7 @@ def create_app(data_dir: Path | str = DEFAULT_DATA_DIR) -> FastAPI:
             site=store.site(),
             photos=store.photos(),
             brochure=store.brochure(),
+            hero=store.hero(),
             inquiries=inquiries,
             new_count=sum(1 for i in inquiries if i.get("status") == "new"),
             msg=msg[:200],
@@ -514,6 +547,27 @@ def create_app(data_dir: Path | str = DEFAULT_DATA_DIR) -> FastAPI:
         require_admin(request)
         store.delete_photo(pid)
         return back("photos", msg="사진을 지웠습니다.")
+
+    # ---------------- 관리자: 첫 화면 배경 사진
+    @app.post("/admin/hero")
+    async def upload_hero(request: Request, file: UploadFile = File(...)):
+        require_admin(request)
+        if Path(file.filename or "").suffix.lower() not in IMAGE_SUFFIXES:
+            return back("hero", error="JPG, PNG, WEBP 이미지 파일만 올릴 수 있습니다.")
+        data = await file.read()
+        if len(data) > MAX_PHOTO_MB * 1024 * 1024:
+            return back("hero", error=f"파일이 {MAX_PHOTO_MB}MB 를 넘습니다.")
+        try:
+            store.save_hero(data)
+        except ValueError as e:
+            return back("hero", error=str(e))
+        return back("hero", msg="첫 화면 배경 사진을 바꿨습니다.")
+
+    @app.post("/admin/hero/delete")
+    def delete_hero(request: Request):
+        require_admin(request)
+        store.delete_hero()
+        return back("hero", msg="배경 사진을 내렸습니다. 첫 화면은 기본 색으로 나옵니다.")
 
     # ---------------- 관리자: 회사소개서
     @app.post("/admin/brochure")
