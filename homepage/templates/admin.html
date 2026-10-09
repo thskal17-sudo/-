@@ -317,13 +317,22 @@
             <input type="email" id="notify_email" name="notify_email" value="{{ notify.notify_email }}">
           </div>
           <div class="fg">
-            <label for="smtp_user">보내는 네이버 아이디</label>
-            <input type="text" id="smtp_user" name="smtp_user" value="{{ notify.smtp_user }}" placeholder="예) koexpert" autocomplete="off">
-            <div class="hint">@naver.com 앞부분만. 네이버 메일 → 환경설정 → POP3/IMAP 설정에서 ‘SMTP 사용’을 켜 주세요.</div>
+            <label for="smtp_host">보내는 메일 종류</label>
+            <select id="smtp_host" name="smtp_host" style="width:100%;padding:11px 13px;border-radius:9px;border:1px solid #d4dae6;font:inherit;font-size:15px;background:#fff">
+              <option value="smtp.naver.com" {{ 'selected' if notify.smtp_host == 'smtp.naver.com' }}>네이버 메일</option>
+              <option value="smtp.gmail.com" {{ 'selected' if notify.smtp_host == 'smtp.gmail.com' }}>지메일 (Gmail)</option>
+            </select>
+            <div class="hint">받는 주소와 달라도 됩니다. 네이버는 환경설정 → POP3/IMAP 설정에서 ‘SMTP 사용’을 켜 주세요.</div>
           </div>
           <div class="fg">
-            <label for="smtp_pass">네이버 앱 비밀번호 <span class="hint" style="font-weight:500">{{ '(저장됨 · 바꿀 때만 입력)' if notify.smtp_pass else '' }}</span></label>
-            <input type="password" id="smtp_pass" name="smtp_pass" autocomplete="new-password" placeholder="{{ '••••••••' if notify.smtp_pass else '네이버 ID → 보안설정 → 앱 비밀번호 관리에서 발급' }}">
+            <label for="smtp_user">보내는 계정 아이디</label>
+            <input type="text" id="smtp_user" name="smtp_user" value="{{ notify.smtp_user }}" placeholder="예) koexpert 또는 example@gmail.com" autocomplete="off">
+            <div class="hint">네이버는 아이디만, 지메일은 전체 주소를 넣어 주세요.</div>
+          </div>
+          <div class="fg">
+            <label for="smtp_pass">보내는 계정 비밀번호 <span class="hint" style="font-weight:500">{{ '(저장됨 · 바꿀 때만 입력)' if notify.smtp_pass else '' }}</span></label>
+            <input type="password" id="smtp_pass" name="smtp_pass" autocomplete="new-password" placeholder="{{ '••••••••' if notify.smtp_pass else '2단계 인증이 켜진 계정은 앱 비밀번호' }}">
+            <div class="hint">2단계 인증이 꺼진 네이버 계정은 평소 비밀번호, 켜진 계정(지메일 포함)은 앱 비밀번호를 넣습니다.</div>
           </div>
           <div class="fg">
             <label for="base_url">홈페이지 주소 <span class="hint" style="font-weight:500">(알림 링크·카카오 연결에 사용)</span></label>
@@ -331,7 +340,7 @@
             <div class="hint">비워 두면 지금 접속한 주소({{ site_url }})를 씁니다. 도메인을 연결하면 그 주소를 넣어 주세요.</div>
           </div>
         </div>
-        <input type="hidden" name="smtp_host" value="{{ notify.smtp_host }}"><input type="hidden" name="smtp_port" value="{{ notify.smtp_port }}">
+        <input type="hidden" name="smtp_port" value="465">
 
         <h3 style="font-size:14px;margin:14px 0 10px">② 카카오톡 알림 (나와의 채팅)</h3>
         <div class="grid2">

@@ -68,7 +68,8 @@ class Notifier:
     def send_email(self, subject: str, body: str) -> None:
         c = self.cfg()
         msg = EmailMessage()
-        sender = c["smtp_user"] if "@" in c["smtp_user"] else f"{c['smtp_user']}@naver.com"
+        domain = "gmail.com" if "gmail" in c["smtp_host"] else "naver.com"
+        sender = c["smtp_user"] if "@" in c["smtp_user"] else f"{c['smtp_user']}@{domain}"
         msg["From"] = f"한국엑스퍼트교육원 홈페이지 <{sender}>"
         msg["To"] = c["notify_email"]
         msg["Subject"] = subject
