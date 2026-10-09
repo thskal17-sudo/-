@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>관리자 로그인 · 한국엑스퍼트교육원</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root { --navy: #14306b; --blue: #2457d6; --ink: #1a1f2b; --ink-2: #4a5263; --line: #e3e7ef; --bg-2: #f6f8fc; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 20px; background: linear-gradient(160deg, #0d1f47, #14306b 55%, #1f47a8); font-family: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; color: var(--ink); word-break: keep-all; }
+  .card { width: 100%; max-width: 400px; background: #fff; border-radius: 20px; padding: 36px 32px; box-shadow: 0 20px 60px rgba(0, 0, 0, .3); }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--navy); font-size: 17px; margin-bottom: 20px; }
+  .brand svg { width: 32px; height: 32px; }
+  h1 { margin: 0 0 6px; font-size: 22px; letter-spacing: -.02em; }
+  p { margin: 0 0 22px; color: var(--ink-2); font-size: 14px; line-height: 1.6; }
+  label { display: block; font-size: 14px; font-weight: 700; margin: 0 0 6px; }
+  input { width: 100%; padding: 13px 14px; border-radius: 10px; border: 1px solid #d4dae6; font: inherit; font-size: 16px; margin-bottom: 14px; }
+  input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(36, 87, 214, .15); }
+  button { width: 100%; min-height: 50px; border: 0; border-radius: 12px; background: var(--navy); color: #fff; font: inherit; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 6px; }
+  button:hover { background: #0d1f47; }
+  .err { background: #fdecec; color: #a62323; padding: 12px 14px; border-radius: 10px; font-size: 14px; margin-bottom: 16px; }
+  .back { display: block; text-align: center; margin-top: 18px; font-size: 14px; color: var(--ink-2); text-decoration: none; }
+  .back:hover { color: var(--navy); }
+</style>
+</head>
+<body>
+<form class="card" method="post" action="/admin/login">
+  <div class="brand">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#14306b"/><path d="M18 46V18h22v6H25v5h13v6H25v5h15v6z" fill="#fff"/><circle cx="47" cy="43" r="4" fill="#ff7a3d"/></svg>
+    한국엑스퍼트교육원
+  </div>
+  {% if setup %}
+  <h1>관리자 비밀번호 정하기</h1>
+  <p>처음 접속하셨습니다. 앞으로 관리자 페이지에 들어올 때 쓸 비밀번호를 정해 주세요. 8자 이상이어야 합니다.</p>
+  {% else %}
+  <h1>관리자 로그인</h1>
+  <p>홈페이지의 사진, 회사소개서, 바로가기, 문의 내역을 관리합니다.</p>
+  {% endif %}
+  {% if error %}<div class="err">{{ error }}</div>{% endif %}
+  <label for="password">{{ '새 비밀번호' if setup else '비밀번호' }}</label>
+  <input type="password" id="password" name="password" autocomplete="{{ 'new-password' if setup else 'current-password' }}" autofocus required minlength="{{ 8 if setup else 1 }}">
+  {% if setup %}
+  <label for="password2">비밀번호 다시 입력</label>
+  <input type="password" id="password2" name="password2" autocomplete="new-password" required minlength="8">
+  {% endif %}
+  <button type="submit">{{ '비밀번호 정하고 들어가기' if setup else '들어가기' }}</button>
+  <a class="back" href="/">← 홈페이지로</a>
+</form>
+</body>
+</html>

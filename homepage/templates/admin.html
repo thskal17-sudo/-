@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>관리자 · 한국엑스퍼트교육원</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root { --navy: #14306b; --navy-deep: #0d1f47; --blue: #2457d6; --accent: #ff7a3d; --ink: #1a1f2b; --ink-2: #4a5263; --ink-3: #7a8294; --line: #e3e7ef; --bg: #f3f5f9; --card: #fff; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; font-size: 15px; line-height: 1.6; word-break: keep-all; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+
+  .top { position: sticky; top: 0; z-index: 10; background: var(--navy); color: #fff; }
+  .top .wrap { display: flex; align-items: center; gap: 16px; height: 60px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 16px; }
+  .brand svg { width: 30px; height: 30px; }
+  .brand span { font-weight: 500; opacity: .7; margin-left: 2px; }
+  .top-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+  .top-actions a, .top-actions button { padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, .25); background: none; color: #fff; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .top-actions a:hover, .top-actions button:hover { background: rgba(255, 255, 255, .1); }
+
+  .layout { display: grid; grid-template-columns: 220px 1fr; gap: 28px; padding: 28px 0 80px; }
+  .side { position: sticky; top: 84px; align-self: start; display: flex; flex-direction: column; gap: 4px; }
+  .side a { display: flex; align-items: center; justify-content: space-between; padding: 11px 14px; border-radius: 10px; font-weight: 600; color: var(--ink-2); }
+  .side a:hover { background: #fff; color: var(--navy); }
+  .badge { min-width: 22px; height: 22px; padding: 0 7px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 12px; font-weight: 800; display: inline-grid; place-items: center; }
+
+  .flash { padding: 14px 18px; border-radius: 12px; margin-bottom: 20px; font-weight: 600; }
+  .flash.ok { background: #e8f7ef; color: #0f6b45; }
+  .flash.err { background: #fdecec; color: #a62323; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 28px; margin-bottom: 24px; }
+  .card h2 { margin: 0 0 6px; font-size: 20px; letter-spacing: -.02em; }
+  .card > p.help { margin: 0 0 20px; color: var(--ink-2); font-size: 14px; }
+  label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  input[type=text], input[type=url], input[type=password], input[type=email], input[type=tel], textarea {
+    width: 100%; padding: 11px 13px; border-radius: 9px; border: 1px solid #d4dae6; font: inherit; font-size: 15px; background: #fff;
+  }
+  input:focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(36, 87, 214, .15); }
+  input[type=file] { font: inherit; font-size: 14px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
+  .fg { margin-bottom: 14px; }
+  .hint { font-size: 12px; color: var(--ink-3); margin-top: 4px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; min-height: 42px; padding: 0 18px; border-radius: 10px; border: 0; background: var(--navy); color: #fff; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .btn:hover { background: var(--navy-deep); }
+  .btn.sm { min-height: 34px; padding: 0 12px; font-size: 13px; }
+  .btn.ghost { background: #fff; color: var(--ink-2); border: 1px solid var(--line); }
+  .btn.ghost:hover { color: var(--navy); border-color: var(--navy); background: #fff; }
+  .btn.danger { background: #fff; color: #b42323; border: 1px solid #f1c7c7; }
+  .btn.danger:hover { background: #fdecec; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .empty { padding: 28px; text-align: center; color: var(--ink-3); border: 1px dashed var(--line); border-radius: 12px; }
+  .inline-form { display: inline; }
+
+  /* 문의 */
+  .inq { border: 1px solid var(--line); border-radius: 12px; padding: 18px; margin-bottom: 12px; background: #fff; }
+  .inq.done { opacity: .62; }
+  .inq-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 10px; }
+  .inq-head b { font-size: 17px; }
+  .tag { font-size: 12px; font-weight: 800; padding: 3px 9px; border-radius: 999px; }
+  .tag.new { background: #fff1e9; color: #d9541a; }
+  .tag.done { background: #eef1f6; color: var(--ink-3); }
+  .inq-head time { font-size: 13px; color: var(--ink-3); margin-left: auto; }
+  .inq dl { display: grid; grid-template-columns: 90px 1fr; gap: 4px 12px; margin: 0 0 12px; font-size: 14px; }
+  .inq dt { color: var(--ink-3); font-weight: 600; }
+  .inq dd { margin: 0; white-space: pre-wrap; }
+  .inq dd a { color: var(--blue); font-weight: 700; }
+
+  /* 사진 */
+  .upload { display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: end; padding: 18px; border-radius: 12px; background: var(--bg); margin-bottom: 20px; }
+  .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .photo { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #fff; }
+  .photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .photo .body { padding: 12px; }
+  .photo .body form { margin: 0; }
+  .photo input[type=text] { font-size: 14px; padding: 8px 10px; margin-bottom: 8px; }
+  .photo .row { gap: 6px; }
+
+  /* 소개서 */
+  .file-box { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 12px; background: #e9effd; margin-bottom: 18px; }
+  .file-box svg { width: 28px; height: 28px; color: var(--navy); flex: none; }
+  .file-box b { display: block; }
+  .file-box small { color: var(--ink-2); }
+  .file-box .row { margin-left: auto; }
+
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; gap: 16px; }
+    .side { position: static; flex-direction: row; overflow-x: auto; gap: 6px; padding-bottom: 4px; }
+    .side a { white-space: nowrap; background: #fff; border: 1px solid var(--line); padding: 8px 12px; font-size: 14px; }
+    .grid2 { grid-template-columns: 1fr; }
+    .upload { grid-template-columns: 1fr; }
+    .photo-grid { grid-template-columns: 1fr 1fr; }
+    .card { padding: 20px; }
+    .brand span { display: none; }
+  }
+  @media (max-width: 520px) { .photo-grid { grid-template-columns: 1fr; } .inq dl { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#fff"/><path d="M18 46V18h22v6H25v5h13v6H25v5h15v6z" fill="#14306b"/><circle cx="47" cy="43" r="4" fill="#ff7a3d"/></svg>
+      한국엑스퍼트교육원 <span>관리자</span>
+    </div>
+    <div class="top-actions">
+      <a href="/" target="_blank" rel="noopener">홈페이지 보기 ↗</a>
+      <form method="post" action="/admin/logout" style="margin:0"><button type="submit">로그아웃</button></form>
+    </div>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <nav class="side" aria-label="관리 메뉴">
+    <a href="#inquiries">문의 내역 {% if new_count %}<span class="badge">{{ new_count }}</span>{% endif %}</a>
+    <a href="#photos">활동 사진</a>
+    <a href="#brochure">회사소개서</a>
+    <a href="#settings">바로가기·연락처</a>
+    <a href="#account">비밀번호</a>
+  </nav>
+
+  <main>
+    {% if msg %}<div class="flash ok">{{ msg }}</div>{% endif %}
+    {% if error %}<div class="flash err">{{ error }}</div>{% endif %}
+
+    <!-- 문의 -->
+    <section class="card" id="inquiries">
+      <h2>문의 내역 {% if new_count %}<span class="badge">{{ new_count }}</span>{% endif %}</h2>
+      <p class="help">홈페이지 문의창으로 들어온 내용입니다. 답변을 마치면 ‘처리 완료’를 눌러 주세요. 답변 완료 후 1년이 지난 문의는 지워 주세요.</p>
+      {% if not inquiries %}
+      <div class="empty">아직 들어온 문의가 없습니다.</div>
+      {% endif %}
+      {% for i in inquiries %}
+      <article class="inq {{ i.status }}">
+        <div class="inq-head">
+          <b>{{ i.기관명 }}</b>
+          <span class="tag {{ i.status }}">{{ '새 문의' if i.status == 'new' else '처리 완료' }}</span>
+          <time>{{ i.created }}</time>
+        </div>
+        <dl>
+          <dt>담당자</dt><dd>{{ i.담당자 }}</dd>
+          <dt>연락처</dt><dd><a href="tel:{{ i.연락처 }}">{{ i.연락처 }}</a></dd>
+          {% if i.이메일 %}<dt>이메일</dt><dd><a href="mailto:{{ i.이메일 }}">{{ i.이메일 }}</a></dd>{% endif %}
+          {% if i.관심분야 %}<dt>관심 분야</dt><dd>{{ i.관심분야 }}</dd>{% endif %}
+          {% if i.운영형태 %}<dt>운영 형태</dt><dd>{{ i.운영형태 }}</dd>{% endif %}
+          {% if i.대상인원 %}<dt>대상·인원</dt><dd>{{ i.대상인원 }}</dd>{% endif %}
+          {% if i.희망시기 %}<dt>희망 시기</dt><dd>{{ i.희망시기 }}</dd>{% endif %}
+          {% if i.문의내용 %}<dt>문의 내용</dt><dd>{{ i.문의내용 }}</dd>{% endif %}
+        </dl>
+        <div class="row">
+          <form class="inline-form" method="post" action="/admin/inquiries/{{ i.id }}/status">
+            <input type="hidden" name="status" value="{{ 'new' if i.status == 'done' else 'done' }}">
+            <button class="btn sm {{ 'ghost' if i.status == 'done' else '' }}" type="submit">{{ '다시 열기' if i.status == 'done' else '처리 완료' }}</button>
+          </form>
+          <form class="inline-form" method="post" action="/admin/inquiries/{{ i.id }}/delete" onsubmit="return confirm('이 문의를 지울까요? 되돌릴 수 없습니다.')">
+            <button class="btn sm danger" type="submit">지우기</button>
+          </form>
+        </div>
+      </article>
+      {% endfor %}
+    </section>
+
+    <!-- 사진 -->
+    <section class="card" id="photos">
+      <h2>활동 사진</h2>
+      <p class="help">여기에 올린 사진이 홈페이지 ‘활동 사진’에 나옵니다. 여러 장을 한 번에 올릴 수 있고, 올릴 때 긴 쪽 1600px 로 줄이고 위치 정보는 지웁니다. 학생 얼굴이 또렷한 사진은 보호자 동의가 있는 것만 올려 주세요.</p>
+      <form class="upload" method="post" action="/admin/photos" enctype="multipart/form-data">
+        <div>
+          <label for="files">사진 파일 (JPG, PNG, WEBP · 한 장 20MB 까지)</label>
+          <input type="file" id="files" name="files" accept="image/*" multiple required>
+          <div class="fg" style="margin:12px 0 0">
+            <label for="caption">사진 설명 <span style="font-weight:500;color:var(--ink-3)">선택 · 함께 올리는 사진 모두에 들어갑니다</span></label>
+            <input type="text" id="caption" name="caption" maxlength="120" placeholder="예) 2026 ○○중 AI 진로캠프">
+          </div>
+        </div>
+        <button class="btn" type="submit">사진 올리기</button>
+      </form>
+      {% if not photos %}
+      <div class="empty">아직 올린 사진이 없습니다. 사진을 올리면 홈페이지에 ‘활동 사진’ 칸이 생깁니다.</div>
+      {% else %}
+      <div class="photo-grid">
+        {% for p in photos %}
+        <div class="photo">
+          <a href="/photos/{{ p.id }}.jpg" target="_blank" rel="noopener"><img src="/photos/{{ p.id }}_t.jpg" alt="{{ p.caption }}" loading="lazy"></a>
+          <div class="body">
+            <form method="post" action="/admin/photos/{{ p.id }}/caption">
+              <input type="text" name="caption" value="{{ p.caption }}" maxlength="120" placeholder="사진 설명" aria-label="사진 설명">
+              <div class="row">
+                <button class="btn sm" type="submit">설명 저장</button>
+                <span class="hint" style="margin-left:auto">{{ p.created }}</span>
+              </div>
+            </form>
+            <div class="row" style="margin-top:8px">
+              {% if not loop.first %}
+              <form class="inline-form" method="post" action="/admin/photos/{{ p.id }}/move"><input type="hidden" name="direction" value="up"><button class="btn sm ghost" type="submit" title="앞으로">◀ 앞으로</button></form>
+              {% endif %}
+              {% if not loop.last %}
+              <form class="inline-form" method="post" action="/admin/photos/{{ p.id }}/move"><input type="hidden" name="direction" value="down"><button class="btn sm ghost" type="submit" title="뒤로">뒤로 ▶</button></form>
+              {% endif %}
+              <form class="inline-form" method="post" action="/admin/photos/{{ p.id }}/delete" onsubmit="return confirm('이 사진을 지울까요?')" style="margin-left:auto"><button class="btn sm danger" type="submit">지우기</button></form>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </section>
+
+    <!-- 회사소개서 -->
+    <section class="card" id="brochure">
+      <h2>회사소개서</h2>
+      <p class="help">PDF 한 파일을 올려 두면 홈페이지에 ‘회사소개서 받기’ 버튼이 생깁니다. 새 파일을 올리면 이전 파일을 대신합니다.</p>
+      {% if brochure %}
+      <div class="file-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 14h6M9 18h6"/></svg>
+        <div><b>{{ brochure.name }}</b><small>{{ (brochure.size / 1048576) | round(1) }} MB · {{ brochure.uploaded }} 올림</small></div>
+        <div class="row">
+          <a class="btn sm ghost" href="/brochure.pdf" target="_blank" rel="noopener">열어 보기</a>
+          <form class="inline-form" method="post" action="/admin/brochure/delete" onsubmit="return confirm('회사소개서를 내릴까요? 홈페이지에서 버튼이 사라집니다.')"><button class="btn sm danger" type="submit">내리기</button></form>
+        </div>
+      </div>
+      {% else %}
+      <div class="empty" style="margin-bottom:18px">아직 올린 회사소개서가 없습니다.</div>
+      {% endif %}
+      <form method="post" action="/admin/brochure" enctype="multipart/form-data" class="row">
+        <input type="file" name="file" accept="application/pdf,.pdf" required>
+        <button class="btn" type="submit">{{ '새 파일로 바꾸기' if brochure else 'PDF 올리기' }}</button>
+      </form>
+    </section>
+
+    <!-- 바로가기·연락처 -->
+    <section class="card" id="settings">
+      <h2>바로가기·연락처</h2>
+      <p class="help">주소를 비워 두면 홈페이지에서 그 버튼이 흐리게 나오고 눌러지지 않습니다. 주소는 https:// 부터 붙여 넣어 주세요.</p>
+      <form method="post" action="/admin/settings">
+        <div class="grid2">
+          <div class="fg">
+            <label for="link_gangsaitda">강사잇다</label>
+            <input type="url" id="link_gangsaitda" name="link_gangsaitda" value="{{ site.links.gangsaitda }}" placeholder="https://gangsaitda.com">
+          </div>
+          <div class="fg">
+            <label for="link_gyoannote">교안노트 (네이버 스마트스토어)</label>
+            <input type="url" id="link_gyoannote" name="link_gyoannote" value="{{ site.links.gyoannote }}" placeholder="https://smartstore.naver.com/...">
+            <div class="hint">스마트스토어 센터 → 스토어 관리 → 스토어 URL 을 복사해 넣으세요.</div>
+          </div>
+          <div class="fg">
+            <label for="link_blog">블로그</label>
+            <input type="url" id="link_blog" name="link_blog" value="{{ site.links.blog }}" placeholder="https://blog.naver.com/...">
+          </div>
+          <div class="fg">
+            <label for="link_youtube">유튜브</label>
+            <input type="url" id="link_youtube" name="link_youtube" value="{{ site.links.youtube }}" placeholder="https://www.youtube.com/@...">
+          </div>
+        </div>
+        <hr style="border:0;border-top:1px solid var(--line);margin:8px 0 18px">
+        <div class="grid2">
+          <div class="fg">
+            <label for="contact_phone">전화</label>
+            <input type="tel" id="contact_phone" name="contact_phone" value="{{ site.contact.phone }}">
+          </div>
+          <div class="fg">
+            <label for="contact_email">이메일</label>
+            <input type="email" id="contact_email" name="contact_email" value="{{ site.contact.email }}">
+          </div>
+          <div class="fg" style="grid-column:1/-1">
+            <label for="contact_address">주소</label>
+            <input type="text" id="contact_address" name="contact_address" value="{{ site.contact.address }}">
+          </div>
+        </div>
+        <button class="btn" type="submit">저장</button>
+      </form>
+    </section>
+
+    <!-- 비밀번호 -->
+    <section class="card" id="account">
+      <h2>비밀번호 바꾸기</h2>
+      <p class="help">관리자 페이지 비밀번호입니다. 8자 이상으로 정해 주세요.</p>
+      <form method="post" action="/admin/password">
+        <div class="grid2">
+          <div class="fg" style="grid-column:1/-1"><label for="current">현재 비밀번호</label><input type="password" id="current" name="current" autocomplete="current-password" required></div>
+          <div class="fg"><label for="password">새 비밀번호</label><input type="password" id="password" name="password" autocomplete="new-password" minlength="8" required></div>
+          <div class="fg"><label for="password2">새 비밀번호 다시</label><input type="password" id="password2" name="password2" autocomplete="new-password" minlength="8" required></div>
+        </div>
+        <button class="btn" type="submit">비밀번호 바꾸기</button>
+      </form>
+    </section>
+  </main>
+</div>
+</body>
+</html>

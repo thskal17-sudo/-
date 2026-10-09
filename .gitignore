@@ -8,3 +8,6 @@ products/*
 !products/sample-ko5-1/
 products/sample-ko5-1/pages/
 products/sample-ko5-1/out/
+# 홈페이지 관리자 페이지에서 올린 사진·소개서·문의·비밀번호
+homepage/data/
+homepage/.preview/
