@@ -68,7 +68,7 @@ def test_settings_change_public_links(admin):
         "link_gyoannote": "smartstore.naver.com/gyoannote",
         "link_blog": "https://blog.naver.com/koexpert",
         "link_youtube": "",
-        "contact_phone": "010-0000-0000",
+        "contact_phone": "010-9999-8888",
         "contact_email": "koexpert@naver.com",
         "contact_address": "부산 어딘가",
     })
@@ -76,7 +76,7 @@ def test_settings_change_public_links(admin):
     html = admin.get("/").text
     assert 'href="https://smartstore.naver.com/gyoannote"' in html
     assert 'href="https://blog.naver.com/koexpert"' in html
-    assert "010-0000-0000" not in html and "부산 어딘가" in html  # 교육원 전화번호는 페이지에 싣지 않는다
+    assert "010-9999-8888" not in html and "부산 어딘가" in html  # 교육원 전화번호는 페이지에 싣지 않는다
     assert 'class="yt is-pending"' in html
 
 
