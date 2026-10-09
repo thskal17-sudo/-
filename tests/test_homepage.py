@@ -76,7 +76,7 @@ def test_settings_change_public_links(admin):
     html = admin.get("/").text
     assert 'href="https://smartstore.naver.com/gyoannote"' in html
     assert 'href="https://blog.naver.com/koexpert"' in html
-    assert "010-0000-0000" not in html and "부산 어딘가" in html  # 전화번호는 페이지에 싣지 않는다
+    assert "010-0000-0000" in html and "부산 어딘가" in html
     assert 'class="yt is-pending"' in html
 
 

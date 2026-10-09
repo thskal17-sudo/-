@@ -610,7 +610,7 @@
         <p>문의부터 결과보고서까지, 담당 선생님의 일이 줄어들도록 교육원이 챙깁니다.</p>
       </div>
       <ol class="steps">
-        <li><b>문의</b><span>메일이나 아래 문의창으로 연락 주세요</span></li>
+        <li><b>문의</b><span>전화·메일·아래 문의창으로 연락 주세요</span></li>
         <li><b>협의</b><span>대상·일정·내용을 함께 정합니다</span></li>
         <li><b>견적서</b><span>맞춤 프로그램과 견적서를 보내 드립니다</span></li>
         <li><b>계약</b><span>학교는 S2B 학교장터로 계약할 수 있습니다</span></li>
@@ -632,8 +632,9 @@
       <div class="contact-grid">
         <aside class="contact-info">
           <h3>바로 연락하기</h3>
-          <p>이메일로 보내 주시면 확인 후 연락드립니다.</p>
+          <p>평일 낮 시간에는 전화가 가장 빠릅니다.</p>
           <ul class="info-list">
+            <li><small>휴대폰</small><a href="tel:{{ site.contact.phone }}">{{ site.contact.phone }}</a></li>
             <li><small>이메일</small><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></li>
             <li><small>주소</small><a class="addr" href="https://map.naver.com/p/search/{{ site.contact.address | urlencode }}" target="_blank" rel="noopener">{{ site.contact.address }}</a></li>
           </ul>
@@ -752,6 +753,7 @@
       <span>대표: 박서현</span>
       <span>사업자등록번호: 169-10-02403</span><br>
       <span>주소: {{ site.contact.address }}</span>
+      <span>휴대폰: {{ site.contact.phone }}</span>
       <span>이메일: {{ site.contact.email }}</span>
     </div>
     <div class="footer-copy">© <span id="year">2026</span> 한국엑스퍼트교육원. All rights reserved.</div>
@@ -823,7 +825,7 @@
       form.reset();
       show('ok', '문의가 접수되었습니다. 확인 후 빠르게 연락드리겠습니다. 감사합니다.');
     } catch (err) {
-      show('err', (err.message || '전송에 실패했습니다.') + ' 계속 안 되면 {{ site.contact.email }} 으로 메일 주세요.');
+      show('err', (err.message || '전송에 실패했습니다.') + ' 계속 안 되면 {{ site.contact.phone }} 으로 전화 주세요.');
     } finally {
       btn.disabled = false; btn.textContent = '문의 보내기';
     }
