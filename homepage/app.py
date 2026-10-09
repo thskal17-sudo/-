@@ -391,11 +391,13 @@ def create_app(data_dir: Path | str = DEFAULT_DATA_DIR) -> FastAPI:
         return FileResponse(p, media_type="image/jpeg", headers={"Cache-Control": "public, max-age=86400"})
 
     @app.get("/brochure.pdf")
-    def brochure():
+    def brochure(download: int = 0):
+        """기본은 브라우저에서 바로 열리고, ?download=1 이면 파일로 내려받는다."""
         if not store.brochure():
             raise HTTPException(404, "아직 올린 회사소개서가 없습니다.")
         return FileResponse(store.dir / "brochure.pdf", media_type="application/pdf",
-                            filename="한국엑스퍼트교육원_회사소개서.pdf")
+                            filename="한국엑스퍼트교육원_회사소개서.pdf",
+                            content_disposition_type="attachment" if download else "inline")
 
     @app.post("/api/inquiry")
     async def inquiry(request: Request):

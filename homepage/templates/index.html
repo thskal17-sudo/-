@@ -164,8 +164,12 @@
   .about-text strong { font-weight: 700; }
   .about-sign { margin-top: 26px; font-size: 15px; color: var(--ink-3); }
   .about-sign b { color: var(--ink); font-size: 17px; margin-left: 6px; }
+  .brochure-row { margin-top: 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+  .brochure-dl { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--ink-2); }
+  .brochure-dl svg { width: 16px; height: 16px; }
+  .brochure-dl:hover { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
   .brochure-card {
-    margin-top: 22px; display: inline-flex; align-items: center; gap: 14px;
+    display: inline-flex; align-items: center; gap: 14px;
     padding: 14px 20px 14px 16px; border-radius: 12px; background: var(--blue-soft); color: var(--navy);
     transition: background .15s ease;
   }
@@ -387,9 +391,9 @@
             <a href="#contact" class="btn btn-blue">교육 문의하기</a>
             <a href="#fields" class="btn btn-glass">교육 분야 보기</a>
             {% if brochure %}
-            <a href="/brochure.pdf" class="btn btn-glass" download>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-              회사소개서 받기
+            <a href="/brochure.pdf" class="btn btn-glass" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 14h6M9 18h6"/></svg>
+              회사소개서 보기
             </a>
             {% endif %}
           </div>
@@ -448,10 +452,16 @@
             <p class="quiet">학교와 기관은 원하는 주제만 정해 주시면 됩니다. 차시 구성과 강사 배치, 교재·활동지와 실습 재료, 운영 후 결과보고서까지 <strong>교육원이 수업 운영을 맡아</strong> 진행합니다.</p>
             <div class="about-sign">한국엑스퍼트교육원 대표<b>박서현</b></div>
             {% if brochure %}
-            <a class="brochure-card" href="/brochure.pdf" download>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 14h6M9 18h6"/></svg>
-              <span><b>회사소개서 내려받기 (PDF)</b><small>교육원 소개와 프로그램 안내를 한 파일로</small></span>
-            </a>
+            <div class="brochure-row">
+              <a class="brochure-card" href="/brochure.pdf" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 14h6M9 18h6"/></svg>
+                <span><b>회사소개서 보기 (PDF)</b><small>교육원 소개와 프로그램 안내를 한 파일로 · 새 창에서 열립니다</small></span>
+              </a>
+              <a class="brochure-dl" href="/brochure.pdf?download=1" download>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+                파일로 내려받기
+              </a>
+            </div>
             {% endif %}
           </div>
         </div>
@@ -734,7 +744,7 @@
         <div class="footer-links">
           {% call ext(site.links.gangsaitda, '') %}강사잇다{% endcall %}
           {% call ext(site.links.gyoannote, '') %}교안노트{% endcall %}
-          {% if brochure %}<a href="/brochure.pdf" download>회사소개서</a>{% endif %}
+          {% if brochure %}<a href="/brochure.pdf" target="_blank" rel="noopener">회사소개서</a>{% endif %}
           <a href="#contact">교육 문의</a>
         </div>
         <div class="social" aria-label="블로그와 유튜브">

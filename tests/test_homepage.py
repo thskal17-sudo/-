@@ -123,10 +123,11 @@ def test_brochure_upload_and_download(admin):
     assert "PDF" in bad.headers["location"]
     pdf = b"%PDF-1.4\n%fake\n"
     admin.post("/admin/brochure", files={"file": ("소개서.pdf", pdf, "application/pdf")})
-    assert "회사소개서 받기" in admin.get("/").text
+    assert "회사소개서 보기" in admin.get("/").text
     r = admin.get("/brochure.pdf")
     assert r.status_code == 200 and r.content == pdf
-    assert "attachment" in r.headers["content-disposition"]
+    assert r.headers["content-disposition"].startswith("inline")  # 브라우저에서 바로 열린다
+    assert admin.get("/brochure.pdf?download=1").headers["content-disposition"].startswith("attachment")
     admin.post("/admin/brochure/delete")
     assert admin.get("/brochure.pdf").status_code == 404
 
