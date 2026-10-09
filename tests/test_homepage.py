@@ -74,7 +74,7 @@ def test_settings_change_public_links(admin):
     })
     assert r.status_code == 303
     html = admin.get("/").text
-    assert 'href="https://smartstore.naver.com/sangsangcareerdesign"' in html
+    assert 'href="https://smartstore.naver.com/gyoannote"' in html  # https:// 를 붙여 저장한다
     assert 'href="https://blog.naver.com/koexpert"' in html
     assert "010-9999-8888" not in html and "부산 어딘가" in html  # 교육원 전화번호는 페이지에 싣지 않는다
     assert 'class="yt is-pending"' in html
