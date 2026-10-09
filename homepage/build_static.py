@@ -25,6 +25,8 @@ DEFAULT_OUT = HERE.parent / "docs"
 
 # 문의창이 보내는 곳. Formspree 양식 주소 (받는 메일은 Formspree 쪽에서 정한다).
 FORM_ENDPOINT = "https://formspree.io/f/xwlvodan"
+# 카카오톡 알림 워커 주소 (homepage/kakao-worker/ 참고). 비워 두면 메일만 보낸다.
+KAKAO_ENDPOINT = ""
 # 홈페이지 도메인. GitHub Pages 가 docs/CNAME 을 읽어 이 주소로 연결한다. 비우면 github.io 주소를 쓴다.
 DOMAIN = "koexpert.co.kr"
 
@@ -32,6 +34,9 @@ FONT_CDN = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus
 FONT_LOCAL = ('<style>@font-face{font-family:"Pretendard Variable";src:url("fonts/PretendardVariable.woff2") '
               'format("woff2-variations");font-weight:45 920;font-display:swap}</style>')
 
+# 메일이 간 뒤 같은 내용을 카카오톡 알림 워커에도 보낸다. 실패해도 문의는 이미 메일로 갔으므로 조용히 넘긴다.
+KAKAO_FETCH = ("""
+      if (res.ok) { fetch('%s', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).catch(function () {}); }""" % KAKAO_ENDPOINT) if KAKAO_ENDPOINT else ""
 # 서버 버전은 /api/inquiry 로 보냈다. 정적 버전은 Formspree 로 바로 보낸다.
 SERVER_FETCH = re.compile(r"const res = await fetch\('/api/inquiry'.*?\);", re.S)
 FORM_FETCH = """const payload = {
@@ -42,7 +47,7 @@ FORM_FETCH = """const payload = {
         관심분야: d.관심분야.join(', '), 운영형태: d.운영형태.join(', '),
         대상인원: d.대상인원, 희망시기: d.희망시기, 문의내용: d.문의내용,
       };
-      const res = await fetch('%s', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) });""" % FORM_ENDPOINT
+      const res = await fetch('%s', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) });%s""" % (FORM_ENDPOINT, KAKAO_FETCH)
 SERVER_ERROR = "if (!res.ok || !out.ok) throw new Error(out.error || '');"
 FORM_ERROR = "if (!res.ok || !out.ok) throw new Error((out.errors && out.errors[0] && out.errors[0].message) || out.error || '');"
 
