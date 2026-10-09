@@ -119,6 +119,74 @@ class Detector:
         return nms(boxes, 0.3)
 
 
+class HeadFinder:
+    """사람(몸)을 찾고 자세 추정으로 머리 위치를 구한다.
+
+    얼굴 감지기는 정면 얼굴에 강하지만 마스크·옆모습·뒷모습·멀리 있는 사람을 자주 놓친다.
+    몸은 훨씬 잘 찾히므로, 몸 상자 안에서 코·눈·귀 위치로 머리를 잡는다.
+    MODEL_DIR 에 efficientdet.tflite(EfficientDet-Lite2)와 pose_landmarker_heavy.task 가 필요하다.
+    """
+
+    def __init__(self, model_dir: Path):
+        import mediapipe as mp
+        from mediapipe.tasks.python import BaseOptions
+        from mediapipe.tasks.python.vision import (
+            ObjectDetector, ObjectDetectorOptions, PoseLandmarker, PoseLandmarkerOptions)
+
+        self.mp = mp
+        self.od = ObjectDetector.create_from_options(ObjectDetectorOptions(
+            base_options=BaseOptions(model_asset_path=str(model_dir / "efficientdet.tflite")),
+            score_threshold=0.25, category_allowlist=["person"], max_results=40))
+        self.pose = PoseLandmarker.create_from_options(PoseLandmarkerOptions(
+            base_options=BaseOptions(model_asset_path=str(model_dir / "pose_landmarker_heavy.task")),
+            num_poses=1, min_pose_detection_confidence=0.3))
+
+    def close(self) -> None:
+        self.od.close()
+        self.pose.close()
+
+    def _img(self, bgr: np.ndarray):
+        rgb = np.ascontiguousarray(cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB))
+        return self.mp.Image(image_format=self.mp.ImageFormat.SRGB, data=rgb)
+
+    def persons(self, frame: np.ndarray) -> list[tuple]:
+        h, w = frame.shape[:2]
+        tiles = [(0, 0, w, h)] + [(x, y, min(w, x + w // 2 + 100), min(h, y + h // 2 + 100))
+                                  for x in (0, w // 2 - 100) for y in (0, h // 2 - 100)]
+        found = []
+        for x0, y0, x1, y1 in tiles:
+            for d in self.od.detect(self._img(frame[y0:y1, x0:x1])).detections:
+                b = d.bounding_box
+                found.append((b.origin_x + x0, b.origin_y + y0, b.width, b.height, d.categories[0].score))
+        return nms(found, 0.5)
+
+    def head(self, frame: np.ndarray, p: tuple) -> tuple | None:
+        x, y, bw, bh, score = p
+        h, w = frame.shape[:2]
+        x0, y0 = int(max(0, x - bw * 0.15)), int(max(0, y - bh * 0.1))
+        x1, y1 = int(min(w, x + bw * 1.15)), int(min(h, y + bh * 1.1))
+        crop = frame[y0:y1, x0:x1]
+        if crop.size == 0:
+            return None
+        k = max(1.0, 384 / max(crop.shape[:2]))
+        big = cv2.resize(crop, None, fx=k, fy=k)
+        r = self.pose.detect(self._img(big))
+        if r.pose_landmarks:
+            lm = r.pose_landmarks[0]
+            pts = np.array([(l.x * big.shape[1] / k + x0, l.y * big.shape[0] / k + y0) for l in lm[:11]])
+            shoulder = abs(lm[11].x - lm[12].x) * big.shape[1] / k
+            cx, cy = np.median(pts, 0)
+            size = max(np.ptp(pts[:, 0]) * 1.3, shoulder * 0.55, bw * 0.22)
+            # 자세 추정이 엉뚱하게 나온 경우(머리가 몸 상자 아래쪽이거나 너무 큼)는 버린다
+            if size <= min(bw * 0.7, bh * 0.45) and y - bh * 0.1 <= cy <= y + bh * 0.5:
+                return (cx - size / 2, cy - size * 0.55, size, size * 1.1, score)
+        size = min(bw * 0.4, bh * 0.3)
+        return (x + bw / 2 - size / 2, y + size * 0.1, size, size * 1.1, score * 0.9)
+
+    def detect(self, frame: np.ndarray) -> list[tuple]:
+        return [hb for p in self.persons(frame) if (hb := self.head(frame, p)) is not None]
+
+
 def iou(a, b) -> float:
     ax2, ay2, bx2, by2 = a[0] + a[2], a[1] + a[3], b[0] + b[2], b[1] + b[3]
     iw = max(0, min(ax2, bx2) - max(a[0], b[0]))
@@ -362,6 +430,9 @@ def main() -> None:
     ap.add_argument("--grow", type=float, default=1.8, help="얼굴 상자 대비 블러 영역 배율")
     ap.add_argument("--max-gap", type=int, default=15, help="감지가 끊겨도 이어 붙일 최대 프레임 수")
     ap.add_argument("--boxes-json", type=Path, help="감지·추적 결과를 저장할 경로 (검수용)")
+    ap.add_argument("--bodies", action="store_true",
+                    help="몸·자세로 머리를 찾아 마스크·옆모습·뒷모습·멀리 있는 사람도 가린다 (느림)")
+    ap.add_argument("--stride", type=int, default=1, help="N 프레임마다 한 번 감지하고 사이는 보간한다")
     ap.add_argument("--labels", action="store_true", help="책상 번호표·이름표처럼 작은 글씨 딱지도 자동으로 찾아 흐린다")
     ap.add_argument("--region", action="append", default=[], metavar="FRAME:X0,Y0,X1,Y1",
                     help="얼굴 말고도 가릴 영역(학교 로고, 번호표 등). FRAME 번째 프레임에서의 위치를 주면 "
@@ -370,10 +441,20 @@ def main() -> None:
 
     w, h, fps = probe_size(args.input)
     det = Detector(args.models, w, h)
-    raw = [det.detect(f) for f in read_frames(args.input, w, h)]
+    heads = HeadFinder(args.models) if args.bodies else None
+    raw = []
+    for i, f in enumerate(read_frames(args.input, w, h)):
+        if i % args.stride:
+            raw.append([])
+            continue
+        found = det.detect(f) + (heads.detect(f) if heads else [])
+        raw.append(nms(found, 0.2))
     det.close()
+    if heads:
+        heads.close()
     motion = camera_motion(args.input, w, h)
-    boxes = track(raw, args.max_gap, motion)
+    # 돌아다니는 사람이 많은 영상에서는 감지가 끊긴 얼굴을 끝까지 늘리지 않는다
+    boxes = track(raw, args.max_gap, None if args.bodies else motion)
 
     rects: list[list[tuple]] = [[] for _ in boxes]
     if args.labels:
