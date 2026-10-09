@@ -25,6 +25,8 @@ DEFAULT_OUT = HERE.parent / "docs"
 
 # 문의창이 보내는 곳. Formspree 양식 주소 (받는 메일은 Formspree 쪽에서 정한다).
 FORM_ENDPOINT = "https://formspree.io/f/xwlvodan"
+# 홈페이지 도메인. GitHub Pages 가 docs/CNAME 을 읽어 이 주소로 연결한다. 비우면 github.io 주소를 쓴다.
+DOMAIN = "koexpert.co.kr"
 
 FONT_CDN = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">'
 FONT_LOCAL = ('<style>@font-face{font-family:"Pretendard Variable";src:url("fonts/PretendardVariable.woff2") '
@@ -86,6 +88,8 @@ def build(out: Path = DEFAULT_OUT) -> Path:
         shutil.copy(CONTENT / "brochure.pdf", out / "brochure.pdf")
     (out / "index.html").write_text(html, "utf-8")
     (out / ".nojekyll").write_text("", "utf-8")  # GitHub Pages 가 파일을 그대로 올리게 한다
+    if DOMAIN:
+        (out / "CNAME").write_text(DOMAIN + "\n", "utf-8")
     return out
 
 

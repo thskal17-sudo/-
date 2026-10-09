@@ -24,6 +24,7 @@ def test_static_site_posts_to_formspree_and_has_no_server_paths(tmp_path):
     assert 'href="brochure.pdf"' in html and "회사소개서" in html
 
     assert (out / ".nojekyll").exists()
+    assert (out / "CNAME").read_text("utf-8").strip() == "koexpert.co.kr"
     for rel in ("static/logo-h.png", "fonts/PretendardVariable.woff2", "brochure.pdf"):
         assert (out / rel).exists(), rel
     # 사진 목록에 있는 사진은 전부 들어 있고, 홈페이지에서 가리킨다
