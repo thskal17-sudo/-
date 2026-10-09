@@ -42,7 +42,7 @@ COOKIE = "kee_admin"
 DEFAULT_SITE = {
     "links": {
         "gangsaitda": "https://gangsaitda.com",
-        "gyoannote": "https://smartstore.naver.com/gyoannote",
+        "gyoannote": "https://smartstore.naver.com/sangsangcareerdesign",
         "blog": "https://blog.naver.com/sangsangcareer",
         "youtube": "https://www.youtube.com/@%ED%95%9C%EA%B5%AD%EC%97%91%EC%8A%A4%ED%8D%BC%ED%8A%B8%EA%B5%90%EC%9C%A1%EC%9B%90",
     },

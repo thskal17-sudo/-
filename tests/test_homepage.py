@@ -40,7 +40,7 @@ def test_index_renders_with_defaults(client):
     html = client.get("/").text
     assert "1. 한국엑스퍼트교육원</h2>" in html
     assert 'href="https://gangsaitda.com"' in html
-    assert 'href="https://smartstore.naver.com/gyoannote"' in html
+    assert 'href="https://smartstore.naver.com/sangsangcareerdesign"' in html
     assert 'href="https://blog.naver.com/sangsangcareer"' in html
     assert 'is-pending" aria-disabled' not in html  # 바로가기 네 곳 모두 주소가 있다
     assert 'id="gallery"' not in html  # 사진이 없으면 칸이 안 보인다
@@ -74,7 +74,7 @@ def test_settings_change_public_links(admin):
     })
     assert r.status_code == 303
     html = admin.get("/").text
-    assert 'href="https://smartstore.naver.com/gyoannote"' in html
+    assert 'href="https://smartstore.naver.com/sangsangcareerdesign"' in html
     assert 'href="https://blog.naver.com/koexpert"' in html
     assert "010-9999-8888" not in html and "부산 어딘가" in html  # 교육원 전화번호는 페이지에 싣지 않는다
     assert 'class="yt is-pending"' in html
