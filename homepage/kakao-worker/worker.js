@@ -32,13 +32,16 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname.replace(/\/+$/, "") || "/";
     try {
+      if (!env.KAKAO || typeof env.KAKAO.get !== "function") {
+        throw new Error("KV 바인딩 KAKAO 가 없습니다. 워커 Settings → Bindings 에서 KV namespace 를 변수 이름 KAKAO 로 연결해 주세요.");
+      }
       if (request.method === "OPTIONS") return cors(env, new Response(null, { status: 204 }));
       if (path === "/inquiry" && request.method === "POST") return cors(env, await inquiry(request, env));
-      if (path === "/callback") return callback(request, url, env);
+      if (path === "/callback") return await callback(request, url, env);
       if (!adminOk(url, env)) return page("잘못된 접근입니다.", 403);
       if (path === "/connect") return connect(url, env);
-      if (path === "/status") return status(env);
-      if (path === "/test") return test(url, env);
+      if (path === "/status") return await status(env);
+      if (path === "/test") return await test(url, env);
       return page("한국엑스퍼트교육원 홈페이지 카카오톡 알림", 200);
     } catch (e) {
       return page("오류: " + (e && e.message ? e.message : String(e)), 500);
