@@ -26,7 +26,7 @@ DEFAULT_OUT = HERE.parent / "docs"
 # 문의창이 보내는 곳. Formspree 양식 주소 (받는 메일은 Formspree 쪽에서 정한다).
 FORM_ENDPOINT = "https://formspree.io/f/xwlvodan"
 # 카카오톡 알림 워커 주소 (homepage/kakao-worker/ 참고). 비워 두면 메일만 보낸다.
-KAKAO_ENDPOINT = ""
+KAKAO_ENDPOINT = "https://koexpert-alert.koexpert.workers.dev/inquiry"
 # 홈페이지 도메인. GitHub Pages 가 docs/CNAME 을 읽어 이 주소로 연결한다. 비우면 github.io 주소를 쓴다.
 DOMAIN = "koexpert.co.kr"
 

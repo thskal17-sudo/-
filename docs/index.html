@@ -856,6 +856,7 @@
         대상인원: d.대상인원, 희망시기: d.희망시기, 문의내용: d.문의내용,
       };
       const res = await fetch('https://formspree.io/f/xwlvodan', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) });
+      if (res.ok) { fetch('https://koexpert-alert.koexpert.workers.dev/inquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).catch(function () {}); }
       const out = await res.json().catch(function () { return {}; });
       if (!res.ok || !out.ok) throw new Error((out.errors && out.errors[0] && out.errors[0].message) || out.error || '');
       form.reset();
