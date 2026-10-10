@@ -27,6 +27,9 @@ DEFAULT_OUT = HERE.parent / "docs"
 FORM_ENDPOINT = "https://formspree.io/f/xwlvodan"
 # 카카오톡 알림 워커 주소 (homepage/kakao-worker/ 참고). 비워 두면 메일만 보낸다.
 KAKAO_ENDPOINT = "https://koexpert-alert.koexpert.workers.dev/inquiry"
+# 검색 등록 확인 코드. 네이버 서치어드바이저 / 구글 서치콘솔의 'HTML 태그' 방식 content 값. 비우면 넣지 않는다.
+NAVER_SITE_VERIFICATION = ""
+GOOGLE_SITE_VERIFICATION = ""
 # 홈페이지 도메인. GitHub Pages 가 docs/CNAME 을 읽어 이 주소로 연결한다. 비우면 github.io 주소를 쓴다.
 DOMAIN = "koexpert.co.kr"
 
@@ -72,6 +75,15 @@ def render_index() -> str:
     html = html.replace('"/static/', '"static/').replace('url("/static/', 'url("static/').replace('"/photos/', '"photos/')
     html = html.replace('href="/brochure.pdf?download=1"', 'href="brochure.pdf"').replace('href="/brochure.pdf"', 'href="brochure.pdf"')
 
+    tags = ""
+    if NAVER_SITE_VERIFICATION:
+        tags += f'<meta name="naver-site-verification" content="{NAVER_SITE_VERIFICATION}">\n'
+    if GOOGLE_SITE_VERIFICATION:
+        tags += f'<meta name="google-site-verification" content="{GOOGLE_SITE_VERIFICATION}">\n'
+    if DOMAIN:
+        tags += f'<link rel="canonical" href="https://{DOMAIN}/">\n'
+    html = html.replace("</title>\n", "</title>\n" + tags, 1)
+
     html, n = SERVER_FETCH.subn(FORM_FETCH, html)
     if n != 1 or SERVER_ERROR not in html:
         raise SystemExit("문의창 전송 코드를 찾지 못했습니다. templates/index.html 이 바뀌었으면 build_static.py 도 맞춰 주세요.")
@@ -95,6 +107,13 @@ def build(out: Path = DEFAULT_OUT) -> Path:
     (out / ".nojekyll").write_text("", "utf-8")  # GitHub Pages 가 파일을 그대로 올리게 한다
     if DOMAIN:
         (out / "CNAME").write_text(DOMAIN + "\n", "utf-8")
+        # 검색 엔진용: 어디를 읽어도 되는지(robots)와 페이지 목록(sitemap)
+        (out / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n", "utf-8")
+        (out / "sitemap.xml").write_text(
+            '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+            f"  <url><loc>https://{DOMAIN}/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>\n"
+            f"  <url><loc>https://{DOMAIN}/brochure.pdf</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>\n"
+            "</urlset>\n", "utf-8")
     return out
 
 

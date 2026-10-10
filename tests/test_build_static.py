@@ -25,6 +25,10 @@ def test_static_site_posts_to_formspree_and_has_no_server_paths(tmp_path):
 
     assert (out / ".nojekyll").exists()
     assert (out / "CNAME").read_text("utf-8").strip() == "koexpert.co.kr"
+    assert "Sitemap: https://koexpert.co.kr/sitemap.xml" in (out / "robots.txt").read_text("utf-8")
+    assert "<loc>https://koexpert.co.kr/</loc>" in (out / "sitemap.xml").read_text("utf-8")
+    assert '<link rel="canonical" href="https://koexpert.co.kr/">' in html
+    assert "naver-site-verification" not in html  # 확인 코드를 넣기 전에는 빈 태그가 생기지 않는다
     for rel in ("static/logo-h.png", "fonts/PretendardVariable.woff2", "brochure.pdf"):
         assert (out / rel).exists(), rel
     # 사진 목록에 있는 사진은 전부 들어 있고, 홈페이지에서 가리킨다
