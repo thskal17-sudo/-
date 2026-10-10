@@ -29,7 +29,7 @@ FORM_ENDPOINT = "https://formspree.io/f/xwlvodan"
 KAKAO_ENDPOINT = "https://koexpert-alert.koexpert.workers.dev/inquiry"
 # 검색 등록 확인 코드. 네이버 서치어드바이저 / 구글 서치콘솔의 'HTML 태그' 방식 content 값. 비우면 넣지 않는다.
 NAVER_SITE_VERIFICATION = "971a57149f5ea9038df211a780fb91f557d2ebfa"
-GOOGLE_SITE_VERIFICATION = ""
+GOOGLE_SITE_VERIFICATION = "2JvdOfg3wB9W9VD5iXJJLr4LAz-_-vdNUUpvhqZc-SY"
 # 홈페이지 도메인. GitHub Pages 가 docs/CNAME 을 읽어 이 주소로 연결한다. 비우면 github.io 주소를 쓴다.
 DOMAIN = "koexpert.co.kr"
 
