@@ -232,10 +232,8 @@ function forgetForm() {
 
 function logLinks_(form) {
   const published = form.getPublishedUrl();
-  let shortUrl = published;
-  try { shortUrl = form.shortenFormUrl(published); } catch (e) { /* 짧은 링크 실패 시 원래 링크 사용 */ }
   const sheetUrl = PropertiesService.getScriptProperties().getProperty('SHEET_URL') || '(폼 [응답] 탭에서 확인)';
-  Logger.log('① 응답 링크 (홈페이지에 붙이기): ' + shortUrl);
+  Logger.log('① 응답 링크 (홈페이지에 붙이기): ' + published);
   Logger.log('② 폼 편집 링크 (미리보기·수정): ' + form.getEditUrl());
   Logger.log('③ 신청자 명단 시트: ' + sheetUrl);
   if (SETTINGS.maxResponses > 0) {
