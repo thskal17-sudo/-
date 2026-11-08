@@ -136,11 +136,6 @@ function createConsultingForm() {
     .setTitle('지원 마감일 (알고 계시면)')
     .setHelpText('예: 11월 30일. 마감에 맞춰 무엇부터 고칠지 함께 정해 드려요. (선택)');
 
-  form.addMultipleChoiceItem()
-    .setTitle('강의 경력')
-    .setChoiceValues(['준비 중 (아직 출강 경험 없음)', '1년 미만', '1~3년', '3~5년', '5년 이상'])
-    .setRequired(true);
-
   // ── 3. 막히는 부분 ──────────────────────────
   form.addPageBreakItem().setTitle('3. 어디서 막히셨나요?');
 
@@ -159,10 +154,6 @@ function createConsultingForm() {
     .showOtherOption(true)
     .setRequired(true);
 
-  form.addParagraphTextItem()
-    .setTitle('상담 때 꼭 이야기하고 싶은 내용을 편하게 적어 주세요.')
-    .setHelpText('예: 강의계획서 15주차를 어떻게 채울지 모르겠어요. 자세히 적어 주실수록 상담 전에 미리 준비해 둘 수 있어요. (선택)');
-
   // ── 4. 희망 시간 ────────────────────────────
   form.addPageBreakItem().setTitle('4. 희망 시간');
 
@@ -177,11 +168,6 @@ function createConsultingForm() {
     .setChoiceValues(['네, 익숙해요', '몇 번 써 봤어요', '처음이에요 (접속 방법도 안내 부탁드려요)'])
     .setRequired(true);
 
-  form.addMultipleChoiceItem()
-    .setTitle('이 모집 소식은 어디서 보셨나요?')
-    .setChoiceValues(['홈페이지', '카카오톡 채널·단톡방', '카페·블로그', '지인 추천'])
-    .showOtherOption(true);
-
   // ── 5. 개인정보 동의 ────────────────────────
   form.addPageBreakItem().setTitle('5. 개인정보 수집·이용 동의');
 
@@ -191,7 +177,7 @@ function createConsultingForm() {
     .setHelpText([
       `${who}1:1 컨설팅 진행을 위해 아래와 같이 개인정보를 수집·이용합니다.`,
       '',
-      '• 수집 항목: 성함, 휴대폰 번호, 이메일, 지원 기관·강좌·경력, 상담 희망 내용·시간',
+      '• 수집 항목: 성함, 휴대폰 번호, 이메일, 지원 기관·강좌, 막히는 부분, 희망 시간',
       '• 이용 목적: 상담 신청 확인, 상담 시각 배정, ZOOM 링크 안내, 상담 준비',
       `• 보유 기간: ${SETTINGS.retention} 파기`,
       '',
