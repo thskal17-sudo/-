@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>1:1 ZOOM 컨설팅 썸네일</title>
+<!--
+  1:1 ZOOM 컨설팅 모집 썸네일 (노란 배경 + 채팅 말풍선 스타일)
+  - thumbnail.html?layout=wide    → 1200×630 (홈페이지 배너·링크 미리보기)
+  - thumbnail.html?layout=square  → 1080×1080 (게시판 목록·SNS)
+  문구는 아래 HTML 을 직접 고치면 된다. 렌더는 render.mjs 참고.
+-->
+<style>
+@font-face { font-family: "Pretendard"; font-weight: 400; src: url("../../fonts/Pretendard-Regular.ttf"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; src: url("../../fonts/Pretendard-Bold.ttf"); }
+@font-face { font-family: "Pretendard"; font-weight: 800; src: url("../../fonts/Pretendard-ExtraBold.ttf"); }
+
+:root {
+  --yellow: #FEE500;
+  --brown: #3A1D1D;
+  --brown-soft: rgba(58, 29, 29, .78);
+  --chat-bg: #BACEE0;
+  --white: #FFFFFF;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--yellow); overflow: hidden; }
+body { font-family: "Pretendard", sans-serif; color: var(--brown); letter-spacing: -0.02em; }
+
+.stage { position: relative; background: var(--yellow); overflow: hidden; }
+
+/* 배경 장식: 흰 원 */
+.dot { position: absolute; border-radius: 50%; background: rgba(255,255,255,.35); }
+
+.pill {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--brown); color: var(--yellow);
+  font-weight: 800; border-radius: 999px;
+}
+.pill svg { flex: none; }
+h1 { font-weight: 800; line-height: 1.18; letter-spacing: -0.04em; color: var(--brown); }
+h1 em { font-style: normal; position: relative; z-index: 0; }
+h1 em::after {
+  content: ""; position: absolute; left: -6px; right: -6px; bottom: .04em; height: .42em;
+  background: var(--white); z-index: -1; border-radius: 6px;
+}
+.sub { font-weight: 700; color: var(--brown-soft); line-height: 1.45; }
+
+.chips { display: flex; flex-wrap: wrap; }
+.chip {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--white); color: var(--brown);
+  font-weight: 700; border-radius: 999px;
+  box-shadow: 0 4px 0 rgba(58,29,29,.12);
+}
+
+/* 채팅창 */
+.chat {
+  background: var(--chat-bg); border-radius: 32px;
+  box-shadow: 0 24px 48px rgba(58,29,29,.18), 0 4px 0 rgba(58,29,29,.10);
+  display: flex; flex-direction: column;
+}
+.chat-head { display: flex; align-items: center; gap: 12px; font-weight: 800; color: #1E2A36; }
+.chat-head .live { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: #3B5167; }
+.chat-head .live i { width: 10px; height: 10px; border-radius: 50%; background: #2DB400; display: inline-block; }
+
+.row { display: flex; align-items: flex-end; gap: 8px; }
+.row.me { justify-content: flex-end; }
+.avatar {
+  flex: none; border-radius: 38%; background: #FFF6B8;
+  display: flex; align-items: center; justify-content: center; align-self: flex-start;
+}
+.msgs { display: flex; flex-direction: column; }
+.name { font-weight: 700; color: #3B5167; }
+.bubble {
+  position: relative; background: var(--white); color: #1E1E1E;
+  font-weight: 700; border-radius: 18px; line-height: 1.35;
+}
+.row.you .msgs .bubble:first-of-type { border-top-left-radius: 4px; }
+.row.me .bubble { background: var(--yellow); }
+.chat > .row.you + .row.me .bubble { border-top-right-radius: 4px; }
+.chat > .row.me + .row.me { margin-top: -8px; }
+.meta { display: flex; flex-direction: column; align-items: flex-end; color: #4D6378; font-weight: 400; line-height: 1.2; white-space: nowrap; }
+.row.you .meta { align-items: flex-start; }
+.meta b { color: #F2B705; font-weight: 800; }
+
+/* ---------- 가로형 1200×630 ---------- */
+.wide .stage { width: 1200px; height: 630px; }
+.wide .left { position: absolute; left: 72px; top: 64px; width: 600px; }
+.wide .pill { font-size: 24px; padding: 11px 22px 11px 18px; }
+.wide h1 { font-size: 66px; margin-top: 28px; }
+.wide .sub { font-size: 28px; margin-top: 22px; }
+.wide .chips { position: absolute; left: 72px; bottom: 60px; gap: 12px; }
+.wide .chip { font-size: 22px; padding: 12px 20px 12px 16px; }
+.wide .chat { position: absolute; right: 60px; top: 72px; width: 450px; padding: 26px 24px; gap: 18px; transform: rotate(2deg); }
+.wide .chat-head { font-size: 22px; padding-bottom: 6px; }
+.wide .chat-head .live { font-size: 17px; }
+.wide .avatar { width: 52px; height: 52px; }
+.wide .msgs { gap: 8px; }
+.wide .name { font-size: 16px; margin-bottom: 2px; }
+.wide .bubble { font-size: 21px; padding: 13px 17px; }
+.wide .meta { font-size: 14px; }
+.wide .d1 { width: 420px; height: 420px; right: -120px; bottom: -200px; }
+.wide .d2 { width: 160px; height: 160px; left: 560px; top: -70px; }
+
+/* ---------- 정사각형 1080×1080 ---------- */
+.square .stage { width: 1080px; height: 1080px; }
+.square .left { position: absolute; left: 80px; top: 68px; right: 80px; }
+.square .pill { font-size: 28px; padding: 12px 26px 12px 20px; }
+.square h1 { font-size: 80px; margin-top: 28px; }
+.square .sub { font-size: 32px; margin-top: 18px; }
+.square .chat { position: absolute; left: 80px; right: 80px; top: 486px; padding: 28px 32px; gap: 16px; }
+.square .chat-head { font-size: 24px; }
+.square .chat-head .live { font-size: 20px; }
+.square .avatar { width: 54px; height: 54px; }
+.square .msgs { gap: 8px; }
+.square .name { font-size: 18px; margin-bottom: 2px; }
+.square .bubble { font-size: 24px; padding: 12px 18px; }
+.square .meta { font-size: 16px; }
+.square .chips { position: absolute; left: 80px; right: 80px; bottom: 56px; gap: 14px; }
+.square .chip { font-size: 26px; padding: 13px 24px 13px 18px; }
+.square .d1 { width: 520px; height: 520px; right: -200px; top: -220px; }
+.square .d2 { width: 220px; height: 220px; left: -80px; bottom: 210px; }
+</style>
+</head>
+<body class="wide">
+<div class="stage">
+  <div class="dot d1"></div>
+  <div class="dot d2"></div>
+
+  <div class="left">
+    <span class="pill">
+      <!-- 비디오 아이콘 -->
+      <svg width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg>
+      1:1 ZOOM 컨설팅
+    </span>
+    <h1>강사님,<br>요즘 많이 <em>힘드시죠?</em></h1>
+    <p class="sub">지원 분야에서 막히는 부분,<br>1:1로 함께 풀어 드릴게요.</p>
+  </div>
+
+  <div class="chat">
+    <div class="chat-head">
+      <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+      1:1 컨설팅 상담방
+      <span class="live"><i></i>상담 가능</span>
+    </div>
+
+    <div class="row you">
+      <div class="avatar">
+        <!-- 사람 아이콘 -->
+        <svg width="60%" height="60%" viewBox="0 0 24 24" fill="#3A1D1D"><circle cx="12" cy="8" r="4.2"/><path d="M3.5 21c.8-4.6 4.2-7 8.5-7s7.7 2.4 8.5 7z"/></svg>
+      </div>
+      <div class="msgs">
+        <span class="name">강사님</span>
+        <div class="row you"><div class="bubble">출강처는 어디서 찾아야 할까요?</div></div>
+        <div class="row you"><div class="bubble">제안서 쓰는 게 너무 어려워요</div><div class="meta">오후 2:03</div></div>
+      </div>
+    </div>
+
+    <div class="row me">
+      <div class="bubble">ZOOM으로 1:1, 같이 풀어 봐요!</div>
+    </div>
+    <div class="row me">
+      <div class="meta"><b>1</b>오후 2:04</div>
+      <div class="bubble">신청서 남겨 주시면<br>일정 맞춰 연락드릴게요</div>
+    </div>
+  </div>
+
+  <div class="chips">
+    <span class="chip">
+      <svg width="1.15em" height="1.15em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg>
+      ZOOM 온라인
+    </span>
+    <span class="chip">
+      <svg width="1.15em" height="1.15em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3.2"/><circle cx="16.5" cy="9.5" r="2.6"/><path d="M2.5 19c.6-3.3 2.8-5 5.5-5s4.9 1.7 5.5 5M14 14.3c2.9-.6 6.4.6 7.3 4.7"/></svg>
+      1:1 개별 상담
+    </span>
+    <span class="chip">
+      <svg width="1.15em" height="1.15em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>
+      구글폼으로 신청
+    </span>
+  </div>
+</div>
+<script>
+  var layout = new URLSearchParams(location.search).get("layout");
+  if (layout === "square") document.body.className = "square";
+</script>
+</body>
+</html>
