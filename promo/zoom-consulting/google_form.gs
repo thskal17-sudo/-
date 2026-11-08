@@ -17,7 +17,7 @@
  */
 const SETTINGS = {
   title: '평생교육원 지원서 1:1 ZOOM 컨설팅 신청서',
-  period: '',        // 예: '11월 17일(월) ~ 11월 28일(금)'
+  period: '11월 10일(화) 오후 7시부터, 신청 순서대로 1:1 진행',
   duration: '',      // 예: '1인 40분'
   capacity: '',      // 예: '선착순 10명'
   fee: '',           // 예: '무료'
@@ -148,17 +148,14 @@ function createConsultingForm() {
   form.addPageBreakItem().setTitle('4. 희망 일정');
 
   form.addCheckboxItem()
-    .setTitle('상담 가능한 요일')
-    .setChoiceValues(['월', '화', '수', '목', '금', '토'])
-    .setRequired(true);
-
-  form.addCheckboxItem()
-    .setTitle('상담 가능한 시간대')
+    .setTitle('11월 10일(화) 저녁, 가능한 시간을 모두 골라 주세요.')
+    .setHelpText('1:1로 한 분씩 진행해서, 고르신 시간 안에서 정확한 상담 시각을 따로 알려 드려요.')
     .setChoiceValues([
-      '오전 (10:00~12:00)',
-      '오후 (13:00~15:00)',
-      '오후 (15:00~18:00)',
-      '저녁 (19:00~21:00)',
+      '7시대 (19:00~20:00)',
+      '8시대 (20:00~21:00)',
+      '9시 이후 (21:00~)',
+      '아무 시간이나 괜찮아요',
+      '이날은 어려워요 (다음 일정이 생기면 연락 주세요)',
     ])
     .setRequired(true);
 
