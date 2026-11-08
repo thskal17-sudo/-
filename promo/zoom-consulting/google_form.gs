@@ -19,7 +19,8 @@ const SETTINGS = {
   title: '평생교육원 지원서 1:1 ZOOM 컨설팅 신청서',
   period: '11월 10일(화) 오후 7시부터, 신청 순서대로 1:1 진행',
   duration: '',      // 예: '1인 40분'
-  capacity: '',      // 예: '선착순 10명'
+  capacity: '선착순 5명',
+  maxResponses: 5,   // 이 수만큼 신청이 들어오면 폼이 자동으로 마감된다. 0 이면 자동 마감 안 함
   fee: '',           // 예: '무료'
   organizer: '',     // 개인정보 동의문에 들어갈 운영 주체. 예: '○○교육원'
   retention: '상담 종료 후 6개월',
@@ -155,7 +156,6 @@ function createConsultingForm() {
       '8시대 (20:00~21:00)',
       '9시 이후 (21:00~)',
       '아무 시간이나 괜찮아요',
-      '이날은 어려워요 (다음 일정이 생기면 연락 주세요)',
     ])
     .setRequired(true);
 
@@ -198,4 +198,24 @@ function createConsultingForm() {
   Logger.log('응답 링크(홈페이지·게시글에 붙이기): ' + shortUrl);
   Logger.log('폼 편집 링크: ' + form.getEditUrl());
   Logger.log('응답 시트: ' + sheet.getUrl());
+
+  // ── 선착순 자동 마감 ─────────────────────────
+  if (SETTINGS.maxResponses > 0) {
+    form.setCustomClosedFormMessage(
+      `${SETTINGS.capacity} 신청이 모두 마감되었습니다. 관심 가져 주셔서 감사합니다!\n` +
+      '다음 일정이 생기면 홈페이지에서 다시 안내해 드릴게요.'
+    );
+    PropertiesService.getScriptProperties().setProperty('MAX_RESPONSES', String(SETTINGS.maxResponses));
+    ScriptApp.newTrigger('closeWhenFull').forForm(form).onFormSubmit().create();
+    Logger.log(`선착순 자동 마감: ${SETTINGS.maxResponses}명이 신청하면 폼이 닫힙니다.`);
+  }
+}
+
+/** 신청이 들어올 때마다 실행된다. 정원이 차면 응답을 더 받지 않는다. */
+function closeWhenFull(e) {
+  const max = Number(PropertiesService.getScriptProperties().getProperty('MAX_RESPONSES') || 0);
+  const form = e.source;
+  if (max > 0 && form.getResponses().length >= max) {
+    form.setAcceptingResponses(false);
+  }
 }
