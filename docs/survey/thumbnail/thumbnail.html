@@ -34,18 +34,20 @@ h1 mark{background:none;color:var(--yellow)}
 .sq .sub{max-width:640px}
 .sq .clip{right:64px;bottom:80px;width:280px}
 
-/* wide 1200x675 */
-.wd{width:1200px;height:675px;padding:64px 72px}
+/* wide: safe side margins so 16:10 / 3:2 crops keep everything */
+.wd{width:1200px;height:var(--h);padding:var(--top) 120px 0}
 .wd .tag{font-size:24px;padding:11px 22px}
-.wd h1{font-size:60px;margin-top:28px}
-.wd .sub{font-size:26px;margin-top:18px}
-.wd .meta{margin-top:24px}
-.wd .pill{font-size:22px;padding:8px 20px}
-.wd .gift{position:absolute;right:60px;bottom:64px;gap:20px;padding:20px 28px;width:440px}
-.wd .col{max-width:600px}
-.wd .gift .t1{font-size:21px}.wd .gift .t2{font-size:31px}
-.wd .org{position:absolute;left:72px;bottom:46px;font-size:22px}
-.wd .clip{right:150px;top:50px;width:260px}
+.wd h1{font-size:58px;margin-top:26px}
+.wd .sub{font-size:25px;margin-top:18px}
+.wd .meta{margin-top:22px}
+.wd .pill{font-size:21px;padding:8px 20px}
+.wd .col{max-width:560px}
+.wd .gift{position:absolute;right:120px;bottom:var(--bot);gap:18px;padding:18px 26px;width:420px}
+.wd .gift .t1{font-size:20px}.wd .gift .t2{font-size:29px}
+.wd .org{position:absolute;left:120px;bottom:var(--bot);font-size:22px}
+.wd .clip{right:190px;top:var(--clipTop);width:240px}
+.h675{--h:675px;--top:62px;--bot:58px;--clipTop:48px}
+.h750{--h:750px;--top:84px;--bot:76px;--clipTop:70px}
 </style></head>
 <body>
 <template id="art">
@@ -73,9 +75,9 @@ h1 mark{background:none;color:var(--yellow)}
 </template>
 <div id="root"></div>
 <script>
-const mode=new URLSearchParams(location.search).get('m')||'sq';
+const q=new URLSearchParams(location.search);const mode=q.get('m')||'sq';const hc=q.get('h')?'h'+q.get('h'):'';
 document.getElementById('root').innerHTML=`
-<div class="card ${mode}">
+<div class="card ${mode} ${hc}">
   <div class="col"><span class="tag"><i></i>강사 활동 실태조사</span>
   <h1>강사님,<br>요즘 <mark>가장 힘든 일</mark>은<br>무엇인가요?</h1>
   <p class="sub">공고 찾기부터 출강까지, 강사님의 진짜 이야기를 들려주세요</p>
