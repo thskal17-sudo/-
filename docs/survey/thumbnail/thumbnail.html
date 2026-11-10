@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:P;src:url("file:///home/user/-/fonts/PretendardVariable.woff2") format("woff2");font-weight:100 900}
+:root{--navy:#14295c;--navy2:#1d3a7e;--ink:#0f1c3f;--yellow:#ffd84d;--paper:#ffffff;--sky:#c9d8ff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:P,sans-serif;word-break:keep-all;background:var(--navy);color:#fff;overflow:hidden}
+.card{position:relative;overflow:hidden;background:radial-gradient(circle at 85% 15%,var(--navy2) 0,var(--navy) 60%)}
+.card::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 2px,transparent 2px);background-size:36px 36px}
+.tag{display:inline-flex;align-items:center;gap:12px;font-weight:700;color:var(--ink);background:var(--yellow);border-radius:999px}
+.tag i{width:12px;height:12px;border-radius:50%;background:var(--ink)}
+h1{font-weight:800;letter-spacing:-.03em;line-height:1.18}
+h1 mark{background:none;color:var(--yellow)}
+.sub{color:var(--sky);font-weight:500;letter-spacing:-.01em}
+.meta{display:flex;gap:14px;flex-wrap:wrap}
+.pill{border:2px solid rgba(255,255,255,.35);border-radius:999px;font-weight:600;color:#fff}
+.gift{display:flex;align-items:center;background:var(--paper);color:var(--ink);border-radius:22px;box-shadow:0 14px 0 rgba(0,0,0,.18)}
+.gift b{color:#d6262b}
+.gift .t1{font-weight:600;color:#56607a}
+.gift .t2{font-weight:800;letter-spacing:-.02em}
+.org{font-weight:700;color:#fff;opacity:.9;letter-spacing:.02em}
+.clip{position:absolute}
+
+/* square 1080 */
+.sq{width:1080px;height:1080px;padding:84px 84px}
+.sq .tag{font-size:30px;padding:14px 28px}
+.sq h1{font-size:96px;margin-top:44px}
+.sq .sub{font-size:36px;margin-top:30px}
+.sq .meta{margin-top:36px}
+.sq .pill{font-size:28px;padding:10px 24px}
+.sq .gift{position:absolute;left:84px;bottom:150px;gap:24px;padding:26px 34px;width:600px}
+.sq .gift .t1{font-size:26px}.sq .gift .t2{font-size:38px}
+.sq .org{position:absolute;left:84px;bottom:72px;font-size:28px}
+.sq .sub{max-width:640px}
+.sq .clip{right:64px;bottom:80px;width:280px}
+
+/* wide 1200x675 */
+.wd{width:1200px;height:675px;padding:64px 72px}
+.wd .tag{font-size:24px;padding:11px 22px}
+.wd h1{font-size:60px;margin-top:28px}
+.wd .sub{font-size:26px;margin-top:18px}
+.wd .meta{margin-top:24px}
+.wd .pill{font-size:22px;padding:8px 20px}
+.wd .gift{position:absolute;right:60px;bottom:64px;gap:20px;padding:20px 28px;width:440px}
+.wd .col{max-width:600px}
+.wd .gift .t1{font-size:21px}.wd .gift .t2{font-size:31px}
+.wd .org{position:absolute;left:72px;bottom:46px;font-size:22px}
+.wd .clip{right:150px;top:50px;width:260px}
+</style></head>
+<body>
+<template id="art">
+  <svg class="clip" viewBox="0 0 300 380" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="14" y="40" width="272" height="330" rx="26" fill="#0b1a42" opacity=".45"/>
+    <rect x="0" y="26" width="272" height="330" rx="26" fill="#ffffff"/>
+    <rect x="86" y="6" width="100" height="44" rx="14" fill="#ffd84d"/>
+    <rect x="112" y="16" width="48" height="12" rx="6" fill="#14295c"/>
+    <g font-family="P,sans-serif">
+      <rect x="34" y="88" width="34" height="34" rx="9" fill="#14295c"/>
+      <path d="M42 105 l7 7 l13 -15" stroke="#ffd84d" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="84" y="94" width="150" height="10" rx="5" fill="#c9d3ea"/><rect x="84" y="112" width="100" height="10" rx="5" fill="#e3e8f4"/>
+      <rect x="34" y="156" width="34" height="34" rx="9" fill="#14295c"/>
+      <path d="M42 173 l7 7 l13 -15" stroke="#ffd84d" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="84" y="162" width="130" height="10" rx="5" fill="#c9d3ea"/><rect x="84" y="180" width="140" height="10" rx="5" fill="#e3e8f4"/>
+      <rect x="34" y="224" width="34" height="34" rx="9" fill="none" stroke="#14295c" stroke-width="4"/>
+      <rect x="84" y="230" width="150" height="10" rx="5" fill="#c9d3ea"/><rect x="84" y="248" width="90" height="10" rx="5" fill="#e3e8f4"/>
+      <rect x="34" y="286" width="204" height="40" rx="12" fill="#ffd84d"/>
+      <text x="136" y="313" text-anchor="middle" font-size="19" font-weight="800" fill="#14295c">응답 제출하기</text>
+    </g>
+  </svg>
+</template>
+<template id="giftIcon">
+  <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="24" width="52" height="34" rx="6" fill="#d6262b"/><rect x="2" y="16" width="60" height="14" rx="5" fill="#ef3b3f"/><rect x="28" y="16" width="8" height="42" fill="#ffd84d"/><path d="M32 16 C22 2 8 8 16 16 Z M32 16 C42 2 56 8 48 16 Z" fill="#ffd84d"/></svg>
+</template>
+<div id="root"></div>
+<script>
+const mode=new URLSearchParams(location.search).get('m')||'sq';
+document.getElementById('root').innerHTML=`
+<div class="card ${mode}">
+  <div class="col"><span class="tag"><i></i>강사 활동 실태조사</span>
+  <h1>강사님,<br>요즘 <mark>가장 힘든 일</mark>은<br>무엇인가요?</h1>
+  <p class="sub">공고 찾기부터 출강까지, 강사님의 진짜 이야기를 들려주세요</p>
+  <div class="meta"><span class="pill">⏱ 5분</span><span class="pill">학교 · 공공기관 · 기업 강사</span></div></div>
+  <div class="gift">${document.getElementById('giftIcon').innerHTML}<div><p class="t1">정성 응답자 선정</p><p class="t2"><b>bhc 치킨</b> 기프티콘 증정</p></div></div>
+  <p class="org">조사기관 보라에듀</p>
+  ${document.getElementById('art').innerHTML}
+</div>`;
+</script>
+</body></html>
