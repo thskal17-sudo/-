@@ -22,7 +22,7 @@ const JOBS = {
   '1학년': ['제과제빵사', '요리사', '웹툰작가', '3D프린팅 전문가', '바리스타'],
 };
 
-function won(n) {
+function won_(n) {
   return n.toLocaleString('ko-KR') + '원';
 }
 
@@ -37,7 +37,7 @@ function createCareerDayForm() {
     '■ 장소: ' + SCHOOL + ' 각반 교실 및 특별실',
     '■ 진행: 이론 + 체험, ' + SESSIONS + '차시',
     '■ 대상: 학급당 약 26~28명',
-    '■ 강사료: 시간당 ' + won(FEE_PER_HOUR) + ' × ' + SESSIONS + '차시 = ' + won(total),
+    '■ 강사료: 시간당 ' + won_(FEE_PER_HOUR) + ' × ' + SESSIONS + '차시 = ' + won_(total),
     '',
     '■ 제출 서류: 안내문에 첨부된 한글 양식',
     '  - 강사 이력카드, 강의계획서, 신분증·통장사본·자격증, 개인정보 수집 및 이용 동의서',
@@ -114,7 +114,7 @@ function createCareerDayForm() {
 
   form.addMultipleChoiceItem()
     .setTitle('강사료 확인')
-    .setHelpText('시간당 ' + won(FEE_PER_HOUR) + ' × ' + SESSIONS + '차시 = ' + won(total))
+    .setHelpText('시간당 ' + won_(FEE_PER_HOUR) + ' × ' + SESSIONS + '차시 = ' + won_(total))
     .setChoiceValues(['확인했습니다'])
     .setRequired(true);
 
