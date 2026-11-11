@@ -17,6 +17,27 @@
 
 const ORG = '보라에듀';
 const CONTACT = '010-9894-5055';
+const GIFT = '스타벅스 e카드교환권 1만원권';
+const DEADLINE_TEXT = '11월 17일(화)';
+const CLOSE_AT = '2026-11-17T23:59:59+09:00';
+
+// 이미 만든 폼의 ID (편집 링크 /forms/d/ 와 /edit 사이)
+const FORM_ID = '1DQ8jMH7SvjrBc-ErPOfX30v6dbvUHGr_tOjDOf5PQ-o';
+
+function descriptionText_() {
+  return '안녕하십니까.\n\n' +
+    '본 조사는 학교·공공기관·기업 등에서 활동하시는 강사분들의 활동 실태와 어려움, ' +
+    '그리고 강사 지원 서비스에 대한 의견을 알아보기 위해 실시됩니다.\n\n' +
+    '응답 내용은 통계 분석 목적으로만 사용되며, 개인을 식별할 수 없는 형태로 처리됩니다. ' +
+    '정답은 없으니 평소 경험하신 대로 응답해 주시기 바랍니다.\n\n' +
+    '· 응답 시간: 약 5분\n' +
+    '· 응답 기간: ' + DEADLINE_TEXT + '까지\n\n' +
+    '🎁 Q5 자유 응답을 정성껏 작성해 주신 분을 선정해 ' + GIFT + '을 보내 드립니다.\n' +
+    '(11월 12일 이전 응답자 중 선정된 분께는 안내드린 대로 bhc 치킨 기프티콘을 보내 드립니다.)\n\n' +
+    '조사기관: ' + ORG + ' · 문의: ' + CONTACT;
+}
+const Q5_HELP = '☕ 정성껏 작성해 주신 분을 선정해 ' + GIFT + '을 보내 드립니다. 설문 마지막에 기프티콘 받으실 연락처를 남겨 주세요.';
+const GIFT_Q_TITLE = '기프티콘(' + GIFT + ')을 받으시겠습니까?';
 
 const PAINS = [
   '마감이 지난 뒤에 공고를 알게 되었다',
@@ -33,15 +54,7 @@ const PAINS = [
 function createSurveyForm() {
   const form = FormApp.create('강사 활동 실태 및 서비스 수요 조사');
   form
-    .setDescription(
-      '안녕하십니까.\n\n' +
-      '본 조사는 학교·공공기관·기업 등에서 활동하시는 강사분들의 활동 실태와 어려움, ' +
-      '그리고 강사 지원 서비스에 대한 의견을 알아보기 위해 실시됩니다.\n\n' +
-      '응답 내용은 통계 분석 목적으로만 사용되며, 개인을 식별할 수 없는 형태로 처리됩니다. ' +
-      '정답은 없으니 평소 경험하신 대로 응답해 주시기 바랍니다.\n\n' +
-      '응답 시간은 약 5분입니다. Q5 자유 응답을 정성껏 작성해 주신 분을 선정해 bhc 치킨 기프티콘을 보내 드립니다.\n\n' +
-      '조사기관: ' + ORG + ' · 문의: ' + CONTACT
-    )
+    .setDescription(descriptionText_())
     .setProgressBar(true)
     .setCollectEmail(false)
     .setAllowResponseEdits(false)
@@ -121,7 +134,7 @@ function createSurveyForm() {
 
   form.addParagraphTextItem()
     .setTitle('Q5. (선택) 강사로 활동하시면서 가장 어려웠던 순간을 자유롭게 적어 주십시오.')
-    .setHelpText('🍗 정성껏 작성해 주신 분을 선정해 bhc 치킨 기프티콘을 보내 드립니다. 설문 마지막에 기프티콘 받으실 연락처를 남겨 주세요.')
+    .setHelpText(Q5_HELP)
     .setRequired(false);
 
   // ── Ⅲ. 강사 지원 서비스에 대한 의견 ─────────────
@@ -226,7 +239,7 @@ function createSurveyForm() {
     .setRequired(false);
 
   const giftQ = form.addMultipleChoiceItem()
-    .setTitle('bhc 치킨 기프티콘을 받으시겠습니까?')
+    .setTitle(GIFT_Q_TITLE)
     .setHelpText('Q5를 정성껏 작성해 주신 분 중 선정해 보내 드립니다.')
     .setRequired(true);
 
@@ -274,4 +287,46 @@ function createSurveyForm() {
   Logger.log('응답자용 링크(배포용): ' + form.getPublishedUrl());
   Logger.log('편집 링크: ' + form.getEditUrl());
   Logger.log('응답 스프레드시트: ' + ss.getUrl());
+}
+
+
+/**
+ * [이미 배포한 폼 수정용] 사례품을 스타벅스로 바꾸고, 11/17(화) 자동 마감을 예약합니다.
+ * 함수 선택에서 updateGiftAndDeadline 을 골라 한 번만 실행하세요.
+ * (새 폼이 만들어지지 않고, 기존 폼의 문구만 바뀝니다. 지금까지 받은 응답은 그대로 남습니다.)
+ */
+function updateGiftAndDeadline() {
+  const form = FormApp.openById(FORM_ID);
+  form.setDescription(descriptionText_());
+
+  let q5 = false, giftQ = false;
+  form.getItems().forEach(function (item) {
+    const title = item.getTitle();
+    if (title.indexOf('Q5.') === 0) {
+      item.setHelpText(Q5_HELP);
+      q5 = true;
+    }
+    if (title.indexOf('받으시겠습니까?') !== -1 && item.getType() === FormApp.ItemType.MULTIPLE_CHOICE) {
+      item.setTitle(GIFT_Q_TITLE);
+      giftQ = true;
+    }
+  });
+
+  // 기존 마감 예약이 있으면 지우고 새로 예약
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'closeSurvey') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('closeSurvey').timeBased().at(new Date(CLOSE_AT)).create();
+
+  Logger.log('설명 수정: 완료');
+  Logger.log('Q5 안내 수정: ' + (q5 ? '완료' : '못 찾음 → 편집 화면에서 직접 수정'));
+  Logger.log('기프티콘 문항 수정: ' + (giftQ ? '완료' : '못 찾음 → 편집 화면에서 직접 수정'));
+  Logger.log('자동 마감 예약: ' + CLOSE_AT);
+}
+
+/** 예약된 시각에 자동 실행되어 응답을 마감합니다. */
+function closeSurvey() {
+  const form = FormApp.openById(FORM_ID);
+  form.setCustomClosedFormMessage('응답 기간(' + DEADLINE_TEXT + ')이 끝났습니다. 참여해 주셔서 감사합니다.');
+  form.setAcceptingResponses(false);
 }

@@ -15,7 +15,8 @@ h1 mark{background:none;color:var(--yellow)}
 .meta{display:flex;gap:14px;flex-wrap:wrap}
 .pill{border:2px solid rgba(255,255,255,.35);border-radius:999px;font-weight:600;color:#fff}
 .gift{display:flex;align-items:center;background:var(--paper);color:var(--ink);border-radius:22px;box-shadow:0 14px 0 rgba(0,0,0,.18)}
-.gift b{color:#d6262b}
+.gift b{color:#00704a}
+.pill.due{background:var(--yellow);border-color:var(--yellow);color:var(--ink);font-weight:800}
 .gift .t1{font-weight:600;color:#56607a}
 .gift .t2{font-weight:800;letter-spacing:-.02em}
 .org{font-weight:700;color:#fff;opacity:.9;letter-spacing:.02em}
@@ -27,12 +28,12 @@ h1 mark{background:none;color:var(--yellow)}
 .sq h1{font-size:96px;margin-top:44px}
 .sq .sub{font-size:36px;margin-top:30px}
 .sq .meta{margin-top:36px}
-.sq .pill{font-size:28px;padding:10px 24px}
+.sq .pill{font-size:24px;padding:9px 20px}
 .sq .gift{position:absolute;left:84px;bottom:150px;gap:24px;padding:26px 34px;width:600px}
 .sq .gift .t1{font-size:26px}.sq .gift .t2{font-size:38px}
 .sq .org{position:absolute;left:84px;bottom:72px;font-size:28px}
 .sq .sub{max-width:640px}
-.sq .clip{right:64px;bottom:80px;width:280px}
+.sq .clip{right:48px;bottom:80px;width:250px}
 
 /* wide: safe side margins so 16:10 / 3:2 crops keep everything */
 .wd{width:1200px;height:var(--h);padding:var(--top) 120px 0}
@@ -71,7 +72,7 @@ h1 mark{background:none;color:var(--yellow)}
   </svg>
 </template>
 <template id="giftIcon">
-  <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="24" width="52" height="34" rx="6" fill="#d6262b"/><rect x="2" y="16" width="60" height="14" rx="5" fill="#ef3b3f"/><rect x="28" y="16" width="8" height="42" fill="#ffd84d"/><path d="M32 16 C22 2 8 8 16 16 Z M32 16 C42 2 56 8 48 16 Z" fill="#ffd84d"/></svg>
+  <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 22h36l-4 34a4 4 0 0 1-4 3.6H22a4 4 0 0 1-4-3.6z" fill="#00704a"/><rect x="10" y="14" width="44" height="9" rx="4" fill="#0b4d33"/><rect x="18" y="6" width="28" height="9" rx="4" fill="#0b4d33"/><circle cx="32" cy="39" r="8" fill="#ffffff"/><circle cx="32" cy="39" r="4" fill="#00704a"/></svg>
 </template>
 <div id="root"></div>
 <script>
@@ -81,8 +82,8 @@ document.getElementById('root').innerHTML=`
   <div class="col"><span class="tag"><i></i>강사 활동 실태조사</span>
   <h1>강사님,<br>요즘 <mark>가장 힘든 일</mark>은<br>무엇인가요?</h1>
   <p class="sub">공고 찾기부터 출강까지, 강사님의 진짜 이야기를 들려주세요</p>
-  <div class="meta"><span class="pill">⏱ 5분</span><span class="pill">학교 · 공공기관 · 기업 강사</span></div></div>
-  <div class="gift">${document.getElementById('giftIcon').innerHTML}<div><p class="t1">정성 응답자 선정</p><p class="t2"><b>bhc 치킨</b> 기프티콘 증정</p></div></div>
+  <div class="meta"><span class="pill due">11/17(화)까지</span><span class="pill">⏱ 5분</span><span class="pill">학교 · 공공기관 · 기업 강사</span></div></div>
+  <div class="gift">${document.getElementById('giftIcon').innerHTML}<div><p class="t1">정성 응답자 선정 · e카드교환권</p><p class="t2"><b>스타벅스</b> 1만원권 증정</p></div></div>
   <p class="org">조사기관 보라에듀</p>
   ${document.getElementById('art').innerHTML}
 </div>`;
