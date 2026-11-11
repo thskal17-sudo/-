@@ -2,16 +2,13 @@
  * 직업인 체험 강사 모집 구글 폼 자동 생성 스크립트
  *
  * 사용법: forms/README.md 참고
- *   1) 강사 서류 양식(한글 파일)을 내 구글 드라이브에 올리고 공유 링크 복사
- *   2) https://script.google.com 에서 "새 프로젝트" → 이 파일 내용 전부 붙여 넣기
- *   3) 아래 TEMPLATE_FILE_URL 에 1)의 링크 붙여 넣고 저장
- *   4) 함수 선택에서 createCareerDayForm 고르고 "실행"
- *   5) 실행 로그의 편집 링크로 들어가 "파일 업로드" 질문만 직접 추가
+ *   1) https://script.google.com 에서 "새 프로젝트" → 이 파일 내용 전부 붙여 넣고 저장
+ *   2) 함수 선택에서 createCareerDayForm 고르고 "실행"
+ *   3) 실행 로그의 편집 링크로 들어가 "파일 업로드" 질문만 직접 추가
  *      (구글이 파일 업로드 질문은 스크립트로 만들 수 없게 막아 두었음)
  */
 
 // ===== 여기만 고치면 폼 전체에 반영됩니다 =====
-const TEMPLATE_FILE_URL = '';                // 구글 드라이브에 올린 서류 양식(한글 파일)의 링크
 const EVENT_DATE = '2026. 12. 10.(목)';
 const EVENT_TIME = '6~7교시 (정확한 시간은 확정 후 개별 안내)';
 const SCHOOL = '김해 소재 중학교';
@@ -29,24 +26,8 @@ function won(n) {
   return n.toLocaleString('ko-KR') + '원';
 }
 
-/** 드라이브 링크에서 파일 ID를 뽑아 "링크가 있는 모든 사용자 보기"로 공유하고 바로 받기 링크를 돌려준다. */
-function templateDownloadUrl() {
-  const m = TEMPLATE_FILE_URL.match(/[-\w]{25,}/);
-  if (!m) {
-    throw new Error('TEMPLATE_FILE_URL 이 비어 있거나 올바른 구글 드라이브 링크가 아닙니다. 서류 양식을 드라이브에 올린 뒤 링크를 붙여 넣으세요.');
-  }
-  const file = DriveApp.getFileById(m[0]);
-  try {
-    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
-  } catch (e) {
-    Logger.log('주의: 양식 파일 공유 설정을 바꾸지 못했습니다(' + e.message + '). 드라이브에서 "링크가 있는 모든 사용자 - 뷰어"로 직접 바꿔 주세요.');
-  }
-  return 'https://drive.google.com/uc?export=download&id=' + m[0];
-}
-
 function createCareerDayForm() {
   const total = FEE_PER_HOUR * SESSIONS;
-  const templateUrl = templateDownloadUrl();
 
   const form = FormApp.create('[' + SCHOOL + '] 직업인 체험 강사 모집 신청서');
   form.setDescription([
@@ -58,8 +39,7 @@ function createCareerDayForm() {
     '■ 대상: 학급당 약 26~28명',
     '■ 강사료: 시간당 ' + won(FEE_PER_HOUR) + ' × ' + SESSIONS + '차시 = ' + won(total),
     '',
-    '■ 제출 서류 양식 (한글 파일) 내려받기',
-    templateUrl,
+    '■ 제출 서류: 안내문에 첨부된 한글 양식',
     '  - 강사 이력카드, 강의계획서, 신분증·통장사본·자격증, 개인정보 수집 및 이용 동의서',
     '  - 작성 후 이 신청서의 "서류 제출" 단계에서 업로드해 주세요.',
     '',
@@ -120,9 +100,7 @@ function createCareerDayForm() {
     .setHelpText([
       '첨부파일 확인하여 업로드해주세요.',
       '',
-      '양식 내려받기: ' + templateUrl,
-      '',
-      '양식 안의 강사 이력카드, 강의계획서(' + SESSIONS + '차시, 이론 + 체험), 신분증·통장사본·자격증, ' +
+      '첨부된 한글 양식의 강사 이력카드, 강의계획서(' + SESSIONS + '차시, 이론 + 체험), 신분증·통장사본·자격증, ' +
         '개인정보 수집 및 이용 동의서를 모두 작성해 업로드해 주세요.',
     ].join('\n'));
 
