@@ -12,7 +12,7 @@
 
 // ===== 여기만 고치면 폼 전체에 반영됩니다 =====
 const TEMPLATE_FILE_URL = '';                // 구글 드라이브에 올린 서류 양식(한글 파일)의 링크
-const EVENT_DATE = '2026. 12. 10.(금)';     // ※ 2026년 12월 10일은 실제로 목요일입니다. 확인 후 수정하세요.
+const EVENT_DATE = '2026. 12. 10.(목)';
 const EVENT_TIME = '6~7교시 (정확한 시간은 확정 후 개별 안내)';
 const SCHOOL = '김해 소재 중학교';
 const FEE_PER_HOUR = 50000;                  // 시간(차시)당 강사료
