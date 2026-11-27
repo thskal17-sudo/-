@@ -172,168 +172,168 @@ const chartText = { catAxisLabelFontFace: "+mn-lt", valAxisLabelFontFace: "+mn-l
     s.addNotes("저는 7년 동안 프리랜서 강사로 일하며 공고 사이트를 매일 뒤졌습니다. 제가 운영하는 강사 모임 1,000명에게서도 공고를 못 봤다, 경력이 없어 지원조차 못 한다는 고민을 반복해서 들었습니다. 이것이 강사잇다의 출발점입니다.");
   }
 
-  // ===== 4. 문제 구조 =====
+  // ===== 4. 문제 구조: 거울 구조(나비형) =====
   {
     const s = content("Q1 문제 인식 · 해결하려는 문제", "강사와 기관이 서로를 찾지 못하는 구조", S1);
-    R(s, { x: 0.6, y: 1.7, w: 5.3, h: 4.05, fill: TINT });
-    R(s, { x: 7.43, y: 1.7, w: 5.3, h: 4.05, fill: BG });
-    pill(s, "강사 (공급)", 2.5, 1.88, 1.5, 0.38, NAVY, WHITE, 13);
-    pill(s, "기관 (수요)", 9.33, 1.88, 1.5, 0.38, INK2, WHITE, 13);
-    // 악순환 3노드
-    const nodes = [[2.15, 2.45, "실적 없음", "첫 경력 쌓을 곳이 없음"], [3.5, 4.35, "공고 지원 불가", "경력 1년 이상 요구"], [0.8, 4.35, "출강 기회 없음", "인맥 없으면 추천도 없음"]];
-    for (const [x, y, t, d] of nodes) {
-      R(s, { x, y, w: 2.2, h: 1.05, fill: "FFFFFF", line: HEX.navy, lw: 1.5 });
-      T(s, t, { x, y: y + 0.12, w: 2.2, h: 0.4, fontSize: 15, bold: true, align: "center" });
-      T(s, d, { x: x + 0.1, y: y + 0.55, w: 2.0, h: 0.35, fontSize: 12, color: INK2, align: "center" });
-    }
-    L(s, 4.0, 3.55, 4.45, 4.3, { color: HEX.navy, width: 2, arrow: true });
-    L(s, 3.45, 4.88, 3.05, 4.88, { color: HEX.navy, width: 2, arrow: true });
-    L(s, 1.75, 4.3, 2.3, 3.55, { color: HEX.navy, width: 2, arrow: true });
-    T(s, "악순환", { x: 2.25, y: 3.75, w: 2.0, h: 0.4, fontSize: 16, bold: true, color: NAVY, align: "center" });
-    // 기관 흐름
-    const org = [["인맥·지인 추천에 의존", "기관 3곳 인터뷰 공통 답변"], ["새 강사를 검증할 수단 없음", "“1분 영상으로는 판단 어려움”"], ["늘 아는 강사만 다시 섭외", "새로운 강사가 들어갈 틈이 없음"]];
-    org.forEach(([t, d], i) => {
-      const y = 2.45 + i * 1.08;
-      R(s, { x: 7.85, y, w: 4.46, h: 0.86, fill: "FFFFFF", line: HEX.muted, lw: 1.25 });
-      T(s, t, { x: 7.85, y: y + 0.08, w: 4.46, h: 0.38, fontSize: 15, bold: true, align: "center" });
-      T(s, d, { x: 7.85, y: y + 0.46, w: 4.46, h: 0.3, fontSize: 12, color: INK2, align: "center" });
-      if (i < 2) L(s, 10.08, y + 0.88, 10.08, y + 1.06, { color: HEX.muted, width: 1.5, arrow: true });
+    pill(s, "강사 (공급)", 0.6, 1.68, 1.6, 0.38, NAVY, WHITE, 13);
+    pill(s, "기관 (수요)", 11.13, 1.68, 1.6, 0.38, INK2, WHITE, 13);
+    const rows = [["탐색", ["공고를 못 봄", "교육청·구청·평생교육원에 공고가 흩어져 있음"], ["인맥·지인 추천에 의존", "기관 3곳 인터뷰 공통 답변"]],
+      ["신뢰", ["실적이 없어 지원 불가", "‘최근 3년 내 강의 경력 1년 이상’ 요구"], ["새 강사를 검증할 수단 없음", "“1분 영상으로는 판단 어려움”"]],
+      ["기회", ["출강 기회 없음", "인맥이 없으면 추천도 못 받음"], ["늘 아는 강사만 다시 섭외", "새로운 강사가 들어갈 틈이 없음"]]];
+    rows.forEach(([k, a, b], i) => {
+      const y = 2.2 + i * 1.12, h = 0.95, cy = y + h / 2;
+      R(s, { x: 0.6, y, w: 4.75, h, fill: TINT });
+      T(s, a[0], { x: 0.85, y: y + 0.1, w: 4.3, h: 0.4, fontSize: 16, bold: true, align: "right" });
+      T(s, a[1], { x: 0.85, y: y + 0.52, w: 4.3, h: 0.32, fontSize: 12, color: INK2, align: "right" });
+      R(s, { x: 7.98, y, w: 4.75, h, fill: BG });
+      T(s, b[0], { x: 8.2, y: y + 0.1, w: 4.3, h: 0.4, fontSize: 16, bold: true });
+      T(s, b[1], { x: 8.2, y: y + 0.52, w: 4.3, h: 0.32, fontSize: 12, color: INK2 });
+      L(s, 5.37, cy, 6.12, cy, { color: HEX.red, width: 1.5, dash: "dash" });
+      L(s, 7.21, cy, 7.96, cy, { color: HEX.red, width: 1.5, dash: "dash" });
+      Oval(s, { x: 6.17, y: cy - 0.5, w: 1.0, h: 1.0, fill: WHITE, line: HEX.red, lw: 2 });
+      T(s, k, { x: 6.17, y: cy - 0.5, w: 1.0, h: 1.0, fontSize: 16, bold: true, color: HEX.red, align: "center", valign: "middle" });
     });
-    // 연결 단절
-    T(s, "연결 단절", { x: 5.95, y: 2.95, w: 1.43, h: 0.35, fontSize: 14, bold: true, color: HEX.red, align: "center" });
-    L(s, 6.05, 3.55, 7.3, 3.55, { color: HEX.red, width: 1.75, dash: "dash", arrow: true });
-    L(s, 7.3, 4.05, 6.05, 4.05, { color: HEX.red, width: 1.75, dash: "dash", arrow: true });
-    T(s, "✕", { x: 6.42, y: 3.55, w: 0.5, h: 0.5, fontSize: 24, bold: true, color: HEX.red, align: "center", valign: "middle" });
-    R(s, { x: 0.6, y: 5.95, w: 12.13, h: 0.6, fill: NAVY, r: 0.1 });
-    T(s, "필요한 것: 첫 실적을 만들어 주고, 기관이 믿을 근거를 함께 주는 연결", { x: 0.6, y: 5.95, w: 12.13, h: 0.6, fontSize: 17, bold: true, color: WHITE, align: "center", valign: "middle" });
+    T(s, "세 지점에서 모두 연결이 끊김", { x: 4.9, y: 1.7, w: 3.53, h: 0.35, fontSize: 13, bold: true, color: HEX.red, align: "center" });
+    R(s, { x: 0.6, y: 5.72, w: 12.13, h: 0.85, fill: "FFFFFF", line: HEX.orange, lw: 1.5 });
+    T(s, "강사잇다가 채우는 것", { x: 0.85, y: 5.72, w: 2.6, h: 0.85, fontSize: 15, bold: true, color: ORANGE, valign: "middle" });
+    [["탐색", "공고를 한 화면에"], ["신뢰", "데뷔 교육 · 인증 배지"], ["기회", "기관 의뢰 연결"]].forEach(([k, t], i) => {
+      const x = 3.45 + i * 3.08;
+      pill(s, k, x, 5.95, 0.75, 0.4, ORANGE, WHITE, 12);
+      T(s, t, { x: x + 0.85, y: 5.95, w: 2.15, h: 0.4, fontSize: 14, bold: true, valign: "middle" });
+    });
     source(s, "출처: 기관 3곳 인터뷰, 부산 남구청 공지(2026.7.8), 서대문구청 공고(2025.12.18)");
-    s.addNotes("강사는 실적이 없어서 공고에 지원하지 못하고, 지원하지 못하니 출강 기회가 없는 악순환에 빠집니다. 기관은 인터뷰한 3곳 모두 인맥과 지인 추천에 의존했고, 새 강사를 검증할 방법이 없어 늘 아는 강사만 다시 부릅니다. 결국 필요한 것은 첫 실적을 만들어 주고 기관이 믿을 근거를 함께 주는 연결입니다.");
+    s.addNotes("강사와 기관의 문제를 마주 보게 놓으면 세 지점에서 끊겨 있습니다. 탐색에서는 강사가 공고를 못 보고 기관은 인맥에 기댑니다. 신뢰에서는 강사는 실적이 없고 기관은 검증할 방법이 없습니다. 그래서 강사는 기회가 없고 기관은 늘 아는 강사만 부릅니다. 강사잇다는 이 세 지점을 각각 공고, 교육과 인증 배지, 기관 연결로 채웁니다.");
   }
 
-  // ===== 5. 강사의 어려움 (도넛 3개) =====
+  // ===== 5. 강사의 어려움: 픽토그램 =====
   {
     const s = content("Q1 문제 인식 · 강사가 겪는 어려움", "강사 10명 중 6명이 공고를 놓치고, 4명은 첫 경력에서 막힙니다", S1);
-    const d = [["공고를 놓친 경험", 60, "강사잇다 강사 설문 (n=100, 2026.11)", HEX.orange], ["정기적인 일감 없음", 54.6, "서울시 프리랜서 1,000명 실태조사 (2018)", HEX.navy], ["첫 경력 쌓기가 가장 어려움", 40, "강사잇다 강사 설문 (n=100, 2026.11)", HEX.navy]];
-    const w = 3.83, g = 0.32;
-    d.forEach(([lab, v, src, col], i) => {
-      const x = 0.6 + i * (w + g);
-      R(s, { x, y: 1.75, w, h: 4.35, fill: BG });
-      T(s, lab, { x: x + 0.3, y: 1.98, w: w - 0.6, h: 0.4, fontSize: 17, bold: true, align: "center" });
-      s.addChart(pres.charts.DOUGHNUT, [{ name: lab, labels: ["해당", "그 외"], values: [v, 100 - v] }], {
-        x: x + 0.62, y: 2.5, w: 2.6, h: 2.6, holeSize: 72, chartColors: [col, HEX.line], showLegend: false, showValue: false, showPercent: false, showLabel: false, showTitle: false, firstSliceAng: 0, dataBorder: { pt: 0, color: "FFFFFF" }, objectName: oid("chart"), ...chartText,
-      });
-      T(s, [{ text: String(v), options: { fontSize: 36, bold: true, color: col } }, { text: "%", options: { fontSize: 18, bold: true, color: col } }], { x: x + 0.62, y: 3.4, w: 2.6, h: 0.8, align: "center", valign: "middle" });
-      T(s, src, { x: x + 0.3, y: 5.3, w: w - 0.6, h: 0.6, fontSize: 12, color: INK2, align: "center" });
+    const on = { o: await icon("FaPerson", HEX.orange), n: await icon("FaPerson", HEX.navy), g: await icon("FaPerson", HEX.line) };
+    const rows = [["공고를 놓친 경험", "강사잇다 강사 설문 (n=100, 2026.11)", 6, "o", ORANGE, "60"], ["첫 경력 쌓기가 가장 어려움", "강사잇다 강사 설문 (n=100, 2026.11)", 4, "n", NAVY, "40"]];
+    rows.forEach(([lab, src, k, c, col, v], r) => {
+      const y = 1.8 + r * 1.5;
+      R(s, { x: 0.6, y, w: 12.13, h: 1.3, fill: BG });
+      T(s, lab, { x: 0.9, y: y + 0.28, w: 3.3, h: 0.42, fontSize: 17, bold: true });
+      T(s, src, { x: 0.9, y: y + 0.72, w: 3.3, h: 0.3, fontSize: 11, color: INK2 });
+      for (let i = 0; i < 10; i++) s.addImage({ data: i < k ? on[c] : on.g, x: 4.3 + i * 0.6, y: y + 0.25, w: 0.5, h: 0.8, objectName: oid("person") });
+      T(s, [{ text: v, options: { fontSize: 40, bold: true, color: col } }, { text: "%", options: { fontSize: 20, bold: true, color: col } }], { x: 10.5, y, w: 2.0, h: 1.3, align: "right", valign: "middle" });
     });
+    const y = 4.8;
+    R(s, { x: 0.6, y, w: 12.13, h: 1.3, fill: BG });
+    T(s, "정기적인 일감 없음", { x: 0.9, y: y + 0.28, w: 3.3, h: 0.42, fontSize: 17, bold: true });
+    T(s, "서울시 프리랜서 1,000명 실태조사 (2018)", { x: 0.9, y: y + 0.72, w: 3.3, h: 0.3, fontSize: 11, color: INK2 });
+    R(s, { x: 4.3, y: y + 0.45, w: 5.9, h: 0.4, fill: HEX.line, r: 0.2 });
+    R(s, { x: 4.3, y: y + 0.45, w: 5.9 * 0.546, h: 0.4, fill: NAVY, r: 0.2 });
+    T(s, [{ text: "54.6", options: { fontSize: 40, bold: true, color: NAVY } }, { text: "%", options: { fontSize: 20, bold: true, color: NAVY } }], { x: 10.5, y, w: 2.0, h: 1.3, align: "right", valign: "middle" });
     R(s, { x: 0.6, y: 6.25, w: 12.13, h: 0.42, fill: OTINT, r: 0.08 });
-    T(s, "강사 402명 조사에서 ‘차별화·브랜드 마케팅’이 모든 경력 단계의 요구도 1순위 (김종현·엄우용, 2019, 교육과 학습 9(4))", { x: 0.85, y: 6.25, w: 11.7, h: 0.42, fontSize: 12, color: INK, valign: "middle" });
-    s.addNotes("강사잇다 강사 설문에서 60%가 공고를 놓친 경험이 있었고, 40%는 첫 경력 쌓기를 가장 어려운 점으로 꼽았습니다. 서울시 프리랜서 실태조사에서도 54.6%가 정기적인 일감이 없다고 답했습니다.");
+    T(s, "강사 402명 조사에서 ‘차별화·브랜드 마케팅’이 모든 경력 단계의 요구도 1순위 (김종현·엄우용, 2019, 교육과 학습 9(4))", { x: 0.85, y: 6.25, w: 11.7, h: 0.42, fontSize: 12, valign: "middle" });
+    s.addNotes("강사잇다 강사 설문에서 10명 중 6명이 공고를 놓친 경험이 있었고, 10명 중 4명은 첫 경력 쌓기를 가장 어려운 점으로 꼽았습니다. 서울시 프리랜서 실태조사에서도 54.6%가 정기적인 일감이 없다고 답했습니다.");
   }
 
-  // ===== 6. 목표 시장 =====
+  // ===== 6. 목표 시장: 깔때기 =====
   {
     const s = content("Q1 문제 인식 · 목표 고객과 시장", "부울경·경북 연 1만 건의 강사 공고부터 시작합니다", S1);
-    const cx = 3.05, base = 6.3;
-    [[4.4, TINT], [3.05, HEX.soft], [1.7, NAVY]].forEach(([d, col]) => Oval(s, { x: cx - d / 2, y: base - d, w: d, h: d, fill: col }));
-    T(s, "전체", { x: cx - 1, y: base - 4.15, w: 2, h: 0.35, fontSize: 14, bold: true, color: NAVY, align: "center" });
-    T(s, "목표", { x: cx - 1, y: base - 2.85, w: 2, h: 0.35, fontSize: 14, bold: true, color: NAVY, align: "center" });
-    T(s, "초기", { x: cx - 1, y: base - 1.05, w: 2, h: 0.4, fontSize: 15, bold: true, color: WHITE, align: "center" });
-    const rows = [["전체 시장", "9,557억 원", "방과후강사 7.4만 명에게 지급된 연간 금액 (국세청 사업소득 원천징수 신고 통계)", TINT], ["목표 시장", "연 약 1만 건", "부울경·경북 공공기관 강사 공고 (추정: 경남 하루 9.3건 × 4개 지역)", HEX.soft], ["초기 고객", "회원 500+명", "강사 모임 1,000명 · 당근모임 260명 · 스레드 팔로워 600명 (2026.11.27)", NAVY]];
-    rows.forEach(([t, n, d, col], i) => {
-      const y = 1.8 + i * 1.45;
-      R(s, { x: 5.9, y: y + 0.1, w: 0.32, h: 0.32, fill: col, r: 0.06 });
-      T(s, t, { x: 6.4, y: y + 0.03, w: 1.8, h: 0.45, fontSize: 16, bold: true, color: INK2, valign: "middle" });
-      T(s, n, { x: 8.2, y: y - 0.08, w: 4.5, h: 0.68, fontSize: 30, bold: true, color: NAVY, valign: "middle" });
-      T(s, d, { x: 6.4, y: y + 0.62, w: 6.3, h: 0.55, fontSize: 13, color: INK2 });
-      if (i < 2) L(s, 5.9, y + 1.32, 12.73, y + 1.32, { color: HEX.line, width: 1 });
+    const lv = [["전체 시장", "9,557억 원", 7.0, TINT, NAVY, "방과후강사 7.4만 명에게 지급된 연간 금액", "국세청 사업소득 원천징수 신고 통계"], ["목표 시장", "연 약 1만 건", 5.4, HEX.soft, NAVY, "부울경·경북 공공기관 강사 공고", "추정: 경남 하루 평균 9.3건 × 4개 지역"], ["초기 고객", "회원 500+명", 3.8, NAVY, WHITE, "이미 모인 강사 커뮤니티", "강사 모임 1,000명 · 당근모임 260명 · 스레드 팔로워 600명"]];
+    const cx = 4.1;
+    lv.forEach(([t, n, w, f, c, d1, d2], i) => {
+      const y = 1.8 + i * 1.5, h = 1.3;
+      s.addShape(pres.shapes.TRAPEZOID, { x: cx - w / 2, y, w, h, flipV: true, fill: { color: f }, line: { type: "none" }, adjustPoint: 0.25, objectName: oid("funnel") });
+      T(s, t, { x: cx - 1.6, y: y + 0.12, w: 3.2, h: 0.35, fontSize: 13, bold: true, color: c, align: "center" });
+      T(s, n, { x: cx - 1.8, y: y + 0.45, w: 3.6, h: 0.6, fontSize: 26, bold: true, color: c, align: "center", valign: "middle" });
+      L(s, cx + w / 2 - 0.2, y + h / 2, 8.0, y + h / 2, { color: HEX.line, width: 1, dash: "dash" });
+      Oval(s, { x: 7.95, y: y + h / 2 - 0.07, w: 0.14, h: 0.14, fill: ORANGE });
+      T(s, d1, { x: 8.25, y: y + 0.2, w: 4.48, h: 0.4, fontSize: 15, bold: true });
+      T(s, d2, { x: 8.25, y: y + 0.62, w: 4.48, h: 0.55, fontSize: 12, color: INK2 });
     });
-    R(s, { x: 5.9, y: 6.08, w: 6.83, h: 0.48, fill: OTINT, r: 0.08 });
-    T(s, "잠재 강사층: 부울경 경력단절여성 16.5만 명 (KOSIS 2025)", { x: 6.1, y: 6.08, w: 6.5, h: 0.48, fontSize: 14, bold: true, color: INK, valign: "middle" });
+    R(s, { x: 0.6, y: 6.25, w: 12.13, h: 0.42, fill: OTINT, r: 0.08 });
+    T(s, "잠재 강사층: 부울경 경력단절여성 16.5만 명 (KOSIS 2025)", { x: 0.85, y: 6.25, w: 11.7, h: 0.42, fontSize: 13, bold: true, valign: "middle" });
     s.addNotes("방과후 강사 7.4만 명에게 지급되는 금액만 연 9,557억 원입니다. 저희는 그중 부울경·경북 공공기관에서 나오는 연 약 1만 건의 강사 공고를 목표 시장으로 잡았고, 이미 모인 회원 500명 이상이 초기 고객입니다. 경력을 강의로 바꾸려는 부울경 경력단절여성만 16.5만 명입니다.");
   }
 
-  // ===== 7. 기존 방식 한계 =====
+  // ===== 7. 기존 방식 한계: 2x2 카드 =====
   {
     const s = content("Q1 문제 인식 · 기존 해결 방식의 한계", "기존 서비스에는 ‘실제 연결’이 비어 있습니다", S1);
-    const H = { bold: true, color: NAVY, fill: { color: HEX.tint }, fontSize: 14, valign: "middle" };
-    const c = { fontSize: 14, color: INK, valign: "middle" };
-    const rows = [
-      [{ text: "기존 방식", options: H }, { text: "하는 일", options: H }, { text: "한계", options: H }],
-      [{ text: "공고 모음 서비스", options: { ...c, bold: true } }, { text: "공고를 모아 보여 줌", options: c }, { text: [{ text: "이미 강사인 사람", options: { bold: true, color: HEX.orange } }, { text: "에게만 유용함" }], options: c }],
-      [{ text: "늘봄허브 (공공)", options: { ...c, bold: true } }, { text: "늘봄·방과후 프로그램 등록", options: c }, { text: "심사 연 2회, 늘봄·방과후에 한정", options: c }],
-      [{ text: "강사 양성 학원", options: { ...c, bold: true } }, { text: "60만~298만 원 교육 판매", options: c }, { text: "공고·기관 연결은 보장하지 않음", options: c }],
-      [{ text: "학교 강사 매칭 앱", options: { ...c, bold: true } }, { text: "강사·학교 연결", options: c }, { text: [{ text: "운영 종료", options: { bold: true, color: HEX.orange } }, { text: " (연결만으로는 지속 어려움)" }], options: c }],
-    ];
-    s.addTable(rows, { x: 0.6, y: 1.8, w: 8.1, colW: [2.3, 2.75, 3.05], rowH: 0.86, border: { type: "solid", pt: 0.75, color: HEX.line }, margin: [0, 0.15, 0, 0.15], objectName: oid("table") });
-    R(s, { x: 9.05, y: 1.8, w: 3.68, h: 3.9, fill: NAVY });
-    T(s, "강사잇다는 이 빈칸을 잇습니다", { x: 9.35, y: 2.05, w: 3.1, h: 0.8, fontSize: 18, bold: true, color: WHITE });
+    const cs = [["공고 모음 서비스", "공고를 모아 보여 줌", "이미 강사인 사람에게만 유용함", "FaListUl"], ["늘봄허브 (공공)", "늘봄·방과후 프로그램 등록", "심사 연 2회, 늘봄·방과후에 한정", "FaLandmark"], ["강사 양성 학원", "60만~298만 원 교육 판매", "공고·기관 연결은 보장하지 않음", "FaUserGraduate"], ["학교 강사 매칭 앱", "강사·학교 연결", "운영 종료 (연결만으로는 지속 어려움)", "FaMobileScreen"]];
+    for (let i = 0; i < 4; i++) {
+      const x = 0.6 + (i % 2) * 4.2, y = 1.8 + Math.floor(i / 2) * 2.25, w = 4.0, h = 2.05;
+      R(s, { x, y, w, h, fill: BG });
+      await iconCircle(s, cs[i][3], x + 0.25, y + 0.25, 0.6, "FFFFFF", HEX.ink2);
+      T(s, cs[i][0], { x: x + 1.0, y: y + 0.25, w: 2.85, h: 0.32, fontSize: 16, bold: true });
+      T(s, cs[i][1], { x: x + 1.0, y: y + 0.57, w: 2.85, h: 0.3, fontSize: 12, color: INK2 });
+      R(s, { x: x + 0.25, y: y + 1.12, w: w - 0.5, h: 0.7, fill: "FFFFFF" });
+      Oval(s, { x: x + 0.4, y: y + 1.32, w: 0.3, h: 0.3, fill: HEX.red });
+      T(s, "✕", { x: x + 0.4, y: y + 1.32, w: 0.3, h: 0.3, fontSize: 10, bold: true, color: WHITE, align: "center", valign: "middle" });
+      T(s, cs[i][2], { x: x + 0.82, y: y + 1.12, w: w - 1.15, h: 0.7, fontSize: 13, bold: true, valign: "middle" });
+    }
+    R(s, { x: 9.15, y: 1.8, w: 3.58, h: 4.3, fill: NAVY });
+    T(s, "강사잇다는 이 빈칸을 잇습니다", { x: 9.45, y: 2.05, w: 3.0, h: 0.8, fontSize: 18, bold: true, color: WHITE });
     ["공고 무료 제공", "데뷔 교육", "단계별 인증 배지", "기관 의뢰·직접 선택"].forEach((t, i) => {
-      const y = 3.0 + i * 0.62;
-      Oval(s, { x: 9.38, y: y + 0.08, w: 0.3, h: 0.3, fill: ORANGE });
-      T(s, "✓", { x: 9.38, y: y + 0.08, w: 0.3, h: 0.3, fontSize: 11, bold: true, color: WHITE, align: "center", valign: "middle" });
-      T(s, t, { x: 9.85, y, w: 2.7, h: 0.46, fontSize: 15, bold: true, color: WHITE, valign: "middle" });
+      const y = 3.05 + i * 0.68;
+      Oval(s, { x: 9.48, y: y + 0.08, w: 0.3, h: 0.3, fill: ORANGE });
+      T(s, "✓", { x: 9.48, y: y + 0.08, w: 0.3, h: 0.3, fontSize: 11, bold: true, color: WHITE, align: "center", valign: "middle" });
+      T(s, t, { x: 9.95, y, w: 2.7, h: 0.46, fontSize: 15, bold: true, color: WHITE, valign: "middle" });
     });
     source(s, "출처: 서울시 보도자료(2018.4), timelyedu.kr, 각 서비스 홈페이지 직접 확인(2026.11.23), 양성 학원 가격은 기사·판매 페이지 기준");
     s.addNotes("공고 모음 서비스는 이미 강사인 사람에게만 유용하고, 양성 학원은 60만~298만 원의 교육을 팔지만 연결은 보장하지 않습니다. 강사와 학교를 연결하던 앱은 운영을 종료했습니다. 연결만으로는 지속이 어렵다는 뜻이고, 그래서 강사잇다는 교육과 인증, 연결을 함께 묶었습니다.");
   }
 
-  // ===== 8. 서비스 흐름 =====
+  // ===== 8. 서비스: 입구 + 선순환 고리 =====
   pres.addSection({ title: "Q2 실현 가능성" });
   const S2 = "Q2 실현 가능성";
   {
     const s = content("Q2 실현 가능성 · 핵심 기능", "공고 찾기부터 첫 출강까지 한 번에 이어 줍니다", S2);
     pill(s, "강사잇다만의 차별점 ②③④", 9.9, 0.92, 2.83, 0.4, ORANGE, WHITE, 13);
-    const st = [["①", "공고 모음", "입구 · 무료", "부울경·경북 교육청·구청·평생교육원 공고 매일 자동 수집", "운영 중"], ["②", "데뷔 교육", "유료 · 기수제", "입문 특강 → 프로필 실습 → 1:1 지원서 컨설팅", "1기 완료"], ["③", "인증 배지", "신뢰 근거", "공공기관 강의 확인 · 강의 경력 · 실적 시간 (50h+, 100h+)", "2027.2"], ["④", "기관 연결", "기관 무료", "섭외 의뢰서 접수, 기관이 강사 프로필을 보고 직접 선택", "운영 중"], ["⑤", "첫 출강 · 실적", "성과", "강의료는 기관이 강사에게 직접 지급 (수수료 없음)", "3건 연결"]];
-    const w = 2.15, g = 0.345, y = 1.75, h = 3.55;
-    st.forEach(([no, name, tag, desc, stat], i) => {
-      const x = 0.6 + i * (w + g), hi = i >= 1 && i <= 3;
-      R(s, { x, y, w, h, fill: hi ? TINT : BG });
-      R(s, { x, y, w, h: 1.0, fill: hi ? NAVY : INK2 });
-      Rect(s, { x, y: y + 0.8, w, h: 0.2, fill: hi ? NAVY : INK2 });
-      T(s, `${no} ${name}`, { x: x + 0.1, y: y + 0.14, w: w - 0.2, h: 0.42, fontSize: 16, bold: true, color: WHITE, align: "center" });
-      T(s, tag, { x: x + 0.1, y: y + 0.56, w: w - 0.2, h: 0.3, fontSize: 12, color: "DDE3F0", align: "center" });
-      T(s, desc, { x: x + 0.18, y: y + 1.2, w: w - 0.36, h: 1.45, fontSize: 14, color: INK, align: "center" });
-      pill(s, stat, x + 0.4, y + h - 0.65, w - 0.8, 0.4, WHITE, hi ? NAVY : INK2, 13);
-      if (i < 4) L(s, x + w + 0.05, y + h / 2, x + w + g - 0.05, y + h / 2, { color: HEX.muted, width: 2, arrow: true });
-    });
-    // 되먹임 ⑤ → ③
-    const xa = 0.6 + 4 * (w + g) + w / 2, xb = 0.6 + 2 * (w + g) + w / 2, yb = 5.75;
-    L(s, xa, y + h + 0.05, xa, yb, { color: HEX.orange, width: 2.25 });
-    L(s, xa, yb, xb, yb, { color: HEX.orange, width: 2.25 });
-    L(s, xb, yb, xb, y + h + 0.06, { color: HEX.orange, width: 2.25, arrow: true });
-    T(s, "출강 실적이 다시 인증 배지로 쌓여, 다음 공고·의뢰에 유리해짐", { x: xb - 1.0, y: yb + 0.12, w: 7.3, h: 0.4, fontSize: 15, bold: true, color: ORANGE, align: "center" });
-    s.addNotes("강사잇다는 다섯 단계로 이어집니다. 무료 공고 모음이 입구이고, 데뷔 교육, 단계별 인증 배지, 기관 의뢰가 기존 서비스에 없는 부분입니다. 출강 실적은 다시 인증 배지로 쌓여 다음 공고와 의뢰에 유리해지는 선순환을 만듭니다.");
+    const node = (x, y, w, no, name, desc, stat, fill, dark) => {
+      R(s, { x, y, w, h: 1.4, fill });
+      T(s, `${no} ${name}`, { x: x + 0.22, y: y + 0.14, w: w - 1.4, h: 0.4, fontSize: 16, bold: true, color: dark ? WHITE : INK });
+      pill(s, stat, x + w - 1.2, y + 0.16, 1.0, 0.34, dark ? WHITE : (fill === BG ? INK2 : NAVY), dark ? NAVY : WHITE, 11);
+      T(s, desc, { x: x + 0.22, y: y + 0.62, w: w - 0.44, h: 0.65, fontSize: 13, color: dark ? "DDE3F0" : INK2 });
+    };
+    node(0.6, 1.75, 3.45, "①", "공고 모음", "부울경·경북 공고를 매일 자동 수집 (입구 · 무료)", "운영 중", BG, false);
+    node(0.6, 3.6, 3.45, "②", "데뷔 교육", "입문 특강 → 프로필 실습 → 1:1 지원서 컨설팅", "1기 완료", TINT, false);
+    node(4.85, 3.6, 3.0, "③", "인증 배지", "공공기관 강의 확인 · 경력 · 실적 시간(50h+, 100h+)", "2027.2", NAVY, true);
+    node(9.28, 1.75, 3.45, "④", "기관 연결", "섭외 의뢰 접수, 기관이 프로필을 보고 직접 선택", "운영 중", TINT, false);
+    node(9.28, 5.1, 3.45, "⑤", "첫 출강·실적", "강의료는 기관이 강사에게 직접 지급 (수수료 없음)", "3건 연결", OTINT, false);
+    L(s, 2.32, 3.18, 2.32, 3.57, { color: HEX.muted, width: 2, arrow: true });
+    L(s, 4.08, 4.3, 4.82, 4.3, { color: HEX.navy, width: 2.25, arrow: true });
+    L(s, 7.9, 3.85, 9.25, 2.75, { color: HEX.navy, width: 2.25, arrow: true });
+    L(s, 11.0, 3.18, 11.0, 5.07, { color: HEX.navy, width: 2.25, arrow: true });
+    L(s, 9.25, 5.75, 7.0, 5.03, { color: HEX.orange, width: 2.5, arrow: true });
+    T(s, "선순환", { x: 9.6, y: 3.85, w: 1.3, h: 0.45, fontSize: 18, bold: true, color: NAVY, align: "right" });
+    T(s, "출강 실적이 다시\n인증 배지로 쌓임", { x: 5.0, y: 5.5, w: 3.2, h: 0.7, fontSize: 14, bold: true, color: ORANGE, align: "center" });
+    T(s, "입구", { x: 0.6, y: 5.15, w: 3.45, h: 0.35, fontSize: 13, bold: true, color: MUTED });
+    T(s, "무료 공고로 강사를 모으고, 첫 출강이 급한 강사를 교육으로 이끎", { x: 0.6, y: 5.5, w: 3.45, h: 0.8, fontSize: 12, color: INK2 });
+    s.addNotes("무료 공고 모음이 입구입니다. 첫 출강이 급한 강사는 데뷔 교육으로 들어오고, 교육을 마치면 인증 배지, 기관 연결, 첫 출강으로 이어집니다. 출강 실적은 다시 인증 배지로 쌓여 다음 공고와 의뢰에 유리해지는 선순환이 됩니다. ②③④가 기존 서비스에 없는 부분입니다.");
   }
 
-  // ===== 9. 공고 자동 수집 =====
+  // ===== 9. 공고 수집: 전/후 비교 =====
   {
     const s = content("Q2 실현 가능성 · 공고 자동 수집", "흩어진 공공 강사 공고를 매일 모아 한 화면에 보여 줍니다", S2);
+    R(s, { x: 0.6, y: 1.75, w: 5.6, h: 4.75, fill: BG });
+    T(s, "지금까지", { x: 0.9, y: 1.95, w: 3, h: 0.32, fontSize: 13, bold: true, color: MUTED });
+    T(s, "사이트 5곳 이상을 매일 따로 확인", { x: 0.9, y: 2.27, w: 5.1, h: 0.45, fontSize: 18, bold: true, color: INK2 });
     const src = [["교육청", "부산·울산·경남·경북"], ["시·군·구청", "평생학습·주민센터"], ["시설공단", "문화·체육 강좌"], ["대학 평생교육원", "강좌 강사 모집"], ["학교", "방과후·늘봄 강사"]];
-    const hx = 5.55, hy = 3.85;
+    const g = await icon("FaGlobe", HEX.muted);
     src.forEach(([a, b], i) => {
-      const y = 1.75 + i * 0.95;
-      R(s, { x: 0.6, y, w: 2.85, h: 0.8, fill: BG, line: LINE });
-      T(s, a, { x: 0.8, y: y + 0.08, w: 2.5, h: 0.36, fontSize: 15, bold: true });
-      T(s, b, { x: 0.8, y: y + 0.44, w: 2.5, h: 0.28, fontSize: 12, color: INK2 });
-      L(s, 3.5, y + 0.4, hx - 1.0, hy, { color: HEX.soft, width: 1.5, dash: "dash" });
+      const y = 2.9 + i * 0.68;
+      R(s, { x: 0.9, y, w: 5.0, h: 0.56, fill: "FFFFFF", line: LINE, r: 0.08 });
+      s.addImage({ data: g, x: 1.08, y: y + 0.15, w: 0.26, h: 0.26, objectName: oid("icon") });
+      T(s, a, { x: 1.5, y, w: 2.0, h: 0.56, fontSize: 14, bold: true, color: INK2, valign: "middle" });
+      T(s, b, { x: 3.5, y, w: 2.3, h: 0.56, fontSize: 12, color: MUTED, valign: "middle" });
     });
-    Oval(s, { x: hx - 1.05, y: hy - 1.05, w: 2.1, h: 2.1, fill: NAVY });
-    T(s, "강사잇다", { x: hx - 1.05, y: hy - 0.55, w: 2.1, h: 0.45, fontSize: 19, bold: true, color: WHITE, align: "center" });
-    T(s, "매일 자동 수집\n정규화 · 검증", { x: hx - 1.05, y: hy - 0.05, w: 2.1, h: 0.6, fontSize: 12, color: "DDE3F0", align: "center" });
-    pill(s, "특허 출원 10-2026-0223988", hx - 1.45, hy + 1.3, 2.9, 0.4, OTINT, ORANGE, 12);
-    L(s, hx + 1.15, hy, 7.55, hy, { color: HEX.navy, width: 3, arrow: true });
-    R(s, { x: 7.75, y: 1.75, w: 4.98, h: 4.2, fill: "FFFFFF", line: LINE, shadow: true });
-    T(s, "강사잇다 공고 화면", { x: 8.1, y: 2.0, w: 4.3, h: 0.35, fontSize: 14, bold: true, color: INK2 });
-    T(s, "지원 가능 공고", { x: 8.1, y: 2.55, w: 4.3, h: 0.35, fontSize: 15, bold: true });
-    T(s, [{ text: "281", options: { fontSize: 54, bold: true, color: NAVY } }, { text: " 건", options: { fontSize: 22, bold: true, color: NAVY } }], { x: 8.1, y: 2.9, w: 4.3, h: 0.95, valign: "middle" });
-    T(s, "1R 당시 228건 → 현재", { x: 8.1, y: 3.85, w: 4.3, h: 0.3, fontSize: 12, color: INK2 });
-    ["지역·마감일 필터", "가입 없이 무료 열람", "www.gangsaitda.com 운영 중"].forEach((t, i) => {
-      const y = 4.4 + i * 0.45;
-      Oval(s, { x: 8.1, y: y + 0.1, w: 0.18, h: 0.18, fill: ORANGE });
-      T(s, t, { x: 8.42, y, w: 4.0, h: 0.38, fontSize: 14, valign: "middle" });
+    s.addShape(pres.shapes.RIGHT_ARROW, { x: 6.35, y: 3.75, w: 0.75, h: 0.7, fill: { color: HEX.orange }, line: { type: "none" }, objectName: oid("arrow") });
+    R(s, { x: 7.25, y: 1.75, w: 5.48, h: 4.75, fill: NAVY });
+    T(s, "강사잇다", { x: 7.55, y: 1.95, w: 3, h: 0.32, fontSize: 13, bold: true, color: "F2A06B" });
+    T(s, "한 화면에서 무료로", { x: 7.55, y: 2.27, w: 5, h: 0.45, fontSize: 18, bold: true, color: WHITE });
+    T(s, "지원 가능 공고", { x: 7.55, y: 2.95, w: 3, h: 0.35, fontSize: 14, color: "DDE3F0" });
+    T(s, [{ text: "281", options: { fontSize: 60, bold: true, color: WHITE } }, { text: " 건", options: { fontSize: 24, bold: true, color: WHITE } }], { x: 7.55, y: 3.25, w: 4.9, h: 1.0, valign: "middle" });
+    T(s, "1R 당시 228건", { x: 7.55, y: 4.25, w: 3, h: 0.3, fontSize: 12, color: "DDE3F0" });
+    ["매일 자동 수집 · 정규화 · 검증", "지역 · 마감일 필터", "특허 출원 10-2026-0223988"].forEach((t, i) => {
+      const y = 4.75 + i * 0.5;
+      Oval(s, { x: 7.58, y: y + 0.12, w: 0.18, h: 0.18, fill: ORANGE });
+      T(s, t, { x: 7.92, y, w: 4.6, h: 0.42, fontSize: 14, bold: true, color: WHITE, valign: "middle" });
     });
-    source(s, "실제 서비스 화면 캡처를 이 오른쪽 카드 자리에 넣으면 더 설득력 있음 (사업계획서 그림 4)");
-    s.addNotes("교육청, 구청, 시설공단, 대학 평생교육원, 학교에 흩어진 강사 공고를 매일 자동으로 모으고 정규화해서 한 화면에 보여 줍니다. 이 수집·정규화·검증 방식은 특허 출원했습니다. 지원 가능한 공고는 1R 당시 228건에서 현재 281건입니다.");
+    s.addNotes("지금까지 강사들은 교육청, 구청, 시설공단, 대학, 학교 사이트를 매일 따로 확인해야 했습니다. 강사잇다는 이 공고를 매일 자동으로 모으고 정규화해서 한 화면에 무료로 보여 줍니다. 지원 가능한 공고는 1R 당시 228건에서 지금 281건이고, 수집 방식은 특허 출원했습니다.");
   }
 
   // ===== 10. 1R 심사 의견 반영 =====
@@ -356,56 +356,67 @@ const chartText = { catAxisLabelFontFace: "+mn-lt", valAxisLabelFontFace: "+mn-l
     s.addNotes("1R에서 받은 네 가지 의견을 모두 반영했습니다. 매칭 성과가 없다는 지적에는 교육 참가자를 실제 출강까지 연결해 3건을 만들었고, 효과가 불분명했던 1분 영상은 단계별 인증 배지로 바꿨습니다. 월 구독료는 없애고 가입을 무료로 바꾼 뒤 유료 교육으로 10명이 결제했습니다.");
   }
 
-  // ===== 11. 추진 경과 타임라인 =====
+  // ===== 11. 추진 경과: 스윔레인 =====
   {
     const s = content("Q2 실현 가능성 · 추진 경과와 다음 일정", "신고·교육·특허를 마쳤고, 다음은 결제 연동과 인증 배지입니다", S2);
-    const ev = [["2026.8", "직업정보제공사업 신고", "부산북부지청", 1, 1], ["10.26", "데뷔 교육 1기", "입문 특강 10명 결제", 0, 1], ["10월 말", "1R 통과", "경남 · 경상국립대학교", 1, 1], ["11.10", "특허 출원", "공고 수집·정규화·검증", 0, 1], ["1R 이후", "기관 직접 선택 기능", "국내 서버 이전", 1, 1], ["11.27", "회원 500+명", "스레드 누적 조회 19.1만", 0, 1], ["12월", "결제 연동", "토스페이먼츠", 1, 0], ["2027.1", "데뷔 교육 2기", "신학기 공고 대응", 0, 0], ["2027.2~3", "배지·기관 파일럿", "인터뷰 기관 3곳", 1, 0]];
-    const ly = 4.05, x0 = 1.15, step = 1.38;
-    L(s, x0 - 0.3, ly, x0 + 5 * step, ly, { color: HEX.ink2, width: 3 });
-    L(s, x0 + 5 * step, ly, x0 + 8 * step + 0.4, ly, { color: HEX.orange, width: 3 });
-    ev.forEach(([dt, t, d, up, done], i) => {
-      const x = x0 + i * step, col = done ? NAVY : ORANGE;
-      Oval(s, { x: x - 0.12, y: ly - 0.12, w: 0.24, h: 0.24, fill: WHITE, line: done ? HEX.navy : HEX.orange, lw: 2.5 });
-      const bw = 2.3;
-      let bx = x - bw / 2, al = "center";
-      if (bx < 0.6) { bx = 0.6; al = "left"; }
-      if (bx + bw > 12.73) { bx = 12.73 - bw; al = "right"; }
-      if (up) {
-        L(s, x, ly - 0.16, x, ly - 0.6, { color: HEX.line, width: 1 });
-        T(s, dt, { x: x - 0.8, y: ly + 0.22, w: 1.6, h: 0.32, fontSize: 13, bold: true, color: col, align: "center" });
-        T(s, t, { x: bx, y: ly - 1.55, w: bw, h: 0.6, fontSize: 14, bold: true, color: done ? INK : ORANGE, align: al, valign: "bottom" });
-        T(s, d, { x: bx, y: ly - 0.92, w: bw, h: 0.3, fontSize: 12, color: INK2, align: al });
-      } else {
-        L(s, x, ly + 0.16, x, ly + 0.6, { color: HEX.line, width: 1 });
-        T(s, dt, { x: x - 0.8, y: ly - 0.55, w: 1.6, h: 0.32, fontSize: 13, bold: true, color: col, align: "center" });
-        T(s, t, { x: bx, y: ly + 0.66, w: bw, h: 0.6, fontSize: 14, bold: true, color: done ? INK : ORANGE, align: al });
-        T(s, d, { x: bx, y: ly + 1.02, w: bw, h: 0.3, fontSize: 12, color: INK2, align: al });
-      }
+    const months = ["2026.8", "9월", "10월", "11월", "12월", "2027.1", "2월", "3월"];
+    const gx = 2.55, cw = (12.73 - gx) / 8, X = (m) => gx + m * cw;
+    const today = X(3.87);
+    Rect(s, { x: today, y: 1.75, w: 12.73 - today, h: 4.6, fill: "FFF6F0" });
+    months.forEach((m, i) => T(s, m, { x: X(i), y: 1.8, w: cw, h: 0.32, fontSize: 12, bold: true, color: i >= 4 ? ORANGE : INK2, align: "center" }));
+    const lanes = ["사업·제도", "서비스·기술", "교육·고객"];
+    lanes.forEach((t, i) => {
+      const y = 2.25 + i * 1.35;
+      L(s, 0.6, y, 12.73, y, { color: HEX.line, width: 0.75 });
+      T(s, t, { x: 0.6, y, w: 1.8, h: 1.35, fontSize: 15, bold: true, color: NAVY, valign: "middle" });
+      L(s, gx, y + 0.675, 12.73, y + 0.675, { color: HEX.line, width: 1.25 });
     });
-    pill(s, "지금까지 한 일", x0 + 1.9, 5.85, 2.2, 0.42, INK2, WHITE, 13);
-    pill(s, "앞으로 할 일", x0 + 6.8, 5.85, 2.2, 0.42, ORANGE, WHITE, 13);
-    source(s, "웹 서비스 운영 중(www.gangsaitda.com) · 특허 출원 10-2026-0223988 · 직업정보제공사업 신고 J1302020260003 · MVP는 대표가 직접 개발");
-    s.addNotes("8월 직업정보제공사업 신고, 10월 데뷔 교육 1기, 1R 통과, 11월 특허 출원까지 마쳤습니다. 1R 이후에는 기관이 강사를 직접 고르는 기능을 붙이고 서버를 국내로 옮겼습니다. 12월 결제 연동, 내년 1월 교육 2기, 2~3월 인증 배지와 기관 파일럿이 다음 일정입니다.");
+    L(s, 0.6, 6.3, 12.73, 6.3, { color: HEX.line, width: 0.75 });
+    const ev = [[0, 0.5, "직업정보제공사업 신고", 1, 1], [0, 2.9, "1R 통과", 0, 1], [0, 3.33, "특허 출원 (11.10)", 1, 1, 1], [1, 3.6, "기관 직접 선택 · 서버 이전", 1, 1, 1], [1, 4.5, "결제 연동", 0, 0], [2, 2.84, "데뷔 교육 1기 (10.26)", 1, 1], [2, 3.87, "회원 500+명", 0, 1, 1], [2, 5.5, "데뷔 교육 2기", 1, 0]];
+    ev.forEach(([lane, m, t, up, done, left]) => {
+      const cy = 2.25 + lane * 1.35 + 0.675, x = X(m);
+      Oval(s, { x: x - 0.11, y: cy - 0.11, w: 0.22, h: 0.22, fill: done ? NAVY : ORANGE });
+      T(s, t, { x: left ? today - 2.45 : x - 1.15, y: up ? cy - 0.55 : cy + 0.16, w: 2.3, h: 0.38, fontSize: 12, bold: true, color: done ? INK : ORANGE, align: left ? "right" : "center", valign: up ? "bottom" : "top" });
+    });
+    [[1, "인증 배지 부여 시작", 1], [2, "기관 파일럿 (인터뷰 기관 3곳)", 0]].forEach(([lane, t, up]) => {
+      const cy = 2.25 + lane * 1.35 + 0.675;
+      R(s, { x: X(6.05), y: cy - 0.17, w: X(8) - X(6.05) - 0.05, h: 0.34, fill: ORANGE, r: 0.17 });
+      T(s, t, { x: X(5.6), y: up ? cy - 0.58 : cy + 0.2, w: X(8) - X(5.6), h: 0.36, fontSize: 12, bold: true, color: ORANGE, align: "center", valign: up ? "bottom" : "top" });
+    });
+    L(s, today, 1.75, today, 6.3, { color: HEX.orange, width: 1.5, dash: "dash" });
+    pill(s, "오늘 11.27", today - 0.6, 6.35, 1.2, 0.3, ORANGE, WHITE, 11);
+    source(s, "");
+    s.addNotes("일을 세 갈래로 나눠 보면, 사업·제도 쪽은 8월 직업정보제공사업 신고, 10월 1R 통과, 11월 특허 출원을 마쳤습니다. 서비스 쪽은 기관 직접 선택 기능과 국내 서버 이전을 끝냈고, 12월 결제 연동이 다음입니다. 교육 쪽은 10월 데뷔 교육 1기, 지금 회원 500명 이상이고, 내년 1월 2기, 2~3월 인증 배지와 기관 파일럿을 진행합니다.");
   }
 
-  // ===== 12. 성과 요약 3열 =====
+  // ===== 12. 성과: 트리 =====
   {
     const s = content("Q2 실현 가능성 · 검증 결과", "사업·서비스·커뮤니티 세 방향에서 성과가 쌓이고 있습니다", S2);
-    const cols = [["사업 성과", "FaHandshake", [["실제 강의 연결 3건", "출강 2건 · 면접 합격 1건"], ["유료 데뷔 교육 1기", "10명 결제"], ["기관 섭외 의뢰 접수", "사이트로 직접 의뢰"], ["회원 500+명", "1R 당시 0명"]]], ["서비스·기술 성과", "FaGears", [["특허 출원", "10-2026-0223988 (2026.11.10)"], ["직업정보제공사업 신고", "J1302020260003"], ["국내 서버 이전", "공고 자동 수집 안정화"], ["기관 강사 직접 선택", "1R 이후 기능 추가"]]], ["커뮤니티 성과", "FaComments", [["스레드 누적 조회 19.1만", "1R 당시 5.1만"], ["스레드 팔로워 600명", "1R 당시 296명"], ["당근모임 260명", "1R 당시 193명"], ["강사 모임 1,000명", "대표가 직접 운영"]]]];
-    const w = 3.89, g = 0.23;
-    for (let i = 0; i < 3; i++) {
-      const x = 0.6 + i * (w + g), [head, ic, items] = cols[i];
-      await iconCircle(s, ic, x, 1.7, 0.5, NAVY, "FFFFFF");
-      T(s, head, { x: x + 0.62, y: 1.7, w: 3, h: 0.5, fontSize: 18, bold: true, color: NAVY, valign: "middle" });
+    const groups = [["사업 성과", [["실제 강의 연결 3건", "출강 2건 · 면접 합격 1건"], ["유료 데뷔 교육 1기", "10명 결제"], ["기관 섭외 의뢰 접수", "사이트로 직접 의뢰"], ["회원 500+명", "1R 당시 0명"]]], ["서비스·기술", [["특허 출원", "10-2026-0223988 (2026.11.10)"], ["직업정보제공사업 신고", "J1302020260003"], ["국내 서버 이전", "공고 자동 수집 안정화"], ["기관 강사 직접 선택", "1R 이후 기능 추가"]]], ["커뮤니티", [["스레드 누적 조회 19.1만", "1R 당시 5.1만"], ["스레드 팔로워 600명", "1R 당시 296명"], ["당근모임 260명", "1R 당시 193명"], ["강사 모임 1,000명", "대표가 직접 운영"]]]];
+    const rh = 0.37, gap = 0.04, top = 1.72, ggap = 0.2;
+    R(s, { x: 0.6, y: 3.45, w: 2.3, h: 1.3, fill: NAVY });
+    T(s, "1R 이후 한 달", { x: 0.6, y: 3.6, w: 2.3, h: 0.5, fontSize: 17, bold: true, color: WHITE, align: "center" });
+    T(s, "2026.11.27 기준", { x: 0.6, y: 4.1, w: 2.3, h: 0.35, fontSize: 12, color: "DDE3F0", align: "center" });
+    const gc = [];
+    groups.forEach(([g, items], gi) => {
+      const gy = top + gi * (4 * (rh + gap) + ggap), cy = gy + (4 * (rh + gap) - gap) / 2;
+      gc.push(cy);
+      R(s, { x: 3.55, y: cy - 0.4, w: 2.2, h: 0.8, fill: TINT });
+      T(s, g, { x: 3.55, y: cy - 0.4, w: 2.2, h: 0.8, fontSize: 16, bold: true, color: NAVY, align: "center", valign: "middle" });
+      const ys = items.map((_, k) => gy + k * (rh + gap) + rh / 2);
+      L(s, 6.1, ys[0], 6.1, ys[3], { color: HEX.soft, width: 1.25 });
+      L(s, 5.75, cy, 6.1, cy, { color: HEX.soft, width: 1.25 });
       items.forEach(([a, b], k) => {
-        const y = 2.4 + k * 1.05, first = k === 0;
-        R(s, { x, y, w, h: 0.9, fill: first ? NAVY : BG });
-        T(s, a, { x: x + 0.25, y: y + 0.1, w: w - 0.5, h: 0.4, fontSize: 16, bold: true, color: first ? WHITE : INK });
-        T(s, b, { x: x + 0.25, y: y + 0.5, w: w - 0.5, h: 0.3, fontSize: 12, color: first ? "DDE3F0" : INK2 });
+        const y = gy + k * (rh + gap);
+        L(s, 6.1, y + rh / 2, 6.4, y + rh / 2, { color: HEX.soft, width: 1.25 });
+        R(s, { x: 6.4, y, w: 6.33, h: rh, fill: k === 0 ? OTINT : BG, r: 0.08 });
+        T(s, [{ text: a, options: { bold: true, color: INK } }, { text: "   " + b, options: { color: INK2, fontSize: 12 } }], { x: 6.6, y, w: 6.0, h: rh, fontSize: 14, valign: "middle" });
       });
-    }
-    source(s, "2026.11.27 기준");
-    s.addNotes("성과를 세 방향으로 정리했습니다. 사업 쪽은 실제 강의 연결 3건과 유료 교육 10명, 서비스 쪽은 특허 출원과 사업 신고, 서버 이전, 커뮤니티 쪽은 스레드 누적 조회 19.1만과 팔로워 600명입니다.");
+    });
+    L(s, 3.2, gc[0], 3.2, gc[2], { color: HEX.soft, width: 1.25 });
+    L(s, 2.9, 4.1, 3.2, 4.1, { color: HEX.soft, width: 1.25 });
+    gc.forEach((cy) => L(s, 3.2, cy, 3.55, cy, { color: HEX.soft, width: 1.25 }));
+    s.addNotes("1R 이후 한 달의 성과를 세 갈래로 정리했습니다. 사업 쪽은 실제 강의 연결 3건과 유료 교육 10명, 서비스 쪽은 특허 출원과 사업 신고, 서버 이전, 커뮤니티 쪽은 스레드 누적 조회 19.1만과 팔로워 600명입니다.");
   }
 
   // ===== 13. 연결 사례 + 성장 그래프 =====
@@ -439,91 +450,92 @@ const chartText = { catAxisLabelFontFace: "+mn-lt", valAxisLabelFontFace: "+mn-l
     s.addNotes("실제 사례입니다. 학원 원장님이 특성화고 영어 강사로 첫 출강을 했고, 1:1 지원서 컨설팅을 받은 수료생이 강사 면접에 합격했습니다. 1기 수료생 10명 중 2명이 결과를 냈고, 60세 이상 강사 연결도 1건 있습니다. 1R 이후 회원은 0명에서 500명 이상으로, 스레드 조회는 3.7배로 늘었습니다.");
   }
 
-  // ===== 14. 포지셔닝 =====
+  // ===== 14. 차별성: 단계별 커버리지 =====
   {
     const s = content("Q2 실현 가능성 · 차별성", "데뷔 교육과 기관 연결을 함께 하는 서비스는 확인되지 않았습니다", S2);
-    const L0 = 1.35, T0 = 1.8, W0 = 5.9, H0 = 4.2;
-    Rect(s, { x: L0, y: T0, w: W0, h: H0, fill: BG });
-    Rect(s, { x: L0 + W0 / 2, y: T0, w: W0 / 2, h: H0 / 2, fill: TINT });
-    L(s, L0, T0 + H0 / 2, L0 + W0, T0 + H0 / 2, { color: HEX.line, width: 1 });
-    L(s, L0 + W0 / 2, T0, L0 + W0 / 2, T0 + H0, { color: HEX.line, width: 1 });
-    L(s, L0, T0 + H0 + 0.15, L0 + W0, T0 + H0 + 0.15, { color: HEX.ink2, width: 1.5, arrow: true });
-    T(s, "실제 공고·기관 의뢰 연결", { x: L0, y: T0 + H0 + 0.22, w: W0, h: 0.3, fontSize: 13, bold: true, color: INK2, align: "center" });
-    L(s, L0 - 0.15, T0 + H0, L0 - 0.15, T0, { color: HEX.ink2, width: 1.5, arrow: true });
-    T(s, "신규 강사 데뷔 지원", { x: L0 - 1.6, y: T0 + H0 / 2 - 0.2, w: 2.4, h: 0.4, fontSize: 13, bold: true, color: INK2, align: "center", valign: "middle", rotate: 270 });
-    const pts = [["강사 양성 학원", 0.18, 0.2], ["늘봄허브 (공공)", 0.55, 0.6], ["공고 모음 서비스", 0.66, 0.7], ["섭외 대행", 0.88, 0.9], ["강사잇다", 0.84, 0.18]];
-    pts.forEach(([n, fx, fy]) => {
-      const me = n === "강사잇다", r = me ? 0.36 : 0.22, x = L0 + W0 * fx, y = T0 + H0 * fy;
-      Oval(s, { x: x - r / 2, y: y - r / 2, w: r, h: r, fill: me ? ORANGE : MUTED });
-      const side = n === "섭외 대행" || n === "늘봄허브 (공공)";
-      const lx = side ? x - 2.25 : x - 1.2, ly = side ? y - 0.18 : y + r / 2 + 0.03;
-      T(s, n, { x: lx, y: ly, w: side ? 2.0 : 2.4, h: 0.36, fontSize: me ? 16 : 13, bold: true, color: me ? ORANGE : INK2, align: side ? "right" : "center" });
+    const stages = ["공고 탐색", "데뷔 준비", "신뢰 근거", "기관 연결"];
+    const gx = 3.35, cw = (12.73 - gx) / 4, X = (i) => gx + i * cw;
+    stages.forEach((t, i) => {
+      Rect(s, { x: X(i), y: 1.75, w: cw - 0.06, h: 4.45, fill: i % 2 ? "FFFFFF" : BG });
+      T(s, t, { x: X(i), y: 1.82, w: cw - 0.06, h: 0.4, fontSize: 15, bold: true, color: INK2, align: "center" });
     });
-    T(s, "강사잇다만 가진 것", { x: 7.75, y: 1.75, w: 5, h: 0.4, fontSize: 18, bold: true, color: NAVY });
-    const it = [["데뷔 교육", "특강 → 프로필 실습 → 1:1 컨설팅"], ["인증 배지", "공공기관 강의·실적 시간 (2027.2 예정)"], ["기관 직접 의뢰", "부울경·경북 지역 밀착"], ["가입 무료", "교육은 1만 원부터"]];
-    it.forEach(([a, b], i) => {
-      const y = 2.3 + i * 0.98;
-      R(s, { x: 7.75, y, w: 4.98, h: 0.82, fill: BG });
-      Oval(s, { x: 7.98, y: y + 0.27, w: 0.28, h: 0.28, fill: NAVY });
-      T(s, "✓", { x: 7.98, y: y + 0.27, w: 0.28, h: 0.28, fontSize: 10, bold: true, color: WHITE, align: "center", valign: "middle" });
-      T(s, a, { x: 8.45, y: y + 0.08, w: 4.1, h: 0.36, fontSize: 15, bold: true });
-      T(s, b, { x: 8.45, y: y + 0.44, w: 4.1, h: 0.3, fontSize: 12, color: INK2 });
+    const rows = [["공고 모음 서비스", "공공강사·티처라인", [[0, 1, "공고를 모아 보여 줌"]]], ["강사 양성 학원", "60만~298만 원", [[1, 2, "교육 판매"]]], ["늘봄허브 (공공)", "심사 연 2회", [[3, 4, "늘봄·방과후 한정"]]], ["섭외 대행", "더알림·커넥트밸류", [[3, 4, "섭외 대행"]]]];
+    rows.forEach(([n, sub, bars], i) => {
+      const y = 2.4 + i * 0.75;
+      T(s, n, { x: 0.6, y, w: 2.65, h: 0.36, fontSize: 15, bold: true });
+      T(s, sub, { x: 0.6, y: y + 0.34, w: 2.65, h: 0.28, fontSize: 11, color: INK2 });
+      bars.forEach(([a, b, t]) => {
+        R(s, { x: X(a) + 0.12, y: y + 0.08, w: X(b) - X(a) - 0.3, h: 0.5, fill: HEX.soft, r: 0.25 });
+        T(s, t, { x: X(a) + 0.12, y: y + 0.08, w: X(b) - X(a) - 0.3, h: 0.5, fontSize: 12, bold: true, color: NAVY, align: "center", valign: "middle" });
+      });
     });
-    source(s, "비교 대상: 공고 모음 = 공공강사·티처라인, 섭외 대행 = 더알림·커넥트밸류 (홈페이지 직접 확인 2026.11.23)");
-    s.addNotes("가로축은 실제 공고와 기관 의뢰로 연결해 주는 정도, 세로축은 신규 강사의 데뷔를 돕는 정도입니다. 양성 학원은 교육만, 공고 모음과 섭외 대행은 연결만 합니다. 두 가지를 함께 하는 서비스는 확인되지 않았고, 강사잇다가 그 자리를 차지합니다.");
+    const y = 5.45;
+    L(s, 0.6, y - 0.12, 12.73, y - 0.12, { color: HEX.line, width: 1 });
+    T(s, "강사잇다", { x: 0.6, y: y + 0.05, w: 2.65, h: 0.5, fontSize: 18, bold: true, color: ORANGE, valign: "middle" });
+    R(s, { x: X(0) + 0.12, y: y + 0.05, w: X(4) - X(0) - 0.3, h: 0.55, fill: ORANGE, r: 0.27 });
+    R(s, { x: X(2) + 0.05, y: y + 0.1, w: cw - 0.16, h: 0.45, fill: "F2A06B", r: 0.22 });
+    ["공고 무료", "데뷔 교육", "인증 배지 (2027.2)", "기관 의뢰·선택"].forEach((t, i) => T(s, t, { x: X(i) + 0.1, y: y + 0.05, w: cw - 0.2, h: 0.55, fontSize: 13, bold: true, color: WHITE, align: "center", valign: "middle" }));
+    source(s, "비교 대상: 각 서비스 홈페이지 직접 확인(2026.11.23), 양성 학원 가격은 기사·판매 페이지 기준");
+    s.addNotes("신규 강사가 첫 출강까지 가는 길을 공고 탐색, 데뷔 준비, 신뢰 근거, 기관 연결의 네 단계로 나눴습니다. 공고 모음은 첫 단계만, 양성 학원은 교육만, 섭외 대행과 늘봄허브는 연결만 합니다. 네 단계를 모두 잇는 서비스는 확인되지 않았고, 강사잇다가 그 길 전체를 맡습니다. 인증 배지는 2027년 2월에 시작합니다.");
   }
 
-  // ===== 15. 대표 역량 =====
+  // ===== 15. 대표 역량: 경험 → 쓰임 연결 =====
   {
     const s = content("Q2 실현 가능성 · 대표 역량", "현장을 아는 강사가 직접 만들고 운영합니다", S2);
-    const cp = [["7년", "프리랜서 강사 경력", "기관이 원하는 강사상을 앎", "FaChalkboardUser"], ["1,000명", "강사 모임 직접 운영", "초기 강사 확보 채널", "FaUsers"], ["학교", "취업·진로 캠프 사업자", "한국엑스퍼트교육원 네트워크", "FaSchool"], ["1인 개발", "기획·개발·운영 직접", "특허 출원·서버 이전 처리", "FaLaptopCode"]];
-    const w = 2.83, g = 0.27;
+    T(s, "대표의 경험", { x: 0.6, y: 1.7, w: 4.6, h: 0.35, fontSize: 14, bold: true, color: MUTED });
+    T(s, "강사잇다에서 쓰이는 곳", { x: 7.55, y: 1.7, w: 5, h: 0.35, fontSize: 14, bold: true, color: MUTED });
+    const m = [["7년", "프리랜서 강사 경력", "기관이 원하는 강사상을 앎", "FaChalkboardUser"], ["1,000명", "강사 모임 직접 운영", "초기 강사 확보 채널", "FaUsers"], ["학교", "취업·진로 캠프 사업자", "한국엑스퍼트교육원 학교 네트워크", "FaSchool"], ["1인 개발", "기획·개발·운영 직접", "특허 출원 · 서버 이전 직접 처리", "FaLaptopCode"]];
     for (let i = 0; i < 4; i++) {
-      const x = 0.6 + i * (w + g), [n, t, d, ic] = cp[i];
-      R(s, { x, y: 1.8, w, h: 3.6, fill: BG });
-      await iconCircle(s, ic, x + (w - 0.8) / 2, 2.1, 0.8, NAVY, "FFFFFF");
-      T(s, n, { x, y: 3.05, w, h: 0.75, fontSize: 34, bold: true, color: NAVY, align: "center", valign: "middle" });
-      T(s, t, { x: x + 0.15, y: 3.9, w: w - 0.3, h: 0.4, fontSize: 16, bold: true, align: "center" });
-      T(s, d, { x: x + 0.15, y: 4.35, w: w - 0.3, h: 0.6, fontSize: 13, color: INK2, align: "center" });
+      const y = 2.15 + i * 0.95, h = 0.8, cy = y + h / 2;
+      R(s, { x: 0.6, y, w: 4.6, h, fill: BG });
+      T(s, m[i][0], { x: 0.85, y, w: 1.65, h, fontSize: 22, bold: true, color: NAVY, valign: "middle" });
+      T(s, m[i][1], { x: 2.5, y, w: 2.6, h, fontSize: 15, bold: true, valign: "middle" });
+      L(s, 5.22, cy, 5.95, cy, { color: HEX.soft, width: 1.5 });
+      await iconCircle(s, m[i][3], 5.97, cy - 0.33, 0.66, NAVY, "FFFFFF");
+      L(s, 6.65, cy, 7.5, cy, { color: HEX.soft, width: 1.5, arrow: true });
+      R(s, { x: 7.55, y, w: 5.18, h, fill: "FFFFFF", line: LINE });
+      T(s, m[i][2], { x: 7.8, y, w: 4.8, h, fontSize: 15, bold: true, color: INK, valign: "middle" });
     }
-    R(s, { x: 0.6, y: 5.7, w: 12.13, h: 0.75, fill: TINT });
-    T(s, "MVP는 대표가 직접 개발해 운영 중이고, 고도화는 외주·개발자와 협업합니다", { x: 0.9, y: 5.7, w: 11.6, h: 0.75, fontSize: 16, bold: true, color: NAVY, valign: "middle" });
-    s.addNotes("저는 7년 차 강사로 기관이 어떤 강사를 원하는지 알고, 1,000명 강사 모임을 직접 운영해 초기 강사를 모을 수 있습니다. 취업·진로 캠프 사업으로 학교 네트워크도 갖고 있습니다. 서비스는 제가 직접 개발해 운영 중이며, 고도화는 외주와 협업합니다.");
+    R(s, { x: 0.6, y: 6.0, w: 12.13, h: 0.6, fill: TINT });
+    T(s, "MVP는 대표가 직접 개발해 운영 중이고, 고도화는 외주·개발자와 협업합니다", { x: 0.9, y: 6.0, w: 11.6, h: 0.6, fontSize: 15, bold: true, color: NAVY, valign: "middle" });
+    s.addNotes("제 경험이 사업 어디에 쓰이는지 정리했습니다. 7년 강사 경력으로 기관이 원하는 강사상을 알고, 1,000명 강사 모임은 초기 강사 확보 채널입니다. 캠프 사업으로 쌓은 학교 네트워크가 있고, 서비스는 제가 직접 개발해 특허 출원과 서버 이전까지 처리했습니다.");
   }
 
-  // ===== 16. 비즈니스 모델 =====
+  // ===== 16. 비즈니스 모델: 무료 영역 + 수익원 타임라인 =====
   pres.addSection({ title: "Q3 사업화 전략" });
   const S3 = "Q3 사업화 전략";
   {
     const s = content("Q3 사업화 전략 · 수익 구조", "가입은 무료, 강사가 한 단계 올라서는 시점에 수익이 생깁니다", S3);
-    const nodes = [[0.6, "강사", "신규·전환 강사, 활동 강사", TINT, NAVY], [5.12, "강사잇다", "공고·교육·배지·연결", NAVY, WHITE], [9.63, "학교·기관", "방과후·늘봄·평생교육원", BG, INK]];
-    const nw = 3.1, ny = 2.75, nh = 1.25;
-    nodes.forEach(([x, t, d, f, c]) => {
-      R(s, { x, y: ny, w: nw, h: nh, fill: f });
-      T(s, t, { x, y: ny + 0.15, w: nw, h: 0.55, fontSize: 24, bold: true, color: c, align: "center" });
-      T(s, d, { x, y: ny + 0.72, w: nw, h: 0.35, fontSize: 13, color: c === WHITE ? "DDE3F0" : INK2, align: "center" });
+    R(s, { x: 0.6, y: 1.75, w: 3.85, h: 4.8, fill: BG });
+    T(s, "무료로 제공", { x: 0.9, y: 1.95, w: 3.3, h: 0.4, fontSize: 18, bold: true, color: NAVY });
+    const fr = [["FaMagnifyingGlass", "가입 · 공고 열람", "강사 누구나"], ["FaSchool", "섭외 의뢰 · 강사 선택", "학교·기관"], ["FaHandHoldingDollar", "강의료 수수료 0원", "기관 → 강사 직접 지급"]];
+    for (let i = 0; i < 3; i++) {
+      const y = 2.6 + i * 1.25;
+      await iconCircle(s, fr[i][0], 0.9, y, 0.65, "FFFFFF", HEX.navy);
+      T(s, fr[i][1], { x: 1.7, y: y - 0.02, w: 2.6, h: 0.38, fontSize: 15, bold: true });
+      T(s, fr[i][2], { x: 1.7, y: y + 0.36, w: 2.6, h: 0.3, fontSize: 12, color: INK2 });
+    }
+    // 수익원 타임라인 (2026.7 기준 월 단위)
+    const x0 = 4.85, x1 = 12.73, M = (m) => x0 + (m / 30) * (x1 - x0);
+    T(s, "수익원이 열리는 시점", { x: x0, y: 1.75, w: 5, h: 0.4, fontSize: 18, bold: true, color: ORANGE });
+    [["2026", 0, 6], ["2027", 6, 18], ["2028", 18, 30]].forEach(([y, a, b], i) => {
+      Rect(s, { x: M(a), y: 2.3, w: M(b) - M(a) - 0.03, h: 0.38, fill: i === 0 ? INK2 : i === 1 ? MID : NAVY });
+      T(s, y, { x: M(a), y: 2.3, w: M(b) - M(a), h: 0.38, fontSize: 13, bold: true, color: WHITE, align: "center", valign: "middle" });
+      L(s, M(a), 2.7, M(a), 6.15, { color: HEX.line, width: 0.75, dash: "dash" });
     });
-    // 서비스(위, 남색)
-    L(s, 5.05, ny + 0.3, 3.77, ny + 0.3, { color: HEX.navy, width: 2.5, arrow: true });
-    L(s, 8.29, ny + 0.3, 9.56, ny + 0.3, { color: HEX.navy, width: 2.5, arrow: true });
-    T(s, "공고 무료 제공 · 데뷔 교육\n인증 배지 · 프로필 노출", { x: 2.6, y: 1.7, w: 3.7, h: 0.75, fontSize: 13, bold: true, color: NAVY, align: "center", valign: "bottom" });
-    T(s, "검증된 강사 추천\n섭외 의뢰 연결", { x: 7.05, y: 1.7, w: 3.7, h: 0.75, fontSize: 13, bold: true, color: NAVY, align: "center", valign: "bottom" });
-    // 수익(아래, 주황)
-    L(s, 3.77, ny + 0.95, 5.05, ny + 0.95, { color: HEX.orange, width: 2.5, arrow: true });
-    L(s, 9.56, ny + 0.95, 8.29, ny + 0.95, { color: HEX.orange, width: 2.5, arrow: true });
-    R(s, { x: 1.9, y: 4.25, w: 4.6, h: 1.5, fill: OTINT });
-    T(s, [{ text: "① 데뷔 교육 1인 30만 원", options: { bold: true, fontSize: 15, breakLine: true } }, { text: "기수제, 출강 2회 보장", options: { fontSize: 12, color: INK2, breakLine: true } }, { text: "② 노출·광고비 월 3만 원", options: { bold: true, fontSize: 15, breakLine: true } }, { text: "2027년 3분기부터", options: { fontSize: 12, color: INK2 } }], { x: 2.15, y: 4.3, w: 4.2, h: 1.4, valign: "middle" });
-    R(s, { x: 6.85, y: 4.25, w: 4.6, h: 1.5, fill: OTINT });
-    T(s, [{ text: "③ 섭외 대행 건당 10만 원", options: { bold: true, fontSize: 15, breakLine: true } }, { text: "2028년부터, 조건 맞춤 선별·추천", options: { fontSize: 12, color: INK2 } }], { x: 7.1, y: 4.3, w: 4.2, h: 1.4, valign: "middle" });
-    L(s, 11.18, 6.0, 2.15, 6.0, { color: HEX.muted, width: 1.5, dash: "dash", arrow: true });
-    T(s, "강의료: 기관 → 강사 직접 지급 (강사잇다는 성사 수수료를 받지 않음)", { x: 2.2, y: 6.06, w: 9, h: 0.35, fontSize: 13, bold: true, color: INK2, align: "center" });
-    // 범례
-    L(s, 0.6, 6.68, 1.0, 6.68, { color: HEX.navy, width: 2.5 }); T(s, "서비스 흐름", { x: 1.08, y: 6.55, w: 1.4, h: 0.28, fontSize: 11, color: INK2 });
-    L(s, 2.4, 6.68, 2.8, 6.68, { color: HEX.orange, width: 2.5 }); T(s, "수익 흐름", { x: 2.88, y: 6.55, w: 1.4, h: 0.28, fontSize: 11, color: INK2 });
-    s.addNotes("가입과 공고 열람은 무료입니다. 수익은 강사가 한 단계 올라서는 시점에 받습니다. 데뷔 교육 1인 30만 원, 2027년 3분기부터 노출·광고비 월 3만 원, 2028년부터 섭외 대행 건당 10만 원입니다. 강의료는 기관이 강사에게 직접 지급하고, 저희는 성사 수수료를 받지 않습니다.");
+    const bars = [[3, "① 데뷔 교육 1인 30만 원", "2026.10~ · 기수제, 출강 2회 보장", HEX.orange], [14, "② 노출·광고비 월 3만 원", "2027.9~ · 프로필 노출", "F08A45"], [18, "③ 섭외 대행 건당 10만 원", "2028~ · 조건 맞춤 선별·추천", "F5B48A"]];
+    bars.forEach(([m, t, d, col], i) => {
+      const y = 2.95 + i * 1.08, x = M(m);
+      s.addShape(pres.shapes.PENTAGON, { x, y, w: x1 - x, h: 0.9, fill: { color: col }, line: { type: "none" }, objectName: oid("bar") });
+      T(s, t, { x: x + 0.2, y: y + 0.08, w: x1 - x - 0.5, h: 0.4, fontSize: 15, bold: true, color: i === 2 ? INK : WHITE });
+      T(s, d, { x: x + 0.2, y: y + 0.48, w: x1 - x - 0.5, h: 0.32, fontSize: 12, color: i === 2 ? INK : WHITE });
+    });
+    R(s, { x: x0, y: 6.2, w: x1 - x0, h: 0.38, fill: TINT, r: 0.08 });
+    T(s, "강사잇다는 성사 수수료를 받지 않음 · 광고비는 노출 비용 (고용센터 확인 후 진행)", { x: x0 + 0.2, y: 6.2, w: x1 - x0 - 0.3, h: 0.38, fontSize: 12, bold: true, color: NAVY, valign: "middle" });
+    s.addNotes("가입, 공고 열람, 기관의 섭외 의뢰는 무료이고, 강의료는 기관이 강사에게 직접 지급해 저희는 수수료를 받지 않습니다. 수익원은 단계적으로 열립니다. 지금은 데뷔 교육 1인 30만 원, 2027년 9월부터 노출·광고비 월 3만 원, 2028년부터 섭외 대행 건당 10만 원입니다.");
   }
 
-  // ===== 17. 가격 근거 + 진입 전략 =====
+  // ===== 17. 가격 근거 + 진입 경로 =====
   {
     const s = content("Q3 사업화 전략 · 가격 근거와 시장 진입", "강의 자리 하나면 교육비 30만 원의 2.5배 이상을 돌려받습니다", S3);
     T(s, "데뷔 교육비와 한 학기 강의료 비교 (만 원)", { x: 0.6, y: 1.7, w: 5.6, h: 0.35, fontSize: 15, bold: true, color: INK2 });
@@ -535,62 +547,83 @@ const chartText = { catAxisLabelFontFace: "+mn-lt", valAxisLabelFontFace: "+mn-l
     });
     R(s, { x: 0.6, y: 5.6, w: 5.6, h: 0.9, fill: BG });
     T(s, [{ text: "한 학기 강의 = 주 1회 × 15주", options: { bold: true, breakLine: true } }, { text: "수료 후 12개월 안에 출강 미연결 시 다음 기수 무료", options: { fontSize: 12, color: INK2 } }], { x: 0.85, y: 5.6, w: 5.2, h: 0.9, fontSize: 14, valign: "middle" });
-    T(s, "초기 시장 진입 전략", { x: 6.85, y: 1.7, w: 5.8, h: 0.35, fontSize: 15, bold: true, color: INK2 });
-    const st = [["강사", "FaUsers", "강사 모임 1,000명 · 당근모임 260명 · 스레드에 무료 공고 → 첫 출강이 급한 강사를 데뷔 교육으로"], ["기관", "FaSchool", "인터뷰 기관 3곳 + 캠프 사업의 학교 네트워크를 파일럿 기관으로"], ["시기·지역", "FaMapLocationDot", "신학기 1~3월 집중 / 경남 → 부산 → 울산 → 경북·대구 → 전국"]];
-    for (let i = 0; i < 3; i++) {
-      const y = 2.15 + i * 1.47;
-      R(s, { x: 6.85, y, w: 5.88, h: 1.3, fill: "FFFFFF", line: LINE });
-      await iconCircle(s, st[i][1], 7.08, y + 0.3, 0.7, TINT, HEX.navy);
-      T(s, st[i][0], { x: 8.0, y: y + 0.13, w: 4.5, h: 0.36, fontSize: 16, bold: true, color: NAVY });
-      T(s, st[i][2], { x: 8.0, y: y + 0.5, w: 4.55, h: 0.7, fontSize: 13, color: INK });
+    T(s, "지역 진입 순서", { x: 6.85, y: 1.7, w: 4, h: 0.35, fontSize: 15, bold: true, color: INK2 });
+    pill(s, "신학기 1~3월 집중", 10.9, 1.68, 1.83, 0.38, OTINT, ORANGE, 12);
+    const rg = ["경남", "부산", "울산", "경북·대구", "전국"];
+    L(s, 7.3, 2.75, 12.3, 2.75, { color: HEX.soft, width: 3 });
+    rg.forEach((t, i) => {
+      const cx = 7.3 + i * 1.25, d = i === 0 ? 0.6 : 0.46;
+      Oval(s, { x: cx - d / 2, y: 2.75 - d / 2, w: d, h: d, fill: i === 0 ? ORANGE : i === 4 ? WHITE : NAVY, line: i === 4 ? HEX.navy : undefined, lw: 2 });
+      T(s, String(i + 1), { x: cx - d / 2, y: 2.75 - d / 2, w: d, h: d, fontSize: 13, bold: true, color: i === 4 ? NAVY : WHITE, align: "center", valign: "middle" });
+      T(s, t, { x: cx - 0.7, y: 3.12, w: 1.4, h: 0.35, fontSize: 13, bold: true, color: i === 0 ? ORANGE : INK, align: "center" });
+    });
+    const ch = [["강사 채널", "FaUsers", "강사 모임 1,000명 · 당근모임 260명 · 스레드에 무료 공고 → 첫 출강이 급한 강사를 데뷔 교육으로"], ["기관 채널", "FaSchool", "인터뷰 기관 3곳 + 캠프 사업의 학교 네트워크를 파일럿 기관으로"]];
+    for (let i = 0; i < 2; i++) {
+      const y = 3.75 + i * 1.4;
+      R(s, { x: 6.85, y, w: 5.88, h: 1.25, fill: "FFFFFF", line: LINE });
+      await iconCircle(s, ch[i][1], 7.08, y + 0.28, 0.68, TINT, HEX.navy);
+      T(s, ch[i][0], { x: 8.0, y: y + 0.12, w: 4.5, h: 0.36, fontSize: 16, bold: true, color: NAVY });
+      T(s, ch[i][2], { x: 8.0, y: y + 0.48, w: 4.55, h: 0.7, fontSize: 13 });
     }
-    s.addNotes("가격 근거입니다. 한 학기 강의 자리, 즉 주 1회 15주면 강의료가 75만~105만 원입니다. 첫 자리 하나로 교육비 30만 원의 2.5배 이상을 돌려받는 구조이고, 수료 후 12개월 안에 연결되지 않으면 다음 기수를 무료로 들을 수 있습니다. 진입은 이미 모인 커뮤니티와 이미 만난 기관에서 시작하고, 신학기인 1~3월에 집중합니다.");
+    s.addNotes("가격 근거입니다. 한 학기 강의 자리, 즉 주 1회 15주면 강의료가 75만~105만 원입니다. 첫 자리 하나로 교육비 30만 원의 2.5배 이상을 돌려받는 구조이고, 수료 후 12개월 안에 연결되지 않으면 다음 기수를 무료로 들을 수 있습니다. 지역은 경남에서 시작해 부산, 울산, 경북·대구, 전국 순으로 넓히고, 신학기인 1~3월에 집중합니다.");
   }
 
-  // ===== 18. 로드맵 =====
+  // ===== 18. 로드맵: 간트 =====
   {
     const s = content("Q3 사업화 전략 · 단계별 추진 일정 (추정)", "2027년 검증·수익화, 2028년 영남권으로 넓힙니다", S3);
-    const stg = [["1. 검증", "2026.12~2027.2", ["인증 배지 기준 확정", "결제 연동", "데뷔 교육 2기"], ["회원 700명", "교육 수강 20명", "기관 의뢰 5건"]], ["2. 수익화", "2027.3~6", ["공공기관 의뢰 연결", "배지 1차 부여", "신학기 공고 대응"], ["출강 연결 10건", "교육 매출 1,200만 원", "재수강·재의뢰 30%"]], ["3. 확장", "2027.7~12", ["노출·광고비 도입", "부산·울산 기관 협력"], ["유료 강사 30명", "협력 기관 10곳"]], ["4. 영남권", "2028~", ["섭외 대행 시작", "경북·대구 확대"], ["회원 2,000명", "협력 기관 30곳", "연간 연결 100건"]]];
-    const shades = ["8FA0CC", "5B6FA8", "2A4489", "163072"];
-    const w = 3.0, g = 0.043;
-    stg.forEach(([n, when, todo, goal], i) => {
-      const x = 0.6 + i * (w + g);
-      s.addShape(i === 0 ? pres.shapes.PENTAGON : pres.shapes.CHEVRON, { x, y: 1.7, w: w + 0.1, h: 0.95, fill: { color: shades[i] }, line: { type: "none" }, objectName: oid("chevron") });
-      T(s, n, { x: x + 0.35, y: 1.74, w: w - 0.5, h: 0.45, fontSize: 18, bold: true, color: WHITE, align: "center" });
-      T(s, when, { x: x + 0.35, y: 2.17, w: w - 0.5, h: 0.35, fontSize: 13, color: WHITE, align: "center" });
-      T(s, "할 일", { x: x + 0.2, y: 2.85, w: 2, h: 0.3, fontSize: 12, bold: true, color: MUTED });
-      T(s, todo.map((t, k) => ({ text: t, options: { bullet: true, breakLine: k < todo.length - 1 } })), { x: x + 0.2, y: 3.15, w: w - 0.35, h: 1.15, fontSize: 14, paraSpaceAfter: 4 });
-      R(s, { x: x + 0.08, y: 4.4, w: w - 0.16, h: 2.1, fill: i === 3 ? NAVY : TINT });
-      T(s, "목표", { x: x + 0.3, y: 4.55, w: 2, h: 0.3, fontSize: 12, bold: true, color: i === 3 ? "DDE3F0" : NAVY });
-      goal.forEach((t, k) => T(s, t, { x: x + 0.3, y: 4.9 + k * 0.5, w: w - 0.5, h: 0.42, fontSize: 16, bold: true, color: i === 3 ? WHITE : INK }));
+    const per = [["검증", "2026.12~2027.2"], ["수익화", "2027.3~6"], ["확장", "2027.7~12"], ["영남권", "2028~"]];
+    const gx = 2.65, cw = (12.73 - gx) / 4, X = (i) => gx + i * cw;
+    per.forEach(([t, d], i) => {
+      R(s, { x: X(i) + 0.03, y: 1.72, w: cw - 0.06, h: 0.6, fill: i === 3 ? NAVY : TINT, r: 0.08 });
+      T(s, [{ text: `${i + 1}. ${t}  `, options: { bold: true, fontSize: 15 } }, { text: d, options: { fontSize: 12 } }], { x: X(i) + 0.03, y: 1.72, w: cw - 0.06, h: 0.6, color: i === 3 ? WHITE : NAVY, align: "center", valign: "middle" });
     });
-    s.addNotes("단계별 목표입니다. 내년 2월까지 검증 단계에서 회원 700명과 교육 수강 20명, 상반기 수익화 단계에서 출강 연결 10건과 교육 매출 1,200만 원, 하반기 확장 단계에서 유료 강사 30명과 협력 기관 10곳을 목표로 합니다. 2028년에는 회원 2,000명, 협력 기관 30곳, 연간 연결 100건으로 영남권 전체로 넓힙니다.");
+    const lanes = [["제품", [[0, 1, "배지 기준 확정 · 결제 연동"], [1, 2, "인증 배지 1차 부여"]]], ["교육", [[0, 1, "데뷔 교육 2기"], [1, 2, "신학기 공고 대응"]]], ["기관·지역", [[1, 2, "공공기관 의뢰 연결"], [2, 3, "부산·울산 기관 협력"], [3, 4, "경북·대구 확대"]]], ["수익", [[2, 3, "노출·광고비 도입"], [3, 4, "섭외 대행 시작"]]]];
+    lanes.forEach(([n, bars], i) => {
+      const y = 2.48 + i * 0.7;
+      L(s, 0.6, y + 0.66, 12.73, y + 0.66, { color: HEX.line, width: 0.5 });
+      T(s, n, { x: 0.6, y, w: 1.9, h: 0.6, fontSize: 15, bold: true, color: INK2, valign: "middle" });
+      bars.forEach(([a, b, t]) => {
+        R(s, { x: X(a) + 0.08, y: y + 0.1, w: X(b) - X(a) - 0.16, h: 0.44, fill: n === "수익" ? OTINT : BG, line: n === "수익" ? HEX.orange : HEX.soft, r: 0.22 });
+        T(s, t, { x: X(a) + 0.08, y: y + 0.1, w: X(b) - X(a) - 0.16, h: 0.44, fontSize: 13, bold: true, color: n === "수익" ? ORANGE : NAVY, align: "center", valign: "middle" });
+      });
+    });
+    const goals = [["회원 700명", "교육 수강 20명", "기관 의뢰 5건"], ["출강 연결 10건", "교육 매출 1,200만 원", "재수강·재의뢰 30%"], ["유료 강사 30명", "협력 기관 10곳"], ["회원 2,000명", "협력 기관 30곳", "연간 연결 100건"]];
+    T(s, "측정 목표", { x: 0.6, y: 5.42, w: 1.9, h: 1.15, fontSize: 15, bold: true, color: ORANGE, valign: "middle" });
+    goals.forEach((g, i) => {
+      R(s, { x: X(i) + 0.03, y: 5.42, w: cw - 0.06, h: 1.15, fill: i === 3 ? NAVY : OTINT });
+      T(s, g.map((t, k) => ({ text: t, options: { breakLine: k < g.length - 1 } })), { x: X(i) + 0.25, y: 5.42, w: cw - 0.45, h: 1.15, fontSize: 14, bold: true, color: i === 3 ? WHITE : INK, valign: "middle", paraSpaceAfter: 2 });
+    });
+    s.addNotes("일정을 제품, 교육, 기관·지역, 수익의 네 줄로 나눴습니다. 내년 2월까지 배지 기준과 결제 연동, 교육 2기를 마치고 회원 700명을 목표로 합니다. 상반기에는 공공기관 의뢰 연결로 출강 10건과 교육 매출 1,200만 원, 하반기에는 노출·광고비를 도입하고 협력 기관 10곳을 만듭니다. 2028년에는 섭외 대행을 시작해 회원 2,000명, 협력 기관 30곳, 연간 연결 100건을 목표로 합니다.");
   }
 
-  // ===== 19. 자금 소요 =====
+  // ===== 19. 자금 소요: 트리맵 =====
   {
     const s = content("Q3 사업화 전략 · 자금 소요 (추정)", "MVP 제작비 2,000만 원 중 61%를 기능 개발과 지식재산에 씁니다", S3);
-    const items = [["기능 개발", 800, "인증 배지, 결제, 기관 선택·추천 기능 고도화", "외주 견적 기준", HEX.navy], ["법률·지식재산", 420, "광고비 구조 자문, 특허 심사청구", "심사청구 약 220만 + 자문 200만", HEX.orange], ["교육 운영", 300, "데뷔 교육 교안·자료, 보조 강사비", "기수당 100만 원 × 3기", "5B6FA8"], ["마케팅", 300, "스레드·당근 광고, 기관 홍보물", "월 25만 원 × 12개월", "8FA0CC"], ["서버·운영", 180, "네이버 클라우드, 도메인, 알림 발송", "월 15만 원 × 12개월", "C3CCE3"]];
-    s.addChart(pres.charts.DOUGHNUT, [{ name: "사업비", labels: items.map((d) => d[0]), values: items.map((d) => d[1]) }], {
-      x: 0.6, y: 1.75, w: 4.4, h: 4.4, holeSize: 62, chartColors: items.map((d) => d[4]), showLegend: false, showPercent: true, showValue: false, showLabel: false,
-      dataLabelColor: "FFFFFF", dataLabelFontSize: 12, dataLabelFontBold: true, dataBorder: { pt: 1.5, color: "FFFFFF" }, firstSliceAng: 0, objectName: oid("chart"), ...chartText,
+    const X0 = 0.6, Y0 = 1.75, W = 7.0, H = 4.8;
+    const box = (x, y, w, h, fill, name, v, fg, size = 15) => {
+      s.addShape(pres.shapes.RECTANGLE, { x, y, w, h, fill: { color: fill }, line: { color: "FFFFFF", width: 3 }, objectName: oid("tree") });
+      T(s, [{ text: name, options: { fontSize: size, bold: true, breakLine: true } }, { text: `${v.toLocaleString()}만 원`, options: { fontSize: size + 5, bold: true, breakLine: true } }, { text: `${Math.round(v / 20)}%`, options: { fontSize: size - 2 } }], { x: x + 0.18, y: y + 0.15, w: w - 0.3, h: h - 0.3, color: fg });
+    };
+    const wl = W * 0.4;
+    box(X0, Y0, wl, H, HEX.navy, "기능 개발", 800, WHITE, 18);
+    const rx = X0 + wl, rw = W - wl, th = H * (420 / 1200);
+    box(rx, Y0, rw, th, HEX.orange, "법률·지식재산", 420, WHITE, 16);
+    const by = Y0 + th, bh = H - th;
+    const sh = bh * (180 / 780), ch = bh - sh;
+    box(rx, by, rw / 2, ch, "5B6FA8", "교육 운영", 300, WHITE, 14);
+    box(rx + rw / 2, by, rw / 2, ch, "8FA0CC", "마케팅", 300, WHITE, 14);
+    s.addShape(pres.shapes.RECTANGLE, { x: rx, y: by + ch, w: rw, h: sh, fill: { color: "C3CCE3" }, line: { color: "FFFFFF", width: 3 }, objectName: oid("tree") });
+    T(s, [{ text: "서버·운영  ", options: { bold: true, fontSize: 13 } }, { text: "180만 원", options: { bold: true, fontSize: 16 } }, { text: "  9%", options: { fontSize: 12 } }], { x: rx + 0.18, y: by + ch, w: rw - 0.3, h: sh, color: INK, valign: "middle" });
+    const items = [["기능 개발", "인증 배지, 결제, 기관 선택·추천 기능 고도화", "외주 견적 기준"], ["법률·지식재산", "광고비 구조 자문, 특허 심사청구", "심사청구 약 220만 원 + 자문 200만 원"], ["교육 운영", "데뷔 교육 교안·자료, 보조 강사비", "기수당 100만 원 × 3기"], ["마케팅", "스레드·당근 광고, 기관 홍보물", "월 25만 원 × 12개월"], ["서버·운영", "네이버 클라우드, 도메인, 알림 발송", "월 15만 원 × 12개월"]];
+    T(s, "산출 근거", { x: 7.95, y: 1.75, w: 3, h: 0.3, fontSize: 12, bold: true, color: MUTED });
+    items.forEach(([n, u, b], i) => {
+      const y = 2.05 + i * 0.8;
+      T(s, n, { x: 7.95, y, w: 4.78, h: 0.32, fontSize: 14, bold: true });
+      T(s, `${u} · ${b}`, { x: 7.95, y: y + 0.32, w: 4.78, h: 0.42, fontSize: 11, color: INK2 });
     });
-    T(s, [{ text: "총 사업비", options: { fontSize: 14, color: INK2, breakLine: true, bold: true } }, { text: "2,000", options: { fontSize: 34, bold: true, color: NAVY } }, { text: " 만 원", options: { fontSize: 15, bold: true, color: NAVY } }], { x: 1.3, y: 3.4, w: 3.0, h: 1.1, align: "center", valign: "middle" });
-    T(s, "항목", { x: 5.6, y: 1.75, w: 2, h: 0.3, fontSize: 12, bold: true, color: MUTED });
-    T(s, "금액", { x: 10.2, y: 1.75, w: 1.0, h: 0.3, fontSize: 12, bold: true, color: MUTED, align: "right" });
-    T(s, "비율", { x: 11.6, y: 1.75, w: 1.1, h: 0.3, fontSize: 12, bold: true, color: MUTED, align: "right" });
-    items.forEach(([n, v, use, basis, col], i) => {
-      const y = 2.15 + i * 0.82;
-      R(s, { x: 5.6, y: y + 0.12, w: 0.24, h: 0.24, fill: col, r: 0.05 });
-      T(s, n, { x: 6.0, y: y + 0.02, w: 2.4, h: 0.4, fontSize: 15, bold: true });
-      T(s, `${use} · ${basis}`, { x: 6.0, y: y + 0.4, w: 6.0, h: 0.3, fontSize: 11, color: INK2 });
-      T(s, `${v.toLocaleString()}만 원`, { x: 9.4, y: y + 0.02, w: 1.8, h: 0.4, fontSize: 15, bold: true, align: "right" });
-      T(s, `${Math.round((v / 2000) * 100)}%`, { x: 11.6, y: y + 0.02, w: 1.1, h: 0.4, fontSize: 15, bold: true, color: NAVY, align: "right" });
-      L(s, 5.6, y + 0.77, 12.73, y + 0.77, { color: HEX.line, width: 0.75 });
-    });
-    R(s, { x: 5.6, y: 6.3, w: 7.13, h: 0.5, fill: TINT, r: 0.08 });
-    T(s, "조달: MVP 제작비(최대 2,000만 원) + 자기자금 300만 원 + 교육 매출 재투자", { x: 5.8, y: 6.3, w: 6.8, h: 0.5, fontSize: 13, bold: true, color: NAVY, valign: "middle" });
-    s.addNotes("MVP 제작비 2,000만 원은 기능 개발 800만 원, 법률·지식재산 420만 원, 교육 운영과 마케팅 각 300만 원, 서버·운영 180만 원으로 씁니다. 기능 개발과 특허 심사청구 등 지식재산에 61%를 배정했습니다. 여기에 자기자금 300만 원과 교육 매출을 재투자합니다.");
+    R(s, { x: 7.95, y: 6.05, w: 4.78, h: 0.5, fill: TINT, r: 0.08 });
+    T(s, "조달: 자기자금 300만 원 + 교육 매출 재투자", { x: 8.1, y: 6.05, w: 4.55, h: 0.5, fontSize: 12, bold: true, color: NAVY, valign: "middle" });
+    s.addNotes("상자 크기가 금액 비율입니다. MVP 제작비 2,000만 원 중 기능 개발이 800만 원으로 가장 크고, 특허 심사청구와 광고비 구조 자문 등 법률·지식재산이 420만 원입니다. 둘을 합치면 61%입니다. 교육 운영과 마케팅에 각 300만 원, 서버·운영에 180만 원을 씁니다. 여기에 자기자금 300만 원과 교육 매출을 재투자합니다.");
   }
 
   // ===== 20. 매출 추정 =====
@@ -643,44 +676,41 @@ const chartText = { catAxisLabelFontFace: "+mn-lt", valAxisLabelFontFace: "+mn-l
     s.addNotes("중장기 목표는 영남권 기관이 강사를 찾을 때 가장 먼저 여는 곳이 되는 것입니다. 회원은 현재 500명에서 내년 2월 700명, 2028년 2,000명을 목표로 하고, 협력 기관 30곳과 연간 연결 100건을 만들겠습니다.");
   }
 
-  // ===== 22. 성장 단계별 서비스 =====
+  // ===== 22. 성장 단계별 서비스: 계단 =====
   {
     const s = content("Q4 성장 전략 · 서비스 고도화", "강사 성장 단계마다 필요한 서비스를 붙여 나갑니다", S4);
     const stg = [["입문", "경력을 강의로"], ["첫 출강", "실적 만들기"], ["활동 강사", "꾸준한 일감·정산"], ["브랜드 강사", "나를 알리기"]];
-    const cards = [[["데뷔 교육", "운영 중", "특강 → 실습 → 컨설팅"], ["교육 과정 확대", "확장", "분야별 수업 전환·자격증"]], [["인증 배지", "2027.2", "공공기관 강의·실적 시간"], ["강의 경력 증명", "고도화", "출강 이력 자동 기록·발급"]], [["맞춤 추천", "고도화", "조건에 맞춰 강사↔공고 추천"], ["서류 지갑", "고도화", "자격증·경력증명 직접 보관"], ["출강잇다", "잇다 시리즈", "출강별 강의료 입금 여부 확인"]], [["월간 강사", "잇다 시리즈", "매달 선정해 사이트·스레드에 소개"]]];
+    const cards = [[["데뷔 교육", "운영 중"], ["교육 과정 확대", "확장"]], [["인증 배지", "2027.2"], ["강의 경력 증명", "고도화"]], [["맞춤 추천", "고도화"], ["서류 지갑", "고도화"], ["출강잇다", "잇다 시리즈"]], [["월간 강사", "잇다 시리즈"]]];
     const shades = ["8FA0CC", "5B6FA8", "2A4489", "163072"];
-    const w = 3.0, g = 0.043;
+    const w = 2.98, g = 0.07, bottom = 6.6;
     stg.forEach(([t, d], i) => {
-      const x = 0.6 + i * (w + g);
-      s.addShape(i === 0 ? pres.shapes.PENTAGON : pres.shapes.CHEVRON, { x, y: 1.7, w: w + 0.1, h: 0.95, fill: { color: shades[i] }, line: { type: "none" }, objectName: oid("chevron") });
-      T(s, t, { x: x + 0.35, y: 1.74, w: w - 0.5, h: 0.45, fontSize: 18, bold: true, color: WHITE, align: "center" });
-      T(s, d, { x: x + 0.35, y: 2.17, w: w - 0.5, h: 0.35, fontSize: 13, color: WHITE, align: "center" });
-      cards[i].forEach(([n, tag, desc], k) => {
-        const y = 2.85 + k * 1.25, itda = tag === "잇다 시리즈";
-        R(s, { x: x + 0.08, y, w: w - 0.16, h: 1.08, fill: itda ? OTINT : BG, line: itda ? HEX.orange : undefined });
-        T(s, n, { x: x + 0.3, y: y + 0.12, w: 1.6, h: 0.4, fontSize: 16, bold: true });
-        const tw = Math.max(0.85, tag.length * 0.13 + 0.3);
-        pill(s, tag, x + w - 0.25 - tw, y + 0.15, tw, 0.32, itda ? ORANGE : (tag === "운영 중" || tag === "2027.2" ? NAVY : MUTED), WHITE, 11);
-        T(s, desc, { x: x + 0.3, y: y + 0.6, w: w - 0.55, h: 0.35, fontSize: 12, color: INK2 });
+      const x = 0.6 + i * (w + g), top = 4.05 - i * 0.75, h = bottom - top;
+      s.addShape(pres.shapes.RECTANGLE, { x, y: top, w, h, fill: { color: shades[i] }, line: { type: "none" }, objectName: oid("step") });
+      T(s, t, { x: x + 0.2, y: top + 0.12, w: w - 0.4, h: 0.42, fontSize: 18, bold: true, color: WHITE });
+      T(s, d, { x: x + 0.2, y: top + 0.52, w: w - 0.4, h: 0.3, fontSize: 12, color: "E8ECF6" });
+      cards[i].forEach(([n, tag], k) => {
+        const y = top + 0.95 + k * 0.62, itda = tag === "잇다 시리즈";
+        R(s, { x: x + 0.15, y, w: w - 0.3, h: 0.52, fill: itda ? OTINT : WHITE, r: 0.08 });
+        T(s, n, { x: x + 0.3, y, w: 1.6, h: 0.52, fontSize: 14, bold: true, color: itda ? ORANGE : INK, valign: "middle" });
+        T(s, tag, { x: x + w - 1.45, y, w: 1.15, h: 0.52, fontSize: 11, bold: true, color: itda ? ORANGE : (tag === "운영 중" || tag === "2027.2" ? NAVY : MUTED), align: "right", valign: "middle" });
       });
     });
-    source(s, "출강잇다: 강의료는 기관이 직접 지급하고, 강사잇다는 입금 내역만 보여 줌");
-    s.addNotes("강사의 성장 단계에 맞춰 서비스를 붙입니다. 입문 단계의 데뷔 교육, 첫 출강 단계의 인증 배지와 경력 증명, 활동 강사를 위한 맞춤 추천과 서류 지갑, 그리고 잇다 시리즈인 출강잇다와 월간 강사입니다.");
+    s.addShape(pres.shapes.LINE, { x: 0.9, y: 2.0, w: 7.6, h: 1.55, flipV: true, line: { color: HEX.orange, width: 2.5, endArrowType: "triangle", dashType: "dash" }, objectName: oid("line") });
+    T(s, "강사의 성장", { x: 2.4, y: 2.15, w: 2.2, h: 0.4, fontSize: 15, bold: true, color: ORANGE, rotate: -11 });
+    source(s, "");
+    s.addNotes("강사가 한 계단씩 올라갈 때마다 필요한 서비스를 붙입니다. 입문 단계의 데뷔 교육, 첫 출강 단계의 인증 배지와 경력 증명, 활동 강사를 위한 맞춤 추천과 서류 지갑, 그리고 잇다 시리즈인 출강잇다와 월간 강사입니다. 출강잇다는 강의료 입금 여부만 보여 주고, 강의료는 기관이 직접 지급합니다.");
   }
 
-  // ===== 23. 시장 확대 =====
+  // ===== 23. 시장 확대: 길어지는 화살표 =====
   {
     const s = content("Q4 성장 전략 · 고객·시장 확대", "부울경·경북 학교에서 시작해 전국 기업 교육까지 넓힙니다", S4);
-    const st = [["1단계", "부울경·경북", "학교 (방과후·늘봄·돌봄)", "경력단절여성·시니어·경력 전환자"], ["2단계", "대구 포함 영남권", "평생학습관·지자체", "활동 강사 전체"], ["3단계", "전국", "기업 교육", "활동 강사 전체"]];
-    const fills = [TINT, "8FA0CC", NAVY];
-    const w = 3.95, g = 0.14, bottom = 6.55;
-    st.forEach(([n, reg, field, who], i) => {
-      const x = 0.6 + i * (w + g), h = 2.9 + i * 0.95, y = bottom - h, dark = i > 0;
-      R(s, { x, y, w, h, fill: fills[i], r: 0.1 });
-      const fg = dark ? WHITE : NAVY, fg2 = dark ? "F0F3FA" : INK;
-      pill(s, n, x + 0.3, y + 0.3, 1.0, 0.38, dark ? WHITE : NAVY, dark ? NAVY : WHITE, 13);
-      T(s, reg, { x: x + 0.3, y: y + 0.85, w: w - 0.6, h: 0.5, fontSize: 22, bold: true, color: fg });
-      T(s, [{ text: "분야", options: { fontSize: 12, bold: true, color: dark ? "DDE3F0" : MUTED, breakLine: true } }, { text: field, options: { fontSize: 16, bold: true, color: fg2, breakLine: true } }, { text: " ", options: { fontSize: 8, breakLine: true } }, { text: "강사층", options: { fontSize: 12, bold: true, color: dark ? "DDE3F0" : MUTED, breakLine: true } }, { text: who, options: { fontSize: 16, bold: true, color: fg2 } }], { x: x + 0.3, y: y + 1.45, w: w - 0.6, h: 1.4 });
+    const st = [["1단계", "부울경·경북", "학교 (방과후·늘봄·돌봄)", "경력단절여성·시니어·경력 전환자", 6.6, TINT, NAVY], ["2단계", "대구 포함 영남권", "평생학습관·지자체", "활동 강사 전체", 9.4, "8FA0CC", WHITE], ["3단계", "전국", "기업 교육", "활동 강사 전체", 12.13, NAVY, WHITE]];
+    st.forEach(([n, reg, f, who, w, fill, fg], i) => {
+      const y = 1.75 + i * 1.62, h = 1.48;
+      s.addShape(pres.shapes.PENTAGON, { x: 0.6, y, w, h, fill: { color: fill }, line: { type: "none" }, objectName: oid("arrow") });
+      pill(s, n, 0.85, y + 0.2, 0.95, 0.36, fg === WHITE ? WHITE : NAVY, fg === WHITE ? NAVY : WHITE, 12);
+      T(s, reg, { x: 1.95, y: y + 0.13, w: 4.5, h: 0.5, fontSize: 22, bold: true, color: fg, valign: "middle" });
+      T(s, [{ text: "분야  ", options: { fontSize: 12, color: fg === WHITE ? "E8ECF6" : MUTED } }, { text: f, options: { bold: true, breakLine: true } }, { text: "강사층  ", options: { fontSize: 12, color: fg === WHITE ? "E8ECF6" : MUTED } }, { text: who, options: { bold: true } }], { x: 0.85, y: y + 0.66, w: w - 1.5, h: 0.75, fontSize: 15, color: fg, valign: "middle", paraSpaceAfter: 2 });
     });
     s.addNotes("시장은 세 단계로 넓힙니다. 1단계는 부울경·경북의 학교와 경력단절여성·시니어 강사, 2단계는 대구를 포함한 영남권 평생학습관과 지자체, 3단계는 전국 기업 교육입니다.");
   }
