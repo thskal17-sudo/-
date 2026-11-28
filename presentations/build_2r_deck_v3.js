@@ -153,8 +153,8 @@ const chartText = { catAxisLabelFontFace: "+mn-lt", valAxisLabelFontFace: "+mn-l
       T(s, lab, { x: x + 0.35, y: 5.08, w: 2.5, h: 0.32, fontSize: 13, bold: true, color: INK2 });
       T(s, [{ text: n, options: { fontSize: 32, bold: true, color: NAVY } }, { text: " " + u, options: { fontSize: 15, bold: true, color: NAVY } }], { x: x + 0.35, y: 5.42, w: 2.6, h: 0.7, valign: "middle" });
     });
-    source(s, "1R 이후 한 달 실적, 2026.11.27 기준");
-    s.addNotes("강사잇다의 이야기를 한 줄로 말씀드리면, 무료 공고로 강사를 모으고, 입문 강사는 데뷔시키고, 1~5년차 강사는 역량을 키워 자격을 주고, 5년 이상 강사는 월간강사로 알립니다. 지금은 첫 단계인 입문 강사 온보딩에 집중하고 있고, 1R 이후 한 달 동안 실제 강의 연결 3건, 유료 교육 결제 10명, 회원 500명 이상을 만들었습니다.");
+    source(s, "2026.11.27 기준 누적 실적 (회원은 1R 당시 0명)");
+    s.addNotes("강사잇다의 이야기를 한 줄로 말씀드리면, 무료 공고로 강사를 모으고, 입문 강사는 데뷔시키고, 1~5년차 강사는 역량을 키워 자격을 주고, 5년 이상 강사는 월간강사로 알립니다. 지금은 첫 단계인 입문 강사 온보딩에 집중하고 있고, 지금까지 실제 강의 연결 3건, 유료 교육 결제 10명을 만들었으며 회원은 1R 이후 0명에서 500명을 넘었습니다.");
   }
 
   pres.addSection({ title: S1 });
